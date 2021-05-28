@@ -1,3 +1,14 @@
+# NODE
+
+Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su última versión para una mejor ejecución de procesos.
+
+#Proces para clonación
+
+Lo primero es crear un proyecto Node.js en cualquier ubicación.
+Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
+Conectar DB y otras API's key que se requieran
+Ejecutar ng serve -o para levantar el servidor
+
 # Market
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
