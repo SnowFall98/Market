@@ -4,10 +4,24 @@ Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su últi
 
 # Proceso para clonación
 
-Lo primero es crear un proyecto Node.js en cualquier ubicación.
-Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
-Conectar DB y otras API's key que se requieran
-Ejecutar ng serve -o para levantar el servidor
+1. Lo primero es crear un proyecto Node.js en cualquier ubicación.
+2. Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
+3. Conectar DB y otras API's key que se requieran
+4. Ejecutar ng serve -o para levantar el servidor
+
+# Errores de ejecución
+Se pueden presentar errores como: 
+1. "An unhandled exception occurred: Script file ./node_modules/js-cookie/src/js.cookie.js does not exist." 
+2. "El archivo ..\npm\ng.ps1 no está firmado digitalmente. No se puede ejecutar este script en el sistema actual." 
+
+Para solucionar el error de que no encuentra el archivo .js escribiremos lo siguiente en la terminal:
+npm install --save @types/chart.js
+
+Para solucionar el error de las firmas digitales debemos modificar en PowerShell lo siguiente:
+1. Abrimos el Windows PowerShell como administrador.
+2. Ejecutamos el comando «Get-ExecutionPolicy» nos tendría que devolver «Unrestricted»
+3. Para cambiar esta configuración basta con ejecutar «Set-ExecutionPolicy Unrestricted».
+Con esto ya no debería presentar fallas y la ejecución del proyecto debería funcionar.
 
 # Market
 
