@@ -2,7 +2,7 @@
 
 Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su última versión para una mejor ejecución de procesos.
 
-#Proces para clonación
+# Proceso para clonación
 
 Lo primero es crear un proyecto Node.js en cualquier ubicación.
 Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
