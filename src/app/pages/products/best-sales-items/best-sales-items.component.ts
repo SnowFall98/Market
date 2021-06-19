@@ -17,6 +17,8 @@ declare var $:any;
 export class BestSalesItemsComponent implements OnInit {
 
   path:String = Path.url;
+  bestSalesItem:Array<any> = [];
+  render:Boolean = true;
 
   constructor(private productsService: ProductsService,private activatedRoute: ActivatedRoute) { }
 
@@ -59,14 +61,57 @@ export class BestSalesItemsComponent implements OnInit {
       }
 
     })
-    OwlCarouselConfig.fnc();
-    CarouselNavigation.fnc();
   }
+
   /*=============================================
   Declaramos la función para mostrar las mejores ventas
   =============================================*/
+
   productsFnc(response){
 
+    /*=============================================
+    Hacemos un recorrido por la respuesta que nos traiga el filtrado
+    =============================================*/
+
+    this.bestSalesItem = [];
+    let i;
+    let getSales =[];
+
+    for (i in response){
+
+      getSales.push(response[i]);
+      console.log("getSales",getSales);
+
+    }
+
+    /*=============================================
+    Ordenamos de mayor a menor ventas el array de obje
+    =============================================*/
+
+    getSales.sort(function(a , b){
+      return (b.sales - a.sales);
+    })
+
+    /*=============================================
+    Filtrado de cantidad de productos a mostrar
+    =============================================*/
+
+    getSales.forEach((product, index)=>{
+      if (index > 10){
+
+        this.bestSalesItem.push(product);
+
+      }
+    })
+  }
+
+  callback(){
+    if(this.render){
+      this.render = false;
+      
+      OwlCarouselConfig.fnc();
+      CarouselNavigation.fnc();
+    }
   }
 
 }
