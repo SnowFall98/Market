@@ -24,6 +24,7 @@ import { HomeTopCategoriesComponent } from './pages/home/home-top-categories/hom
 import { HomeShowcaseComponent } from './pages/home/home-showcase/home-showcase.component';
 import { ProductsBreadcrumbComponent } from './pages/products/products-breadcrumb/products-breadcrumb.component';
 import { BestSalesItemsComponent } from './pages/products/best-sales-items/best-sales-items.component';
+import { ProductsRecommendedComponent } from './pages/products/products-recommended/products-recommended.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { BestSalesItemsComponent } from './pages/products/best-sales-items/best-
     HomeTopCategoriesComponent,
     HomeShowcaseComponent,
     ProductsBreadcrumbComponent,
-    BestSalesItemsComponent
+    BestSalesItemsComponent,
+    ProductsRecommendedComponent
   ],
   imports: [
     BrowserModule,
