@@ -456,3 +456,43 @@ export let DinamicPrice = {
     }
 
 }
+
+/*=============================================
+Pagination
+=============================================*/
+export let Pagination = {
+
+    fnc: function(){
+
+        var target = $('.pagination');
+        
+        if (target.length > 0) {
+
+            target.each(function() {
+                
+                var tg = $(this),
+                    totalPages = tg.data('total-pages'),                
+                    actualPage = tg.data('actual-page'),
+                    currentRoute = tg.data('current-route');    
+   
+                tg.twbsPagination({
+                    totalPages: totalPages,
+                    startPage: actualPage,
+                    visiblePages: 4,
+                    first: "First",
+                    last: "Last",
+                    prev: '<i class="fas fa-angle-left"></i>',
+                    next: '<i class="fas fa-angle-right"></i>'
+                }).on("page", function(evt, page){
+
+                     window.location.href = currentRoute+"&"+page;
+
+                })
+               
+
+            })
+        }
+
+    }
+
+}
