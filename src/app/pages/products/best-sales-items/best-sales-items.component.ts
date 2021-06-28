@@ -33,7 +33,7 @@ export class BestSalesItemsComponent implements OnInit {
       Caputarmos el parametro URL
 		=============================================*/
 
-    let params = this.activatedRoute.snapshot.params["params"];
+    let params = this.activatedRoute.snapshot.params["params"].split("&")[0];
     /*=============================================
       Filtrar la data de productos con la categoria
 		=============================================*/

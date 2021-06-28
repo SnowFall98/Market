@@ -14,11 +14,11 @@ declare var $:any;
 })
 export class ProductsShowcaseComponent implements OnInit {
 
-  path:String = Path.url;
-  products:Array<any> = [];
-  render:Boolean = true;
-  cargando:Boolean = false;
-  rating:Array<any> = [];
+	path:String = Path.url;
+	products:Array<any> = [];
+	render:Boolean = true;
+	cargando:Boolean = false;
+	rating:Array<any> = [];
 	reviews:Array<any> = [];
 	price:Array<any> = [];
 	params:String = null;
@@ -99,9 +99,9 @@ export class ProductsShowcaseComponent implements OnInit {
 
   productsFnc(response){
 
-    this.products = [];
+    	this.products = [];
 
-  	/*=============================================
+  		/*=============================================
 		Hacemos un recorrido por la respuesta que nos traiga el filtrado
 		=============================================*/	
 
@@ -124,7 +124,7 @@ export class ProductsShowcaseComponent implements OnInit {
 		this.productFound = total;
 		this.totalPage =  Math.ceil(Number(this.productFound)/6);
 
-    /*=============================================
+    	/*=============================================
 		Filtramos solo hasta 10 productos
 		=============================================*/
 
@@ -168,7 +168,6 @@ export class ProductsShowcaseComponent implements OnInit {
 			}
 
 		})
-    
-  }
+    }
 
 }

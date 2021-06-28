@@ -25,7 +25,7 @@ export class ProductsBreadcrumbComponent implements OnInit {
 		=============================================*/
     //this.activateRoute.params.subscribe(param=> { /*linea de instrucciones*/})
 
-    let params= this.activateRoute.snapshot.params["param"];
+    let params= this.activateRoute.snapshot.params["param"].split("&")[0]; 
 
     /*=============================================
 		Filtramos Data de categorías
