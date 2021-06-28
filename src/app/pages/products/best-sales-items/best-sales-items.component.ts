@@ -23,44 +23,45 @@ export class BestSalesItemsComponent implements OnInit {
 	price:Array<any> = [];
 	cargando:Boolean = false;
 
-  constructor(private productsService: ProductsService,private activatedRoute: ActivatedRoute) { }
+  constructor(private productsService: ProductsService,private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this.cargando = true;
 
     /*=============================================
-      Caputarmos el parametro URL
-		=============================================*/
+    Capturamos el parámetro URL
+    =============================================*/	
 
-    let params = this.activatedRoute.snapshot.params["params"].split("&")[0];
+    let params = this.activateRoute.snapshot.params["param"].split("&")[0];
+
     /*=============================================
-      Filtrar la data de productos con la categoria
-		=============================================*/
+    Filtramos data de productos con categorías
+    =============================================*/	
 
     this.productsService.getFilterData("category", params)
-		.subscribe(resp1=>{
+    .subscribe(resp1=>{
 
-			if(Object.keys(resp1).length > 0){
+      if(Object.keys(resp1).length > 0){
 
-				this.productsFnc(resp1);
+        this.productsFnc(resp1);
 
-			}else{
+      }else{
 
-				/*=============================================
-				Filtramos data de subategorías
-				=============================================*/	
+        /*=============================================
+        Filtramos data de subategorías
+        =============================================*/	
 
-				this.productsService.getFilterData("sub_category", params)
-				.subscribe(resp2=>{
-		
-					this.productsFnc(resp2);			
-					
-				})
+        this.productsService.getFilterData("sub_category", params)
+        .subscribe(resp2=>{
+    
+          this.productsFnc(resp2);			
+          
+        })
 
-			}
-			
-		})
+      }
+      
+    })
   }
 
   /*=============================================
@@ -71,48 +72,48 @@ export class BestSalesItemsComponent implements OnInit {
 
     this.bestSalesItem = [];
 
-  /*=============================================
-  Hacemos un recorrido por la respuesta que nos traiga el filtrado
-  =============================================*/	
+		/*=============================================
+		Hacemos un recorrido por la respuesta que nos traiga el filtrado
+		=============================================*/	
 
-    let i;
-    let getSales = [];
+  		let i;
+  		let getSales = [];
 
-    for(i in response){
+  		for(i in response){
 
-    getSales.push(response[i]);						
-      
-  }
+			getSales.push(response[i]);						
+				
+		}
 
-  /*=============================================
-  Ordenamos de mayor a menor ventas el arreglo de objetos
-  =============================================*/	
+    /*=============================================
+		Ordenamos de mayor a menor ventas el arreglo de objetos
+		=============================================*/	
 
-  getSales.sort(function(a,b){
-    return (b.sales - a.sales)
-  })	
+		getSales.sort(function(a,b){
+			return (b.sales - a.sales)
+		})	
 
-  /*=============================================
-  Filtramos solo hasta 10 productos
-  =============================================*/
+		/*=============================================
+		Filtramos solo hasta 10 productos
+		=============================================*/
 
-  getSales.forEach((product, index)=>{
+		getSales.forEach((product, index)=>{
 
-    if(index < 10){
+			if(index < 10){
 
-      this.bestSalesItem.push(product);
-      
-      this.rating.push(DinamicRating.fnc(this.bestSalesItem[index]));
-      
-      this.reviews.push(DinamicReviews.fnc(this.rating[index]));
+				this.bestSalesItem.push(product);
+				
+				this.rating.push(DinamicRating.fnc(this.bestSalesItem[index]));
+				
+				this.reviews.push(DinamicReviews.fnc(this.rating[index]));
 
-      this.price.push(DinamicPrice.fnc(this.bestSalesItem[index]));
+				this.price.push(DinamicPrice.fnc(this.bestSalesItem[index]));
 
-      this.cargando = false;
+				this.cargando = false;
 
-    }
+			}
 
-  })
+		})
 
   }
   
