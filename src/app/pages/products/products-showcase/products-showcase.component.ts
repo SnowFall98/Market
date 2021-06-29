@@ -97,21 +97,21 @@ export class ProductsShowcaseComponent implements OnInit {
 		})
   }
 
-  productsFnc(response){
+	productsFnc(response){
 
-    	this.products = [];
+		this.products = [];
 
-  		/*=============================================
+		/*=============================================
 		Hacemos un recorrido por la respuesta que nos traiga el filtrado
 		=============================================*/	
 
-  		let i;
-  		let getProducts = [];
-  		let total = 0;
+			let i;
+			let getProducts = [];
+			let total = 0;
 
-  		for(i in response){
+			for(i in response){
 
-  			total++;
+				total++;
 
 			getProducts.push(response[i]);						
 				
@@ -124,7 +124,153 @@ export class ProductsShowcaseComponent implements OnInit {
 		this.productFound = total;
 		this.totalPage =  Math.ceil(Number(this.productFound)/6);
 
-    	/*=============================================
+		/*=============================================
+		Ordenamos el arreglo de objetos lo mas actual a lo más antiguo
+		=============================================*/
+		if(this.sort == undefined || this.sort == "fisrt"){
+
+			getProducts.sort(function (a, b) {
+				return (b.date_created - a.date_created)
+			})
+
+			this.sortItems = [
+
+				"Sort by first",
+				"Sort by latest",
+				"Sort by popularity",
+				"Sort by price: low to high",
+				"Sort by price: high to low"
+			]
+
+			this.sortValues = [
+
+				"first",
+				"latest",
+				"popularity",
+				"low",
+				"high"
+			]
+		}
+
+		/*=============================================
+		Ordenamos el arreglo de objetos lo mas antiguo a lo más actual
+		=============================================*/
+
+		if(this.sort == "latest"){
+
+			getProducts.sort(function (a, b) {
+				return (a.date_created - b.date_created)
+			})
+
+			this.sortItems = [
+
+				"Sort by latest",
+				"Sort by first",	
+				"Sort by popularity",
+				"Sort by price: low to high",
+				"Sort by price: high to low"
+			]
+
+			this.sortValues = [
+
+				"latest",
+				"first",
+				"popularity",
+				"low",
+				"high"
+			]
+		}
+
+		/*=============================================
+		Ordenamos el arreglo de objetos lo mas visto
+		=============================================*/
+
+		if(this.sort == "popularity"){
+
+			getProducts.sort(function (a, b) {
+				return (b.views - a.views)
+			})
+
+			this.sortItems = [
+
+				"Sort by popularity",
+				"Sort by first",
+				"Sort by latest",					
+				"Sort by price: low to high",
+				"Sort by price: high to low"
+			]
+
+			this.sortValues = [
+
+				"popularity",
+				"first",
+				"latest",				
+				"low",
+				"high"
+			]
+		}
+
+		/*=============================================
+		Ordenamos el arreglo de objetos de menor a mayor precio
+		=============================================*/
+
+		if(this.sort == "low"){
+
+			getProducts.sort(function (a, b) {
+				return (a.price - b.price)
+			})
+
+			this.sortItems = [
+
+				"Sort by price: low to high",			
+				"Sort by first",
+				"Sort by latest",					
+				"Sort by popularity",
+				"Sort by price: high to low"
+			]
+
+			this.sortValues = [
+
+				"low",
+				"first",
+				"latest",
+				"popularity",
+				"high"
+			]
+		}
+
+		/*=============================================
+		Ordenamos el arreglo de objetos de mayor a menor precio
+		=============================================*/
+
+		if(this.sort == "high"){
+
+			getProducts.sort(function (a, b) {
+				return (b.price - a.price)
+			})
+
+			this.sortItems = [
+
+				"Sort by price: high to low",		
+				"Sort by first",
+				"Sort by latest",					
+				"Sort by popularity",
+				"Sort by price: low to high"	
+				
+			]
+
+			this.sortValues = [
+
+				"high",
+				"first",
+				"latest",
+				"popularity",
+				"low"
+				
+			]
+		}
+
+		/*=============================================
 		Filtramos solo hasta 10 productos
 		=============================================*/
 
@@ -168,7 +314,7 @@ export class ProductsShowcaseComponent implements OnInit {
 			}
 
 		})
-    }
+	}
 
 	/*=============================================
 	Función que nos avisa cuando finaliza el renderizado de Angular
