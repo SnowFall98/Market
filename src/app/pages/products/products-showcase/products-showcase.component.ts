@@ -170,4 +170,31 @@ export class ProductsShowcaseComponent implements OnInit {
 		})
     }
 
+	/*=============================================
+	Función que nos avisa cuando finaliza el renderizado de Angular
+	=============================================*/
+
+	callback(params){
+
+		if(this.render){
+
+			this.render = false;
+
+			Rating.fnc();
+			Pagination.fnc();
+			//Select2Cofig.fnc();
+			//Tabs.fnc();
+
+		  /*=============================================
+		  Captura del Select Sort Items
+		  =============================================*/	
+
+		  $(".sortItems").change(function(){
+
+			  window.open(`products/${params}&${$(this).val()}`, '_top')
+
+		  })
+		}
+	}
+
 }
