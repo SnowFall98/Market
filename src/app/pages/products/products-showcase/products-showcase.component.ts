@@ -127,7 +127,7 @@ export class ProductsShowcaseComponent implements OnInit {
 		/*=============================================
 		Ordenamos el arreglo de objetos lo mas actual a lo más antiguo
 		=============================================*/
-		if(this.sort == undefined || this.sort == "fisrt"){
+		if(this.sort == undefined || this.sort == "first"){
 
 			getProducts.sort(function (a, b) {
 				return (b.date_created - a.date_created)
@@ -328,7 +328,7 @@ export class ProductsShowcaseComponent implements OnInit {
 
 			Rating.fnc();
 			Pagination.fnc();
-			//Select2Cofig.fnc();
+			Select2Cofig.fnc();
 			//Tabs.fnc();
 
 		  /*=============================================

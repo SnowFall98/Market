@@ -496,3 +496,17 @@ export let Pagination = {
     }
 
 }
+
+/*=============================================
+Select2Cofig
+=============================================*/
+export let Select2Cofig = {
+
+    fnc: function(){
+
+        $('select.ps-select').select2({
+            placeholder: $(this).data('placeholder'),
+            minimumResultsForSearch: -1
+        });
+    }
+}
