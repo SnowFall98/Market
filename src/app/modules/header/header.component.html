@@ -126,13 +126,18 @@
 
                 <div class="header__content-center">
                     <form class="ps-form--quick-search" action="index.html" method="get">
+
                         <input 
                         (keyup.enter)="goSearch(search.value)"
                         #search
-                        class="form-control" type="text" placeholder="I'm shopping for...">
-                        <button 
+                        class="form-control" 
+                        type="text" 
+                        placeholder="I'm shopping for...">
+
+                        <button type="button"
                         (click)="goSearch(search.value)"
                         >Search</button>
+                        
                     </form>
                 </div>
 
