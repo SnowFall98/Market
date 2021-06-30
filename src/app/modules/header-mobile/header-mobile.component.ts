@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../config';
+import { Search } from '../../functions';
+import { CategoriesService } from '../../services/categories.service';
+import { SubCategoriesService } from '../../services/sub-categories.service';
 
 declare var jQuery:any;
 declare var $:any;
-
-import { CategoriesService } from '../../services/categories.service';
-import { SubCategoriesService } from '../../services/sub-categories.service';
 
 @Component({
   selector: 'app-header-mobile',
@@ -62,6 +62,22 @@ export class HeaderMobileComponent implements OnInit {
 		})
 
 	}
+
+	/*=============================================
+	Declaramos función del buscador
+	=============================================*/
+
+	goSearch(search:String){
+
+		if(search.length == 0 || Search.fnc(search) == undefined){
+
+			return;
+		}
+
+		window.open(`search/${Search.fnc(search)}`, '_top')
+
+	}
+
 
 	/*=============================================
 	Función que nos avisa cuando finaliza el renderizado de Angular
