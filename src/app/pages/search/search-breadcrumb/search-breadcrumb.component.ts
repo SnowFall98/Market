@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-breadcrumb',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchBreadcrumbComponent implements OnInit {
 
-  constructor() { }
+  breadcrumb:string = null;
+
+  constructor(private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    /*=============================================
+		Capturamos el parámetro URL
+		=============================================*/	
+
+		this.breadcrumb = this.activateRoute.snapshot.params["param"].replace(/[_]/g, " ");
+    
   }
 
 }
