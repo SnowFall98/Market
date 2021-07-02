@@ -15,345 +15,350 @@ declare var $:any;
 export class SearchShowcaseComponent implements OnInit {
 
   path:String = Path.url;
-	products:Array<any> = [];
-	render:Boolean = true;
-	cargando:Boolean = false;
-	rating:Array<any> = [];
-	reviews:Array<any> = [];
-	price:Array<any> = [];
-	params:String = null;
-	page;
-	productFound:Number = 0;
-	currentRoute:String = null;
-	totalPage:Number = 0;
-	sort;
-	sortItems:Array<any> = [];
-	sortValues:Array<any> = [];
+  products:Array<any> = [];
+  render:Boolean = true;
+  cargando:Boolean = false;
+  rating:Array<any> = [];
+  reviews:Array<any> = [];
+  price:Array<any> = [];
+  params:String = null;
+  page;
+  productFound:Number = 0;
+  currentRoute:String = null;
+  totalPage:Number = 0;
+  sort;
+  sortItems:Array<any> = [];
+  sortValues:Array<any> = [];
   properties:Array<any> = ["category","name","store","sub_category","tags","title_list","url"];
-	listProducts:Array<any> = [];
+  listProducts:Array<any> = [];
 
-  constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute) { }
+   constructor(private productsService: ProductsService,
+             private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this.cargando = true;
 
     /*=============================================
-    Capturamos el parámetro URL
-    =============================================*/	
+   Capturamos el parámetro URL
+   =============================================*/	
 
-    this.params = this.activateRoute.snapshot.params["param"].split("&")[0];
-    this.sort = this.activateRoute.snapshot.params["param"].split("&")[1];
-    this.page = this.activateRoute.snapshot.params["param"].split("&")[2];
+   this.params = this.activateRoute.snapshot.params["param"].split("&")[0];
+   this.sort = this.activateRoute.snapshot.params["param"].split("&")[1];
+   this.page = this.activateRoute.snapshot.params["param"].split("&")[2];
 
-    /*=============================================
-    Evaluamos que el segundo parámetro sea de paginación
-    =============================================*/	
-    if(Number.isInteger(Number(this.sort))){
+   /*=============================================
+   Evaluamos que el segundo parámetro sea de paginación
+   =============================================*/	
+   if(Number.isInteger(Number(this.sort))){
 
-      this.page = this.sort;
-      this.sort = undefined;
-    
-    }
+     this.page = this.sort;
+     this.sort = undefined;
+   
+   }
 
-    /*=============================================
-    Evaluamos que el parámetro de orden no esté definido
-    =============================================*/	
+   /*=============================================
+   Evaluamos que el parámetro de orden no esté definido
+   =============================================*/	
 
-    if(this.sort == undefined){
+   if(this.sort == undefined){
 
-      this.currentRoute = `search/${this.params}`;
-    
-    }else{
+     this.currentRoute = `search/${this.params}`;
+   
+   }else{
 
-      this.currentRoute = `search/${this.params}&${this.sort}`;
+     this.currentRoute = `search/${this.params}&${this.sort}`;
 
-    }
-    
-    /*=============================================
-    Filtramos data de productos con todas las propiedades
-    =============================================*/	
-    this.properties.forEach(property=>{
+   }
+   
+   /*=============================================
+   Filtramos data de productos con todas las propiedades
+   =============================================*/	
+   this.properties.forEach(property=>{
 
-      this.productsService.getSearchData(property, this.params)
-      .subscribe(resp=>{
+     this.productsService.getSearchData(property, this.params)
+     .subscribe(resp=>{
 
-        let i;
-        
-        for(i in resp){
+       let i;
+       
+       for(i in resp){
 
-          this.listProducts.push(resp[i])
+         this.listProducts.push(resp[i])
 
-        }	
+       }	
 
-        this.productsFnc(this.listProducts);
+       this.productsFnc(this.listProducts);
 
-      })
+     })
 
-    })
+   })
 
    }
 
-	productsFnc(response){
+  /*=============================================
+  Declaramos función para mostrar el catálogo de productos
+  =============================================*/	
 
-  		if(response.length > 0){
+   productsFnc(response){
 
-	  		this.products = [];
+     if(response.length > 0){
 
-	  	/*=============================================
-			Hacemos un recorrido por la respuesta que nos traiga el filtrado
-			=============================================*/	
+       this.products = [];
 
-	  		let i;
-	  		let getProducts = [];
-	  		let total = 0;
+       /*=============================================
+      Hacemos un recorrido por la respuesta que nos traiga el filtrado
+      =============================================*/	
 
-	  		for(i in response){
+       let i;
+       let getProducts = [];
+       let total = 0;
 
-	  			total++;
+       for(i in response){
 
-				getProducts.push(response[i]);						
-					
-			}
+         total++;
 
-			/*=============================================
-			Definimos el total de productos y la paginación de productos
-			=============================================*/	
+       getProducts.push(response[i]);						
+         
+     }
 
-			this.productFound = total;
-			this.totalPage =  Math.ceil(Number(this.productFound)/6);
+     /*=============================================
+     Definimos el total de productos y la paginación de productos
+     =============================================*/	
 
-			/*=============================================
-			Ordenamos el arreglo de objetos lo mas actual a lo más antiguo
-			=============================================*/
-			if(this.sort == undefined || this.sort == "fisrt"){
+     this.productFound = total;
+     this.totalPage =  Math.ceil(Number(this.productFound)/6);
 
-				getProducts.sort(function (a, b) {
-				    return (b.date_created - a.date_created)
-				})
+     /*=============================================
+     Ordenamos el arreglo de objetos lo mas actual a lo más antiguo
+     =============================================*/
+     if(this.sort == undefined || this.sort == "fisrt"){
 
-				this.sortItems = [
+       getProducts.sort(function (a, b) {
+           return (b.date_created - a.date_created)
+       })
 
-					"Sort by first",
-					"Sort by latest",
-					"Sort by popularity",
-					"Sort by price: low to high",
-					"Sort by price: high to low"
-				]
+       this.sortItems = [
 
-				this.sortValues = [
+         "Sort by first",
+         "Sort by latest",
+         "Sort by popularity",
+         "Sort by price: low to high",
+         "Sort by price: high to low"
+       ]
 
-					"first",
-					"latest",
-					"popularity",
-					"low",
-					"high"
-				]
+       this.sortValues = [
 
-			}
+         "first",
+         "latest",
+         "popularity",
+         "low",
+         "high"
+       ]
 
-			/*=============================================
-			Ordenamos el arreglo de objetos lo mas antiguo a lo más actual
-			=============================================*/
+     }
 
-			if(this.sort == "latest"){
+     /*=============================================
+     Ordenamos el arreglo de objetos lo mas antiguo a lo más actual
+     =============================================*/
 
-				getProducts.sort(function (a, b) {
-				    return (a.date_created - b.date_created)
-				})
+     if(this.sort == "latest"){
 
-				this.sortItems = [
+       getProducts.sort(function (a, b) {
+           return (a.date_created - b.date_created)
+       })
 
-					"Sort by latest",
-					"Sort by first",	
-					"Sort by popularity",
-					"Sort by price: low to high",
-					"Sort by price: high to low"
-				]
+       this.sortItems = [
 
-				this.sortValues = [
+         "Sort by latest",
+         "Sort by first",	
+         "Sort by popularity",
+         "Sort by price: low to high",
+         "Sort by price: high to low"
+       ]
 
-					"latest",
-					"first",
-					"popularity",
-					"low",
-					"high"
-				]
-				
-			}
+       this.sortValues = [
 
-			/*=============================================
-			Ordenamos el arreglo de objetos lo mas visto
-			=============================================*/
+         "latest",
+         "first",
+         "popularity",
+         "low",
+         "high"
+       ]
+       
+     }
 
-			if(this.sort == "popularity"){
+     /*=============================================
+     Ordenamos el arreglo de objetos lo mas visto
+     =============================================*/
 
-				getProducts.sort(function (a, b) {
-				    return (b.views - a.views)
-				})
+     if(this.sort == "popularity"){
 
-				this.sortItems = [
+       getProducts.sort(function (a, b) {
+           return (b.views - a.views)
+       })
 
-					"Sort by popularity",
-					"Sort by first",
-					"Sort by latest",					
-					"Sort by price: low to high",
-					"Sort by price: high to low"
-				]
-
-				this.sortValues = [
+       this.sortItems = [
 
-					"popularity",
-					"first",
-					"latest",				
-					"low",
-					"high"
-				]
-				
-			}
+         "Sort by popularity",
+         "Sort by first",
+         "Sort by latest",					
+         "Sort by price: low to high",
+         "Sort by price: high to low"
+       ]
 
-			/*=============================================
-			Ordenamos el arreglo de objetos de menor a mayor precio
-			=============================================*/
+       this.sortValues = [
 
-			if(this.sort == "low"){
+         "popularity",
+         "first",
+         "latest",				
+         "low",
+         "high"
+       ]
+       
+     }
 
-				getProducts.sort(function (a, b) {
-				    return (a.price - b.price)
-				})
+     /*=============================================
+     Ordenamos el arreglo de objetos de menor a mayor precio
+     =============================================*/
 
-				this.sortItems = [
+     if(this.sort == "low"){
 
-					"Sort by price: low to high",			
-					"Sort by first",
-					"Sort by latest",					
-					"Sort by popularity",
-					"Sort by price: high to low"
-				]
+       getProducts.sort(function (a, b) {
+           return (a.price - b.price)
+       })
 
-				this.sortValues = [
+       this.sortItems = [
 
-					"low",
-					"first",
-					"latest",
-					"popularity",
-					"high"
-				]
+         "Sort by price: low to high",			
+         "Sort by first",
+         "Sort by latest",					
+         "Sort by popularity",
+         "Sort by price: high to low"
+       ]
 
-				
-			}
+       this.sortValues = [
 
-			/*=============================================
-			Ordenamos el arreglo de objetos de mayor a menor precio
-			=============================================*/
+         "low",
+         "first",
+         "latest",
+         "popularity",
+         "high"
+       ]
 
-			if(this.sort == "high"){
+       
+     }
 
-				getProducts.sort(function (a, b) {
-				    return (b.price - a.price)
-				})
+     /*=============================================
+     Ordenamos el arreglo de objetos de mayor a menor precio
+     =============================================*/
 
-				this.sortItems = [
+     if(this.sort == "high"){
 
-					"Sort by price: high to low",		
-					"Sort by first",
-					"Sort by latest",					
-					"Sort by popularity",
-					"Sort by price: low to high"	
-					
-				]
+       getProducts.sort(function (a, b) {
+           return (b.price - a.price)
+       })
 
-				this.sortValues = [
+       this.sortItems = [
 
-					"high",
-					"first",
-					"latest",
-					"popularity",
-					"low"
-					
-				]
+         "Sort by price: high to low",		
+         "Sort by first",
+         "Sort by latest",					
+         "Sort by popularity",
+         "Sort by price: low to high"	
+         
+       ]
 
-				
-			}
+       this.sortValues = [
 
-			/*=============================================
-			Filtramos solo hasta 10 productos
-			=============================================*/
+         "high",
+         "first",
+         "latest",
+         "popularity",
+         "low"
+         
+       ]
 
-			getProducts.forEach((product, index)=>{
+       
+     }
 
-				/*=============================================
-				Evaluamos si viene número de página definida
-				=============================================*/
+     /*=============================================
+     Filtramos solo hasta 10 productos
+     =============================================*/
 
-				if(this.page == undefined){
+     getProducts.forEach((product, index)=>{
 
-					this.page = 1;
-				}	
+       /*=============================================
+       Evaluamos si viene número de página definida
+       =============================================*/
 
-				/*=============================================
-				Configuramos la paginación desde - hasta
-				=============================================*/						
+       if(this.page == undefined){
 
-				let first = Number(index) + (this.page*6)-6; 
-				let last = 6*this.page;
+         this.page = 1;
+       }	
 
-				/*=============================================
-				Filtramos los productos a mostrar
-				=============================================*/		
+       /*=============================================
+       Configuramos la paginación desde - hasta
+       =============================================*/						
 
-				if(first < last){
+       let first = Number(index) + (this.page*6)-6; 
+       let last = 6*this.page;
 
-					if(getProducts[first] != undefined){
+       /*=============================================
+       Filtramos los productos a mostrar
+       =============================================*/		
 
-						this.products.push(getProducts[first]);
+       if(first < last){
 
-						this.rating.push(DinamicRating.fnc(getProducts[first]));
-						
-						this.reviews.push(DinamicReviews.fnc(this.rating[index]));
+         if(getProducts[first] != undefined){
 
-						this.price.push(DinamicPrice.fnc(getProducts[first]));
+           this.products.push(getProducts[first]);
 
-						this.cargando = false;
+           this.rating.push(DinamicRating.fnc(getProducts[first]));
+           
+           this.reviews.push(DinamicReviews.fnc(this.rating[index]));
 
-					}
-				}
+           this.price.push(DinamicPrice.fnc(getProducts[first]));
 
-			})
+           this.cargando = false;
 
-		}else{
+         }
+       }
 
-			this.cargando = false;
+     })
 
-		}
+   }else{
 
-  	}
+     this.cargando = false;
 
-	/*=============================================
-	Función que nos avisa cuando finaliza el renderizado de Angular
-	=============================================*/
+   }
 
-	callback(params){
+   }
 
-    if(this.render){
+   /*=============================================
+ Función que nos avisa cuando finaliza el renderizado de Angular
+ =============================================*/
 
-      this.render = false;
+   callback(params){
 
-      Rating.fnc();
-      Pagination.fnc();
-      Select2Cofig.fnc();
-      //Tabs.fnc();
+     if(this.render){
 
-    /*=============================================
-    Captura del Select Sort Items
-    =============================================*/	
+       this.render = false;
+
+       Rating.fnc();
+       Pagination.fnc();
+       Select2Cofig.fnc();
+       //Tabs.fnc();
+
+      /*=============================================
+      Captura del Select Sort Items
+      =============================================*/	
 
       $(".sortItems").change(function(){
 
         window.open(`search/${params}&${$(this).val()}`, '_top')
 
       })
-    }
-  }
+     }
+   }
 
 }
