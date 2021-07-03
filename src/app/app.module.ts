@@ -30,6 +30,8 @@ import { SearchBreadcrumbComponent } from './pages/search/search-breadcrumb/sear
 import { SearchShowcaseComponent } from './pages/search/search-showcase/search-showcase.component';
 import { CallToActionComponent } from './pages/product/call-to-action/call-to-action.component';
 import { ProductBreadcrumbComponent } from './pages/product/product-breadcrumb/product-breadcrumb.component';
+import { ProductLeftComponent } from './pages/product/product-left/product-left.component';
+import { ProductRightComponent } from './pages/product/product-right/product-right.component';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import { ProductBreadcrumbComponent } from './pages/product/product-breadcrumb/p
     SearchBreadcrumbComponent,
     SearchShowcaseComponent,
     CallToActionComponent,
-    ProductBreadcrumbComponent
+    ProductBreadcrumbComponent,
+    ProductLeftComponent,
+    ProductRightComponent
   ],
   imports: [
     BrowserModule,
