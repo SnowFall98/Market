@@ -28,6 +28,7 @@ import { ProductsRecommendedComponent } from './pages/products/products-recommen
 import { ProductsShowcaseComponent } from './pages/products/products-showcase/products-showcase.component';
 import { SearchBreadcrumbComponent } from './pages/search/search-breadcrumb/search-breadcrumb.component';
 import { SearchShowcaseComponent } from './pages/search/search-showcase/search-showcase.component';
+import { CallToActionComponent } from './pages/product/call-to-action/call-to-action.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SearchShowcaseComponent } from './pages/search/search-showcase/search-s
     ProductsRecommendedComponent,
     ProductsShowcaseComponent,
     SearchBreadcrumbComponent,
-    SearchShowcaseComponent
+    SearchShowcaseComponent,
+    CallToActionComponent
   ],
   imports: [
     BrowserModule,
