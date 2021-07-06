@@ -150,4 +150,17 @@ export class ProductLeftComponent implements OnInit {
 		}
 	}
 
+  callbackGallery(){
+
+    if(this.renderGallery){
+
+      this.renderGallery = false;
+
+      SlickConfig.fnc()
+      ProductLightbox.fnc()
+
+    }
+
+  }
+
 }
