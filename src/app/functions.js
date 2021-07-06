@@ -539,3 +539,88 @@ export let Search = {
     }
 
 }
+
+/*=============================================
+Tabs
+=============================================*/
+export let Tabs = {
+
+    fnc: function() {
+        $('.ps-tab-list  li > a ').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $(this).closest('li').siblings('li').removeClass('active');
+            $(this).closest('li').addClass('active');
+            $(target).addClass('active');
+            $(target).siblings('.ps-tab').removeClass('active');
+        });
+        $('.ps-tab-list.owl-slider .owl-item a').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $(this).closest('.owl-item').siblings('.owl-item').removeClass('active');
+            $(this).closest('.owl-item').addClass('active');
+            $(target).addClass('active');
+            $(target).siblings('.ps-tab').removeClass('active');
+        });
+    }
+
+}
+
+/*=============================================
+Quantity
+=============================================*/
+export let Quantity = {
+
+    fnc:function(){
+
+        $(".quantity").each(function(){
+
+            var spinner = $(this),
+            input = spinner.find('input[type="number"]'),
+            btnUp = spinner.find('.up'),
+            btnDown = spinner.find('.down'),
+            min = input.attr("min"),
+            max = input.attr("max")
+
+
+            btnUp.click(function(){
+
+                var oldValue = parseInt(input.val());
+
+                if(oldValue >= max){
+
+                    var newVal = oldValue;
+
+                }else{
+
+                    var newVal = oldValue + 1;
+                }
+
+                input.val(newVal)
+                input.trigger("change")
+
+            })
+
+            btnDown.click(function(){
+
+                var oldValue = parseInt(input.val());
+
+                if(oldValue <= min){
+
+                    var newVal = oldValue;
+
+                }else{
+
+                    var newVal = oldValue - 1;
+                }
+
+                input.val(newVal)
+                input.trigger("change")
+
+            })
+
+        })
+
+    }
+
+}
