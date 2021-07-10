@@ -2607,6 +2607,18 @@ textarea.form-control {
   color: #000;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number]
+{
+  -moz-appearance: textfield;
+}
+
 .form-group--select {
   position: relative;
 }
