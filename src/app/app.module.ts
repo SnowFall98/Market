@@ -33,6 +33,7 @@ import { ProductBreadcrumbComponent } from './pages/product/product-breadcrumb/p
 import { ProductLeftComponent } from './pages/product/product-left/product-left.component';
 import { ProductRightComponent } from './pages/product/product-right/product-right.component';
 import { UrlsecurePipe } from './pipes/urlsecure.pipe';
+import { BoughtTogetherComponent } from './pages/product/product-left/bought-together/bought-together.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { UrlsecurePipe } from './pipes/urlsecure.pipe';
     ProductBreadcrumbComponent,
     ProductLeftComponent,
     ProductRightComponent,
-    UrlsecurePipe
+    UrlsecurePipe,
+    BoughtTogetherComponent
   ],
   imports: [
     BrowserModule,
