@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Path } from '../../../../config';
+import { StoresService } from '../../../../services/store.service';
 
 @Component({
   selector: 'app-vendor-store',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VendorStoreComponent implements OnInit {
 
-  constructor() { }
+	@Input() childItem:any;
+	path:String = Path.url;
+	store:Array<any>= [];
 
-  ngOnInit(): void {
-  }
+  	constructor(private storesService: StoresService) { }
+
+  	ngOnInit(): void {
+
+  		this.storesService.getFilterData("store", this.childItem)
+  		.subscribe( resp => {	
+  			
+  			for(const i in resp){
+
+  				this.store.push(resp[i])
+  			
+  			}
+
+  		})
+  	}
 
 }
