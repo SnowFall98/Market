@@ -148,25 +148,21 @@ export class ReviewsComponent implements OnInit {
 
 			for(let i = 0; i < reviews.length; i++){
 
-			  	for(let r = 0; r < 5; r++){
+        for(let r = 0; r < 5; r++){
 
-		        	$(reviews[i]).append(`
-						
-						<option value="2">${r+1}</option>
+            $(reviews[i]).append(`
+          
+          <option value="2">${r+1}</option>
 
-		        	`)
+            `)
 
-		        	if($(reviews[i]).attr("reviews") == (r+1)){
+            if($(reviews[i]).attr("reviews") == (r+1)){
 
-		        		$(reviews[i]).children("option").val(1)
-		        	}
-		        }
-
+              $(reviews[i]).children("option").val(1)
+            }
+          }
 		    }
-
-        	Rating.fnc();
+      Rating.fnc();
 		}
 	}
-
-
 }
