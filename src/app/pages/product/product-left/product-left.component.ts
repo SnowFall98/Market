@@ -12,25 +12,23 @@ import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, Progres
 export class ProductLeftComponent implements OnInit {
 
     path:String = Path.url;	
-  	product:Array<any>= [];
-  	rating:Array<any> = [];
-	  reviews:Array<any> = [];
-	  price:Array<any> = [];
-	  cargando:Boolean = false;
-	  render:Boolean = true;
-	  countd:Array<any> = [];
+    product:Array<any>= [];
+    rating:Array<any> = [];
+    reviews:Array<any> = [];
+    price:Array<any> = [];
+    cargando:Boolean = false;
+    render:Boolean = true;
+    countd:Array<any> = [];
     gallery:Array<any> = [];
     renderGallery:Boolean = true;
     video:string = null;
     tags:String = null;
     totalReviews:String;
-  
+    
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 
   ngOnInit(): void {
-    
     this.cargando = true;
-  	
     this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"])  
     .subscribe( resp => {
       
@@ -41,8 +39,8 @@ export class ProductLeftComponent implements OnInit {
   }
 
   /*=============================================
-	Declaramos función para mostrar los productos recomendados
-	=============================================*/	
+  Declaramos función para mostrar los productos recomendados
+  =============================================*/	
 
   productsFnc(response){
 
@@ -138,17 +136,17 @@ export class ProductLeftComponent implements OnInit {
 
   callback(){
 
-		if(this.render){
+    if(this.render){
 
-			this.render = false;
+      this.render = false;
 
-			Rating.fnc();
-			CountDown.fnc();
-			ProgressBar.fnc();
-			Tabs.fnc();
+      Rating.fnc();
+      CountDown.fnc();
+      ProgressBar.fnc();
+      Tabs.fnc();
       Quantity.fnc();
-		}
-	}
+    }
+  }
 
   callbackGallery(){
 
