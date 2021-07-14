@@ -20,8 +20,7 @@ export class ProductRightComponent implements OnInit {
   render:Boolean = true;
   cargando:Boolean = false;
 
-  constructor(private activateRoute: ActivatedRoute,
-            private productsService: ProductsService) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 
   ngOnInit(): void {
 
@@ -65,7 +64,7 @@ export class ProductRightComponent implements OnInit {
         
     }
 
-      /*=============================================
+    /*=============================================
     Ordenamos de mayor a menor ventas el arreglo de objetos
     =============================================*/	
 
@@ -100,20 +99,19 @@ export class ProductRightComponent implements OnInit {
         this.cargando = false;
       }
 
-
     })
 
   }
 
   callback(){
 
-      if(this.render){
+    if(this.render){
 
-        this.render = false;
+      this.render = false;
 
-        Rating.fnc();
+      Rating.fnc();
 
-      }
+    }
   }
 
 }
