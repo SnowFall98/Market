@@ -18,8 +18,7 @@ export class RelatedProductComponent implements OnInit {
   	render:Boolean = true;
   	cargando:Boolean = false;
 
-  	constructor(private activateRoute: ActivatedRoute,
-  		        private productsService: ProductsService) { }
+  	constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 
   	ngOnInit(): void {
 
@@ -36,15 +35,13 @@ export class RelatedProductComponent implements OnInit {
   					this.productsFnc(resp);		
 
   				})
-
   			}
-
   		}) 
   	}
 
   	/*=============================================
-	Declaramos función para mostrar los productos recomendados
-	=============================================*/	
+    Declaramos función para mostrar los productos recomendados
+    =============================================*/	
 
   	productsFnc(response){
 
@@ -64,8 +61,8 @@ export class RelatedProductComponent implements OnInit {
 		}
 
 	  	/*=============================================
-		Ordenamos de mayor a menor views el arreglo de objetos
-		=============================================*/	
+      Ordenamos de mayor a menor views el arreglo de objetos
+      =============================================*/	
 
 		getProduct.sort(function(a,b){
 			return (b.views - a.views)
@@ -81,7 +78,7 @@ export class RelatedProductComponent implements OnInit {
 
 				this.products.push(product);
 
-				 /*=============================================
+				  /*=============================================
 	        	Rating y Review
 	        	=============================================*/
 	        
@@ -97,29 +94,26 @@ export class RelatedProductComponent implements OnInit {
 				
 				this.cargando = false;
 			}
-
-
 		})
-
 	}
 
 	callback(){
 
-  		if(this.render){
+    if(this.render){
 
 
-  			this.render = false;
+      this.render = false;
 
-  			setTimeout(function(){
-		
-				OwlCarouselConfig.fnc();
+      setTimeout(function(){
+  
+      OwlCarouselConfig.fnc();
 
-				CarouselNavigation.fnc();
+      CarouselNavigation.fnc();
 
-  				Rating.fnc();
+        Rating.fnc();
 
-  			},1000)
+      },1000)
 
-  		}
+    }
 	}
 }
