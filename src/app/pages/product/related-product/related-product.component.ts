@@ -26,7 +26,6 @@ export class RelatedProductComponent implements OnInit {
 
   		this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"]) 
   		.subscribe( resp => { 
-        //esto scomentario
 
   			for(const i in resp){
   				
