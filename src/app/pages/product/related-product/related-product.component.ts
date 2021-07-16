@@ -99,21 +99,21 @@ export class RelatedProductComponent implements OnInit {
 
 	callback(){
 
-    if(this.render){
+		if(this.render){
 
 
-      this.render = false;
+			this.render = false;
 
-      setTimeout(function(){
-  
-      OwlCarouselConfig.fnc();
+			setTimeout(function(){
 
-      CarouselNavigation.fnc();
+			OwlCarouselConfig.fnc();
 
-        Rating.fnc();
+			CarouselNavigation.fnc();
 
-      },1000)
+			Rating.fnc();
 
-    }
+			},1000)
+
+		}
 	}
 }

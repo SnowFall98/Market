@@ -329,7 +329,7 @@ export class ProductsShowcaseComponent implements OnInit {
 			Rating.fnc();
 			Pagination.fnc();
 			Select2Cofig.fnc();
-			//Tabs.fnc();
+			Tabs.fnc();
 
 		  /*=============================================
 		  Captura del Select Sort Items

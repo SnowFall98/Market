@@ -12,8 +12,7 @@ export class ProductBreadcrumbComponent implements OnInit {
 
   breadcrumb:string = null;
 
-  constructor(private activateRoute: ActivatedRoute,
-             private productsService: ProductsService) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 
    ngOnInit(): void {
 
@@ -25,28 +24,22 @@ export class ProductBreadcrumbComponent implements OnInit {
 
      /*=============================================
      Actualizar vistas de producto
-     =============================================  
+     =============================================*/
 
      this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"])
      .subscribe(resp=>{
        
        for(const i in resp){
 
-         let id = Object.keys(resp).toString();
-         
-         let value = {
-           "views": Number(resp[i].views+1)
-         }
+        let id = Object.keys(resp).toString();
+        
+        let value = {
+          "views": Number(resp[i].views+1)
+        }
 
-         this.productsService.patchData(id, value)
-         .subscribe(resp=>{})
-   
-       }
-
-     })*/
-
-
-   }
-
-
+        this.productsService.patchData(id, value)
+        .subscribe(resp=>{})
+      }
+    })
+  }
 }

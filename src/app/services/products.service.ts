@@ -41,4 +41,10 @@ export class ProductsService {
 		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&startAt="${param}"&endAt="${param}\uf8ff"&print=pretty`);
 
 	}
+
+	patchData(id:String, value:Object){
+
+		return this.http.patch(`${this.api}products/${id}.json`,value);
+
+	}
 }
