@@ -39,6 +39,7 @@ import { ReviewsComponent } from './pages/product/product-left/reviews/reviews.c
 import { SimilarBoughtComponent } from './pages/product/similar-bought/similar-bought.component';
 import { RelatedProductComponent } from './pages/product/related-product/related-product.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { LoginComponent } from './pages/login/login.component';
     ReviewsComponent,
     SimilarBoughtComponent,
     RelatedProductComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

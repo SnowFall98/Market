@@ -7,6 +7,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { SearchComponent } from './pages/search/search.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
 
@@ -15,6 +16,7 @@ const routes: Routes = [
 	{path: 'product/:param', component: ProductComponent },
 	{path: 'search/:param', component: SearchComponent },
 	{path: 'login', component: LoginComponent },
+	{path: 'register', component: RegisterComponent },
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
