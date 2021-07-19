@@ -13,13 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsRecommendedComponent implements OnInit {
 
-	path:String = Path.url;	
-	recommendedItems:Array<any> = [];
-	render:Boolean = true;
-	rating:Array<any> = [];
-	reviews:Array<any> = [];
-	price:Array<any> = [];
-	cargando:Boolean = false;
+	path:string = Path.url;	
+	recommendedItems:any[] = [];
+	render:boolean = true;
+	rating:any[] = [];
+	reviews:any[] = [];
+	price:any[] = [];
+	cargando:boolean = false;
 
   	constructor(private productsService: ProductsService,
   		        private activateRoute: ActivatedRoute) { }

@@ -7,7 +7,7 @@ import { Api } from '../config';
 })
 export class SalesService {
 
-	private api:String = Api.url;
+	private api:string = Api.url;
 
   	constructor(private http:HttpClient) { }
 

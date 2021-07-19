@@ -15,10 +15,10 @@ declare var $:any;
 
 export class HeaderMobileComponent implements OnInit {
 
-	path:String = Path.url;	
-	categories:Object = null;
-	render:Boolean = true;
-	categoriesList:Array<any> = [];
+	path:string = Path.url;	
+	categories:object = null;
+	render:boolean = true;
+	categoriesList:any[] = [];
 
 	constructor(private categoriesService: CategoriesService, private subCategoriesService: SubCategoriesService) { }
 
@@ -67,7 +67,7 @@ export class HeaderMobileComponent implements OnInit {
 	Declaramos función del buscador
 	=============================================*/
 
-	goSearch(search:String){
+	goSearch(search:string){
 
 		if(search.length == 0 || Search.fnc(search) == undefined){
 

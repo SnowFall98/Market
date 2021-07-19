@@ -15,10 +15,10 @@ export class BoughtTogetherComponent implements OnInit {
 
 	@Input() childItem:any;
 
-	path:String = Path.url;	
-	products:Array<any> = [];
-	price:Array<any> = [];
-	render:Boolean = true;
+	path:string = Path.url;	
+	products:any[] = [];
+	price:any[] = [];
+	render:boolean = true;
 
   	constructor(private productsService: ProductsService) { }
 

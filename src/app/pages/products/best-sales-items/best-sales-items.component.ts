@@ -15,13 +15,13 @@ declare var $:any;
 })
 export class BestSalesItemsComponent implements OnInit {
 
-  path:String = Path.url;	
-	bestSalesItem:Array<any> = [];
-	render:Boolean = true;
-	rating:Array<any> = [];
-	reviews:Array<any> = [];
-	price:Array<any> = [];
-	cargando:Boolean = false;
+  path:string = Path.url;	
+	bestSalesItem:any[] = [];
+	render:boolean = true;
+	rating:any[] = [];
+	reviews:any[] = [];
+	price:any[] = [];
+	cargando:boolean = false;
 
   constructor(private productsService: ProductsService,private activateRoute: ActivatedRoute) { }
 

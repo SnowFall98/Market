@@ -14,10 +14,10 @@ declare var $:any;
 })
 export class HeaderComponent implements OnInit {
 
-	path:String = Path.url;	
-	categories:Object = null;
-	arrayTitleList:Array<any> = [];
-	render:Boolean = true;
+	path:string = Path.url;	
+	categories:object = null;
+	arrayTitleList:any[] = [];
+	render:boolean = true;
 
 	constructor(private categoriesService: CategoriesService, private subCategoriesService: SubCategoriesService) { }
 
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
 	Declaramos función del buscador
 	=============================================*/
 
-	goSearch(search:String){
+	goSearch(search:string){
 
 		if(search.length == 0 || Search.fnc(search) == undefined){
 

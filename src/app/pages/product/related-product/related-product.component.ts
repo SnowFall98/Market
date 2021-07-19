@@ -10,13 +10,13 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class RelatedProductComponent implements OnInit {
 
-  path:String = Path.url;	
-  	products:Array<any> = [];
-  	rating:Array<any> = [];
-  	reviews:Array<any> = [];
-  	price:Array<any> = [];
-  	render:Boolean = true;
-  	cargando:Boolean = false;
+  path:string = Path.url;	
+  	products:any[] = [];
+  	rating:any[] = [];
+  	reviews:any[] = [];
+  	price:any[] = [];
+  	render:boolean = true;
+  	cargando:boolean = false;
 
   	constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 

@@ -9,11 +9,11 @@ import { ProductsService } from '../../services/products.service';
 })
 export class HeaderPromotionComponent implements OnInit {
 
-	path:String = Path.url;	
-	top_banner:Object = null;
-	category:Object = null;
-	url:Object = null;
-	preload:Boolean = false;
+	path:string = Path.url;	
+	top_banner:object = null;
+	category:object = null;
+	url:object = null;
+	preload:boolean = false;
 
 	constructor(private productsService: ProductsService ) { }
 

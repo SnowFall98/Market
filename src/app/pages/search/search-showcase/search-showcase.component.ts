@@ -14,23 +14,23 @@ declare var $:any;
 })
 export class SearchShowcaseComponent implements OnInit {
 
-  path:String = Path.url;
-  products:Array<any> = [];
-  render:Boolean = true;
-  cargando:Boolean = false;
-  rating:Array<any> = [];
-  reviews:Array<any> = [];
-  price:Array<any> = [];
-  params:String = null;
+  path:string = Path.url;
+  products:any[] = [];
+  render:boolean = true;
+  cargando:boolean = false;
+  rating:any[] = [];
+  reviews:any[] = [];
+  price:any[] = [];
+  params:string = null;
   page;
-  productFound:Number = 0;
-  currentRoute:String = null;
-  totalPage:Number = 0;
+  productFound:number = 0;
+  currentRoute:string = null;
+  totalPage:number = 0;
   sort;
-  sortItems:Array<any> = [];
-  sortValues:Array<any> = [];
-  properties:Array<any> = ["category","name","store","sub_category","tags","title_list","url"];
-  listProducts:Array<any> = [];
+  sortItems:any[] = [];
+  sortValues:any[] = [];
+  properties:any[] = ["category","name","store","sub_category","tags","title_list","url"];
+  listProducts:any[] = [];
 
    constructor(private productsService: ProductsService,
              private activateRoute: ActivatedRoute) { }

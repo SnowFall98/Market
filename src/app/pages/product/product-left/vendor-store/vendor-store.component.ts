@@ -10,8 +10,8 @@ import { StoresService } from '../../../../services/store.service';
 export class VendorStoreComponent implements OnInit {
 
 	@Input() childItem:any;
-	path:String = Path.url;
-	store:Array<any>= [];
+	path:string = Path.url;
+	store:any[]= [];
 
   	constructor(private storesService: StoresService) { }
 

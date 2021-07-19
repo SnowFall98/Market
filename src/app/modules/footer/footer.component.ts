@@ -14,10 +14,10 @@ import { SubCategoriesService } from '../../services/sub-categories.service';
 })
 export class FooterComponent implements OnInit {
 
-	path:String = Path.url;	
-	categories:Object = null;
-	render:Boolean = true;
-	categoriesList:Array<any> = [];
+	path:string = Path.url;	
+	categories:object = null;
+	render:boolean = true;
+	categoriesList:any[] = [];
 
 	constructor(private categoriesService: CategoriesService, private subCategoriesService: SubCategoriesService) { }
 

@@ -11,19 +11,19 @@ import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, Progres
 })
 export class ProductLeftComponent implements OnInit {
 
-    path:String = Path.url;	
-    product:Array<any>= [];
-    rating:Array<any> = [];
-    reviews:Array<any> = [];
-    price:Array<any> = [];
-    cargando:Boolean = false;
-    render:Boolean = true;
-    countd:Array<any> = [];
-    gallery:Array<any> = [];
-    renderGallery:Boolean = true;
+    path:string = Path.url;	
+    product:any[]= [];
+    rating:any[] = [];
+    reviews:any[] = [];
+    price:any[] = [];
+    cargando:boolean = false;
+    render:boolean = true;
+    countd:any[] = [];
+    gallery:any[] = [];
+    renderGallery:boolean = true;
     video:string = null;
-    tags:String = null;
-    totalReviews:String;
+    tags:string = null;
+    totalReviews:string;
     
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 

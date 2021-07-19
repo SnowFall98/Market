@@ -15,14 +15,14 @@ declare var $:any;
 })
 export class HomeHotTodayComponent implements OnInit {
 
-	path:String = Path.url;	
-	indexes:Array<any> = [];
-	products:Array<any> = [];
-	render:Boolean = true;
-	cargando:Boolean = false;
-	topSales:Array<any> = [];
-	topSalesBlock:Array<any> = [];
-	renderBestSeller:Boolean = true;
+	path:string = Path.url;	
+	indexes:any[] = [];
+	products:any[] = [];
+	render:boolean = true;
+	cargando:boolean = false;
+	topSales:any[] = [];
+	topSalesBlock:any[] = [];
+	renderBestSeller:boolean = true;
 
   	constructor(private productsService: ProductsService,
   		        private salesService: SalesService) { }

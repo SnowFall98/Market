@@ -11,9 +11,9 @@ import { ProductsService } from '../../../services/products.service';
 })
 export class CallToActionComponent implements OnInit {
 
-  path:String = Path.url;	
-  call_to_action:Array<any> = [];	
-  price:Array<any> = [];	
+  path:string = Path.url;	
+  call_to_action:any[] = [];	
+  price:any[] = [];	
 
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
 
