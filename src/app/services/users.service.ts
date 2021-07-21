@@ -14,13 +14,28 @@ export class UsersService {
 
   constructor(private http:HttpClient) { }
 
-  /*=============================================
+   	/*=============================================
 	Registro en Firebase Authentication
 	=============================================*/
 	
 	registerAuth(user: UsersModel){
 
 		return this.http.post(`${this.register}`, user);
+
+	}
+
+	/*=============================================
+	Registro en Firebase Database
+	=============================================*/
+
+	registerDatabase(user: UsersModel){
+
+		delete user.first_name;
+		delete user.last_name;
+		delete user.password;
+		delete user.returnSecureToken;
+
+		return this.http.post(`${this.api}/users.json`, user);
 
 	}
 

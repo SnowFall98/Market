@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UsersModel } from '../../models/users.model';
-import { UsersService  } from '../../services/users.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-register',
@@ -21,9 +21,7 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(f: NgForm){
-
-
-
+    
     /*=============================================
   	Registro en Firebase Authentication
   	=============================================*/
@@ -33,11 +31,7 @@ export class RegisterComponent implements OnInit {
 		this.usersService.registerAuth(this.user)
 		.subscribe(resp=>{
 
-		}, err =>{
-
-      //Sweetalert.fnc("error", err.error.error.message, null)
-
-    })
+		})
 
   }
 
