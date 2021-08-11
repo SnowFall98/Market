@@ -64,7 +64,20 @@ Login - Register Content
                             type="text" 
                             placeholder="First name"
                             [(ngModel)]="user.first_name"
-                            name="first_name">
+                            name="first_name"
+                            required
+                            minlength="2"
+                            pattern="[A-Za-z]{2,}"
+                            data-toggle="tooltip"
+                            title="Ingrese su nombre"
+                            (change)="capitalize(first_name)"
+                            #first_name
+                            >
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div 
+                            *ngIf="f.submitted && f.controls['first_name'].errors"
+                            class="invalid-feedback">Please fill out this field.</div>
 
                         </div>
 
@@ -75,7 +88,20 @@ Login - Register Content
                             type="text" 
                             placeholder="Last name"
                             [(ngModel)]="user.last_name"
-                            name="last_name">
+                            name="last_name"
+                            required
+                            minlength="2"
+                            pattern="[A-Za-z]{2,}"
+                            data-toggle="tooltip"
+                            title="Ingrese su apellido"
+                            (change)="capitalize(last_name)"
+                            #last_name
+                            >
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div 
+                            *ngIf="f.submitted && f.controls['last_name'].errors"
+                            class="invalid-feedback">Please fill out this field.</div>
 
                         </div>
 
@@ -86,7 +112,17 @@ Login - Register Content
                             type="email" 
                             placeholder="Email address"
                             [(ngModel)]="user.email"
-                            name="email">
+                            name="email"
+                            email
+                            required
+                            data-toggle="tooltip"
+                            title="Ingrese su correo electronico válido"
+                            >
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div 
+                            *ngIf="f.submitted && f.controls['email'].errors"
+                            class="invalid-feedback">Please fill out this field.</div>
 
                         </div>
 
@@ -98,7 +134,20 @@ Login - Register Content
                             placeholder="Username"
                             [(ngModel)]="user.username"
                             name="username"
+                            required
+                            minlength="2"
+                            maxlength="8"
+                            pattern="[A-Za-z]{2,8}"
+                            data-toggle="tooltip"
+                            title="Ingrese su username con al menos 2 caracteres, maximo 8 caracteres sin usar numeros"
+                            (change)="validate(username)"
+                            #username
                             >
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div 
+                            *ngIf="f.submitted && f.controls['username'].errors"
+                            class="invalid-feedback">Please fill out this field.</div>
 
                         </div>
 
@@ -110,7 +159,20 @@ Login - Register Content
                             placeholder="Password"
                              [(ngModel)]="user.password"
                             name="password"
+                            required
+                            minlength="4"
+                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,}"  
+                            data-toggle="tooltip"
+                            title="Ingrese su contraseña con al menos 4 caracteres y debe incluir letras mayúsculas, minúsculas y números"
+                            (change)="validate(password)"
+                            #password
                             >
+
+                            <div class="valid-feedback">Valid.</div>
+                            <div 
+                            *ngIf="f.submitted && f.controls['password'].errors"
+                            class="invalid-feedback">Please fill out this field.</div>
+
                         </div>
 
                         <div class="form-group submtit">

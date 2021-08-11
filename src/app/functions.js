@@ -624,3 +624,27 @@ export let Quantity = {
     }
 
 }
+
+/*=============================================
+Capitalize
+=============================================*/
+
+export let Capitalize = {
+
+    fnc: function(value){
+
+        value = value.toLowerCase();
+
+        let names = value.split(' ');
+
+        names = names.map( name => {
+
+            return name[0].toUpperCase() + name.substr(1)
+
+        })
+
+        return names.join(' ');
+
+    }
+
+}
