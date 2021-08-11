@@ -39,6 +39,16 @@ export class UsersService {
 
 	}
 
+	/*=============================================
+  	Filtrar data para buscar coincidencias
+  	=============================================*/
+
+  	getFilterData(orderBy:string, equalTo:string){
+
+    	return this.http.get(`${this.api}users.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
+
+  	}
+
 
 
 }

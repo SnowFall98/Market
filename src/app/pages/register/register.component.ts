@@ -69,6 +69,23 @@ export class RegisterComponent implements OnInit {
       pattern = /^[A-Za-z]{2,8}$/;
 
       input.value = input.value.toLowerCase();
+
+      this.usersService.getFilterData("username", input.value)
+      .subscribe(resp=>{
+        
+        if(Object.keys(resp).length > 0){
+
+          $(input).parent().addClass('was-validated')
+
+          input.value = "";
+
+          //Sweetalert.fnc("error", "Username already exists", null)
+
+          return;
+         
+        }
+
+      })
     }
 
     if($(input).attr("name") == "password"){
