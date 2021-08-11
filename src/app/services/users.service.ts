@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Api, Register} from '../config';
+import {Api, Register, Login, SendEmailVerification} from '../config';
 
 import { UsersModel } from '../models/users.model';
 
@@ -11,6 +11,8 @@ export class UsersService {
   
 	private api:string = Api.url;
 	private register:string = Register.url;
+	private login:string = Login.url;
+	private sendEmailVerification:string = SendEmailVerification.url;
 
   constructor(private http:HttpClient) { }
 
@@ -48,6 +50,26 @@ export class UsersService {
     	return this.http.get(`${this.api}users.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
 
   	}
+
+	/*=============================================
+  	Login en Firebase Authentication
+  	=============================================*/
+  
+  	loginAuth(user: UsersModel){
+
+    	return this.http.post(`${this.login}`, user);
+
+  	}
+	  
+	/*=============================================
+  	Enviar verificación de correo electrónico
+  	=============================================*/
+
+  	sendEmailVerificationFnc(body:object){
+
+		return this.http.post(`${this.sendEmailVerification}`, body);
+
+	}
 
 
 

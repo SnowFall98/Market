@@ -104,6 +104,10 @@ export class RegisterComponent implements OnInit {
 
   }
 
+  /*=============================================
+  Envío del formulario
+  =============================================*/
+
   onSubmit(f: NgForm){
 
     /*=============================================
@@ -131,24 +135,43 @@ export class RegisterComponent implements OnInit {
 		this.usersService.registerAuth(this.user)
 		.subscribe(resp=>{
 
-
       if(resp["email"] == this.user.email){
 
         /*=============================================
-        Registro en Firebase Database
+        Enviar correo de verificación
         =============================================*/
 
-        this.user.displayName = `${this.user.first_name } ${this.user.last_name}`;
-        this.user.method = "direct";
-        this.user.needConfirm = false;
-        this.user.username = this.user.username.toLowerCase();
- 
-        this.usersService.registerDatabase(this.user)
-        .subscribe(resp=>{
-              
-          Sweetalert.fnc("success", "Confirme su cuenta en su correo electrónico (verifique el correo no deseado)", "login")
+        let body = {
 
-        })
+          requestType: "VERIFY_EMAIL",
+          idToken: resp["idToken"]
+        
+        }
+
+        this.usersService.sendEmailVerificationFnc(body)
+        .subscribe(resp=>{
+          
+          if(resp["email"] == this.user.email){
+
+            /*=============================================
+            Registro en Firebase Database
+            =============================================*/
+
+            this.user.displayName = `${this.user.first_name } ${this.user.last_name}`;
+            this.user.method = "direct";
+            this.user.needConfirm = false;
+            this.user.username = this.user.username.toLowerCase();
+     
+            this.usersService.registerDatabase(this.user)
+            .subscribe(resp=>{
+              
+              Sweetalert.fnc("success", "Confirme su cuenta en su correo electrónico (verifique el correo no deseado)", "login")
+
+            })
+
+          }
+
+        })	
 
       }
 
