@@ -648,3 +648,95 @@ export let Capitalize = {
     }
 
 }
+
+/*=============================================
+Sweetalert
+=============================================*/
+
+export let Sweetalert = {
+
+    fnc:function(type, text, url){
+
+        switch (type) {
+
+            case "error":
+
+            if(url == null){
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: text
+                }) 
+
+            }else{
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: text
+                }).then((result) => {
+
+                    if (result.value) { 
+
+                        window.open(url, "_top")
+                    }
+
+                })
+
+            } 
+
+            break; 
+
+            case "success":
+
+            if(url == null){
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: text
+                }) 
+
+            }else{
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: text
+                }).then((result) => {
+
+                    if (result.value) { 
+
+                        window.open(url, "_top")
+                    }
+
+                })
+
+            } 
+
+            break; 
+
+            case "loading":
+
+              Swal.fire({
+                allowOutsideClick: false,
+                type: 'info',
+                text:text
+              })
+              Swal.showLoading()
+
+            break; 
+
+            case "close":
+
+                Swal.close()
+
+            break;
+
+        }
+
+       
+    }
+
+}

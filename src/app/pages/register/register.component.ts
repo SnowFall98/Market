@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
 
           input.value = "";
 
-          //Sweetalert.fnc("error", "Username already exists", null)
+          Sweetalert.fnc("error", "El nombre de usuario ya existe", null)
 
           return;
          
@@ -115,6 +115,12 @@ export class RegisterComponent implements OnInit {
       return;
 
     }
+
+    /*=============================================
+    Alerta suave mientras se registra el usuario
+    =============================================*/
+
+    Sweetalert.fnc("loading", "Loading...", null)
     
     /*=============================================
   	Registro en Firebase Authentication
@@ -139,14 +145,18 @@ export class RegisterComponent implements OnInit {
  
         this.usersService.registerDatabase(this.user)
         .subscribe(resp=>{
-
-          console.log("resp", resp);
+              
+          Sweetalert.fnc("success", "Confirme su cuenta en su correo electrónico (verifique el correo no deseado)", "login")
 
         })
 
       }
 
-		})
+		}, err =>{
+
+      Sweetalert.fnc("error", err.error.error.message, null)
+
+    })
 
   }
 
