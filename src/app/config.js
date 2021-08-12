@@ -53,3 +53,13 @@ export let ConfirmEmailVerification = {
 	url: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 
 }
+
+/*=============================================
+Exportamos el endPoint para tomar la data del usuario en Firebase auth
+=============================================*/
+
+export let GetUserData = {
+
+	url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+
+}

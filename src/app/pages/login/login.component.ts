@@ -115,35 +115,106 @@ export class LoginComponent implements OnInit {
   Envío del formulario
   =============================================*/
 
-  onSubmit(f: NgForm){
+  onSubmit(f: NgForm ){
 
-    if(f.invalid ){
+		if(f.invalid ){
 
-      return;
-    }
+        	return;
 
-    /*=============================================
-    Alerta suave mientras se registra el usuario
-    =============================================*/
+		}
 
-    Sweetalert.fnc("loading", "Loading...", null)
+	 	/*=============================================
+      	Alerta suave mientras se registra el usuario
+      	=============================================*/
 
-    /*=============================================
-  	Registro en Firebase Authentication
-  	=============================================*/
-		
-		this.user.returnSecureToken = true;
+      	Sweetalert.fnc("loading", "Loading...", null)
 
-		this.usersService.registerAuth(this.user)
-		.subscribe(resp=>{
+      	/*=============================================
+       	Validar que el correo esté verificado
+        =============================================*/
 
+     	this.usersService.getFilterData("email", this.user.email) 
+     	.subscribe( resp1 =>{
 
-    }, err =>{
+     		for(const i in resp1){
 
-      Sweetalert.fnc("error", err.error.error.message, null)
+     			if(resp1[i].needConfirm){
 
-    })
+     				/*=============================================
+			    	Login en Firebase Authentication
+			    	=============================================*/
+			  		
+			  		this.user.returnSecureToken = true;
 
-  }
+			  		this.usersService.loginAuth(this.user)
+			  		.subscribe( resp2 => {
+
+            /*=============================================
+            Almacenar id Token en Firebase Database
+            =============================================*/
+
+            let id = Object.keys(resp1).toString();
+
+              let value = {
+
+                idToken: resp2["idToken"]
+              }
+
+              this.usersService.patchData(id, value)
+              .subscribe(resp3=>{
+
+                if(resp3["idToken"] != ""){
+
+                  Sweetalert.fnc("close", null, null)
+            
+                  /*=============================================
+                  Almacenamos el Token de seguridad en el localstorage
+                  =============================================*/
+
+                  localStorage.setItem("idToken", resp3["idToken"]);
+
+                  /*=============================================
+                  Almacenamos el email en el localstorage
+                  =============================================*/
+
+                  localStorage.setItem("email", resp2["email"]);
+
+                  /*=============================================
+                  Almacenamos la fecha de expiración localstorage
+                  =============================================*/
+
+                  let today = new Date();
+
+                  today.setSeconds(resp2["expiresIn"]);
+
+                  localStorage.setItem("expiresIn", today.getTime().toString());
+
+                  /*=============================================
+                  Redireccionar al usuario a la página de su cuenta
+                  =============================================*/
+
+                  window.open("account", "_top");
+
+                }
+
+              })
+
+			  		}, err =>{
+
+			        	Sweetalert.fnc("error", err.error.error.message, null)
+
+			      })
+
+     			}else{
+
+     				Sweetalert.fnc("error", 'Need Confirm your email', null)
+
+     			}
+
+     		}
+
+     	}) 		
+
+  	}
 
 }
