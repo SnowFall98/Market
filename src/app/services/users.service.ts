@@ -132,14 +132,14 @@ export class UsersService {
 						
 						}else{
 
-							localStorage.removeItem('idToken');
+						  localStorage.removeItem('idToken');
 						  localStorage.removeItem('expiresIn');
 							resolve(false)
 						}
 
 					}else{
 
-						localStorage.removeItem('idToken');
+					  localStorage.removeItem('idToken');
 					  localStorage.removeItem('expiresIn');
 						resolve(false)
 					

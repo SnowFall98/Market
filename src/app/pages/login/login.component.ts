@@ -27,6 +27,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     /*=============================================
+		Validar acción de recordar credencial de correo
+		=============================================*/
+
+		if(localStorage.getItem("rememberMe") && localStorage.getItem("rememberMe") == "yes"){
+
+			this.user.email = localStorage.getItem("email");
+			this.rememberMe = true;
+
+		}
+
+    /*=============================================
     Validar formulario de Bootstrap 4
     =============================================*/
 
@@ -188,6 +199,19 @@ export class LoginComponent implements OnInit {
                   today.setSeconds(resp2["expiresIn"]);
 
                   localStorage.setItem("expiresIn", today.getTime().toString());
+
+                  /*=============================================
+                  Almacenamos recordar email en el localStorage
+                  =============================================*/
+
+                  if(this.rememberMe){
+
+                    localStorage.setItem("rememberMe", "yes");
+                  
+                  }else{
+
+                    localStorage.setItem("rememberMe", "no");
+                  }
 
                   /*=============================================
                   Redireccionar al usuario a la página de su cuenta
