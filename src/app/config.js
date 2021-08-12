@@ -63,3 +63,42 @@ export let GetUserData = {
 	url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 
 }
+
+/*=============================================
+Exportamos el endPoint para Resetear la contraseña
+=============================================*/
+
+export let SendPasswordResetEmail = {
+
+	url: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+   
+}
+
+/*=============================================
+Exportamos el endPoint para confirmar el cambio de la contraseña
+=============================================*/
+
+export let VerifyPasswordResetCode = {
+
+	url: 'https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+
+}
+
+/*=============================================
+Exportamos el endPoint para enviar la contraseña
+=============================================*/
+
+export let ConfirmPasswordReset = {
+
+	url:'https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+
+}
+
+/*=============================================
+Exportamos el endPoint para cambiar la contraseña
+=============================================*/
+
+export let ChangePassword = {
+
+	url:'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+}

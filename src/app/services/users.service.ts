@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Api, Register, Login, SendEmailVerification, ConfirmEmailVerification, GetUserData } from '../config';
+import {Api, Register, Login, SendEmailVerification, 
+		ConfirmEmailVerification, GetUserData, SendPasswordResetEmail, 
+		VerifyPasswordResetCode, ConfirmPasswordReset, ChangePassword } from '../config';
 
 import { UsersModel } from '../models/users.model';
 
@@ -15,6 +17,10 @@ export class UsersService {
 	private sendEmailVerification:string = SendEmailVerification.url;
 	private confirmEmailVerification:string = ConfirmEmailVerification.url;
 	private getUserData:string = GetUserData.url;
+	private sendPasswordResetEmail:string = SendPasswordResetEmail.url;
+	private verifyPasswordResetCode:string = VerifyPasswordResetCode.url;
+	private confirmPasswordReset:string = ConfirmPasswordReset.url;
+	private changePassword:string = ChangePassword.url;
 
   constructor(private http:HttpClient) { }
 
@@ -164,6 +170,47 @@ export class UsersService {
 	  })	
 
 	}
+
+	/*=============================================
+	Resetear la contraseña
+	=============================================*/
+
+	sendPasswordResetEmailFnc(body:object){
+
+		return this.http.post(`${this.sendPasswordResetEmail}`, body)
+
+	}
+
+	/*=============================================
+	Confirmar el cambio de la contraseña
+	=============================================*/
+
+	verifyPasswordResetCodeFnc(body:object){
+
+		return this.http.post(`${this.verifyPasswordResetCode}`, body)
+
+	}
+
+	/*=============================================
+	Enviar la contraseña
+	=============================================*/
+
+	confirmPasswordResetFnc(body:object){
+
+		return this.http.post(`${this.confirmPasswordReset}`, body)
+
+	}
+
+	/*=============================================
+	Cambiar la contraseña
+	=============================================*/
+
+	changePasswordFnc(body:object){
+
+		return this.http.post(`${this.changePassword}`, body)
+
+	}
+
 
 
 
