@@ -43,3 +43,13 @@ export let SendEmailVerification = {
 	url: 'https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 
 }
+
+/*=============================================
+Exportamos el endPoint para confirmar email de verificación
+=============================================*/
+
+export let ConfirmEmailVerification = {
+
+	url: 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+
+}

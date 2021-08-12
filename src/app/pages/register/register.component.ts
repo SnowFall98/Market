@@ -127,59 +127,90 @@ export class RegisterComponent implements OnInit {
     Sweetalert.fnc("loading", "Loading...", null)
     
     /*=============================================
-  	Registro en Firebase Authentication
-  	=============================================*/
-		
-		this.user.returnSecureToken = true;
+    Validar que el correo esté verificado
+    =============================================*/
 
-		this.usersService.registerAuth(this.user)
-		.subscribe(resp=>{
+    this.usersService.getFilterData("email", this.user.email) 
+    .subscribe( resp1 =>{
 
-      if(resp["email"] == this.user.email){
+      for(const i in resp1){
 
-        /*=============================================
-        Enviar correo de verificación
-        =============================================*/
+        if(resp1[i].needConfirm){
 
-        let body = {
-
-          requestType: "VERIFY_EMAIL",
-          idToken: resp["idToken"]
-        
-        }
-
-        this.usersService.sendEmailVerificationFnc(body)
-        .subscribe(resp=>{
+          /*=============================================
+          Login en Firebase Authentication
+          =============================================*/
           
-          if(resp["email"] == this.user.email){
+          this.user.returnSecureToken = true;
 
-            /*=============================================
-            Registro en Firebase Database
-            =============================================*/
+          this.usersService.loginAuth(this.user)
+          .subscribe( resp2 => {
 
-            this.user.displayName = `${this.user.first_name } ${this.user.last_name}`;
-            this.user.method = "direct";
-            this.user.needConfirm = false;
-            this.user.username = this.user.username.toLowerCase();
-     
-            this.usersService.registerDatabase(this.user)
-            .subscribe(resp=>{
-              
-              Sweetalert.fnc("success", "Confirme su cuenta en su correo electrónico (verifique el correo no deseado)", "login")
+          /*=============================================
+          Almacenar id Token en Firebase Database
+          =============================================*/
+
+          let id = Object.keys(resp1).toString();
+
+            let value = {
+
+              idToken: resp2["idToken"]
+            }
+
+            this.usersService.patchData(id, value)
+            .subscribe(resp3=>{
+
+              if(resp3["idToken"] != ""){
+
+                Sweetalert.fnc("close", null, null)
+          
+                /*=============================================
+                Almacenamos el Token de seguridad en el localstorage
+                =============================================*/
+
+                localStorage.setItem("idToken", resp3["idToken"]);
+
+                /*=============================================
+                Almacenamos el email en el localstorage
+                =============================================*/
+
+                localStorage.setItem("email", resp2["email"]);
+
+                /*=============================================
+                Almacenamos la fecha de expiración localstorage
+                =============================================*/
+
+                let today = new Date();
+
+                today.setSeconds(resp2["expiresIn"]);
+
+                localStorage.setItem("expiresIn", today.getTime().toString());
+
+                /*=============================================
+                Redireccionar al usuario a la página de su cuenta
+                =============================================*/
+
+                window.open("account", "_top");
+
+              }
 
             })
 
-          }
+          }, err =>{
 
-        })	
+              Sweetalert.fnc("error", err.error.error.message, null)
+
+          })
+
+        }else{
+
+          Sweetalert.fnc("error", 'Need Confirm your email', null)
+
+        }
 
       }
 
-		}, err =>{
-
-      Sweetalert.fnc("error", err.error.error.message, null)
-
-    })
+    }) 
 
   }
 

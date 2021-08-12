@@ -48,6 +48,67 @@ export class LoginComponent implements OnInit {
         });
       }, false);
     })();
+
+    /*=============================================
+		Verificar cuenta de correo electrónico
+		=============================================*/
+
+		if(this.activatedRoute.snapshot.queryParams["oobCode"] != undefined &&
+    this.activatedRoute.snapshot.queryParams["mode"] == "verifyEmail"){
+
+      let body = {
+
+        oobCode: this.activatedRoute.snapshot.queryParams["oobCode"]
+      }
+
+      this.usersService.confirmEmailVerificationFnc(body)
+      .subscribe(resp=>{
+
+        if(resp["emailVerified"]){
+
+          /*=============================================
+          Actualizar Confirmación de correo en Database
+          =============================================*/ 
+
+          this.usersService.getFilterData("email", resp["email"])
+          .subscribe(resp=>{
+
+            for(const i in resp){
+
+              let id = Object.keys(resp).toString();
+
+              let value = {
+
+                needConfirm: true
+              }
+
+              this.usersService.patchData(id, value)
+              .subscribe(resp=>{
+
+                if(resp["needConfirm"]){
+
+                  Sweetalert.fnc("success", "¡Correo Confirmado, puedes ingresar ahora!", "login")
+                }
+
+              })
+
+            }
+
+          })
+
+        }
+
+      }, err =>{
+
+        if(err.error.error.message == "INVALID_OOB_CODE"){
+
+          Sweetalert.fnc("error", "El correo ya fue confirmado", "login")	
+
+        }
+      })
+    }  
+
+
   }
 
   /*=============================================
