@@ -280,7 +280,7 @@ export class LoginComponent implements OnInit {
 
         }else{
 
-          Sweetalert.fnc("error", 'Need Confirm your email', null)
+          Sweetalert.fnc("error", 'Necesita confirmar su correo', null)
 
         }
 
@@ -350,11 +350,11 @@ export class LoginComponent implements OnInit {
   }
 
   /*=============================================
-  	Login con Facebook
-  	=============================================*/
+  Login con Facebook
+  =============================================*/
 
-  	facebookLogin(){
-
+  facebookLogin(){
+    
     /*=============================================
 		Documentacion para entender el SDK de Facebook/Firebase 
 		//https://firebase.google.com/docs/auth/web/facebook-login
@@ -374,17 +374,25 @@ export class LoginComponent implements OnInit {
       measurementId: "G-0VJ1CKBX6M"
 		}
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
-    /*=============================================
-		Crea una instancia del objeto proveedor de Facebook
-		=============================================*/
+  //https://firebase.google.com/docs/auth/web/facebook-login
 
-		var provider = new firebase.auth.FacebookAuthProvider();
+  /*=============================================
+  Crea una instancia del objeto proveedor de Facebook
+  =============================================*/
 
+  var provider = new firebase.auth.FacebookAuthProvider();
 
-    firebase.auth().signInWithPopup(provider).then((result) => {
+  /*=============================================
+  acceder con una ventana emergente y con certificado SSL (https)
+  =============================================*/
+  //ng serve --ssl true --ssl-cert "/path/to/file.crt" --ssl-key "/path/to/file.key"
+
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+
+    loginFirebaseDatabase(result, localUser, localUsersService)
 
   }).catch(function(error) {
 
@@ -394,22 +402,100 @@ export class LoginComponent implements OnInit {
 
   });
 
+  /*=============================================
+  Registramos al usuario en Firebase Database
+  =============================================*/
+
+  function loginFirebaseDatabase(result, localUser, localUsersService){
+
+    var user = result.user; 
+
+    if(user.P){
+
+      localUsersService.getFilterData("email", user.email)
+      .subscribe(resp=>{
+
+        if(Object.keys(resp).length > 0){
+
+          if(resp[Object.keys(resp)[0]].method == "facebook"){
+
+            /*=============================================
+            Actualizamos el idToken en Firebase
+            =============================================*/
+
+            let id = Object.keys(resp).toString();
+
+            let body = {	
+
+              idToken: user.b.b.g
+            }
+
+            localUsersService.patchData(id, body)
+            .subscribe(resp=>{
+
+              /*=============================================
+              Almacenamos el Token de seguridad en el localstorage
+              =============================================*/
+
+              localStorage.setItem("idToken", user.b.b.g);
+
+              /*=============================================
+              Almacenamos el email en el localstorage
+              =============================================*/
+
+              localStorage.setItem("email", user.email);
+
+              /*=============================================
+              Almacenamos la fecha de expiración localstorage
+              =============================================*/
+
+              let today = new Date();
+
+              today.setSeconds(3600);
+
+              localStorage.setItem("expiresIn", today.getTime().toString());
+
+              /*=============================================
+              Redireccionar al usuario a la página de su cuenta
+              =============================================*/
+
+              window.open("account", "_top");
 
 
-	}
+            })
+
+          }else{
+
+            Sweetalert.fnc("error", `You're already signed in, please login with ${resp[Object.keys(resp)[0]].method} method`, "login")
+          }
+
+        }else{
+
+          Sweetalert.fnc("error", "This account is not registered", "register")
+
+        }
+
+
+      })
+      
+
+    }
+  }
+
+}
 
 	/*=============================================
-  	Login con Google
-  	=============================================*/
+  Login con Google
+  =============================================*/
 
-  	googleLogin(){
+  googleLogin(){
 
     let localUsersService = this.usersService;
     let localUser = this.user;
 
     /*=============================================
 		Documentacion para entender el SDK de Google/Firebase 
-    https://firebase.google.com/docs/web/setup
+    https://firebase.google.com/docs/auth/web/google-signin
 		=============================================*/
 
 		// Orden de realizacion del SDK Firebase
@@ -417,10 +503,6 @@ export class LoginComponent implements OnInit {
 		// npm install --save firebase
 		// import firebase from "firebase/app"; -- Revisar documentacion ya que cambia la forma de importacion
 		// import "firebase/auth"; -- Revisar documentacion ya que cambia la forma de importacion
-
-		/*=============================================
-		Inicializa Firebase en tu proyecto web
-		=============================================*/
 
 		const firebaseConfig = {
 			apiKey: "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw",
@@ -434,8 +516,6 @@ export class LoginComponent implements OnInit {
 		}
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-
 
 		/*=============================================
 		Crea una instancia del objeto proveedor de Google
@@ -518,23 +598,21 @@ export class LoginComponent implements OnInit {
 
 								window.open("account", "_top");
 
-
 							})
 
 						}else{
 
-							Sweetalert.fnc("error", `You're already signed in, please login with ${resp[Object.keys(resp)[0]].method} method`, "login")
+							Sweetalert.fnc("error", `Ya ha iniciado sesión, inicie sesión con ${resp[Object.keys(resp)[0]].method} método`, "login")
 						}
 
 					}else{
 
-						Sweetalert.fnc("error", "This account is not registered", "register")
+						Sweetalert.fnc("error", "Esta cuenta no esta registrada", "register")
 
 					}
 				})
 			}
 		}
-
 	}
 
   /*=============================================

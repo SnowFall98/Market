@@ -5,6 +5,10 @@ export let Path = {
 
 	url: 'http://localhost:4200/assets/'
 
+	/*Cuando necestiemos trabajar con certificado SSL (registro o ingreso con facebook)
+	comentamos la linea 6 y quitamos el comentario de la linea 10. Revisar el README.md para más información*/
+	//url: 'https://localhost:4200/assets/'
+
 }
 
 /*=============================================
