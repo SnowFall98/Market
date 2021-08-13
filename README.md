@@ -27,9 +27,23 @@ Con esto ya no debería presentar fallas y la ejecución del proyecto debería f
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
 
-## Development server
+# Levantar el servidor
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para levantar el servidor con certificado `SSL (https)` se debe realizar lo siguiente:
+
+1. Ir a el archivo `config.js` 
+2. Comentar la linea 6 y dejar sin comentario la linea 10
+3. Ejecuta el siguiente comando para USAR CERTIFICADO SSL (https)
+4. `ng serve --ssl true --ssl-cert "/path/to/file.crt" --ssl-key "/path/to/file.key"`
+5. En caso de que no funcione utilizar este: `ng serve --ssl`
+6. Navegar a `https://localhost:4200/`
+
+Si se desea ejecutar de forma normal el servidor local (http): 
+1. Ir a el archivo `config.js`
+2. Comentar la linea 10 y dejar sin comentario la linea 6
+3. Ejecutar `ng serve --o`
+4. Navegar a `http://localhost:4200/`
+
 
 ## Code scaffolding
 
