@@ -109,9 +109,7 @@
                                 {{ lastIndex ? callback() : "" }}
                                     
                                 </li>
-                                }
-                                }
-                              
+                               
                             </ul>
 
                         </div>
@@ -151,8 +149,8 @@
 						Wishlist
 						======================================-->
 
-                    	<a class="header__extra" href="#">
-                    		<i class="icon-heart"></i><span><i>0</i></span>
+                    	<a class="header__extra" routerLink="account">
+                    		<i class="icon-heart"></i>
                     	</a>
 
                     	<!--=====================================
@@ -227,7 +225,9 @@
 						Login and Register
 						======================================-->
 
-                        <div class="ps-block--user-header">
+                        <div 
+                        *ngIf="!authValidate"
+                        class="ps-block--user-header">
                             <div class="ps-block__left">
                             	<i class="icon-user"></i>
                             </div>
@@ -236,7 +236,7 @@
                             	<a routerLink="register">Register</a>
                             </div>
                         </div>
-                        
+
                         <!--=====================================
                         Go to Account
                         ======================================-->

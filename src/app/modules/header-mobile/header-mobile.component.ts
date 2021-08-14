@@ -3,6 +3,7 @@ import { Path } from '../../config';
 import { Search } from '../../functions';
 import { CategoriesService } from '../../services/categories.service';
 import { SubCategoriesService } from '../../services/sub-categories.service';
+import { UsersService } from '../../services/users.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -19,10 +20,51 @@ export class HeaderMobileComponent implements OnInit {
 	categories:object = null;
 	render:boolean = true;
 	categoriesList:any[] = [];
+	authValidate:boolean = false;
+	picture:string;
 
-	constructor(private categoriesService: CategoriesService, private subCategoriesService: SubCategoriesService) { }
+	constructor(private categoriesService: CategoriesService, 
+		private subCategoriesService: SubCategoriesService,
+		private usersService: UsersService) { }
 
 	ngOnInit(): void {
+
+		/*=============================================
+		Validar si existe usuario autenticado
+		=============================================*/
+		this.usersService.authActivate().then(resp =>{
+
+			if(resp){
+
+				this.authValidate = true;
+
+				this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
+				.subscribe(resp=>{
+
+					for(const i in resp){
+
+						if(resp[i].picture != undefined){
+
+							if(resp[i].method != "direct"){
+
+								this.picture = `<img src="${resp[i].picture}" class="img-fluid rounded-circle ml-auto">`;
+							
+							}else{
+
+								this.picture = `<img src="assets/img/users/${resp[i].username.toLowerCase()}/${resp[i].picture}" class="img-fluid rounded-circle ml-auto">`;
+							}
+
+						}else{
+
+							this.picture = `<i class="icon-user"></i>`;
+						}
+
+					}
+
+				})
+			}
+
+		})
 
 		/*=============================================
 		Tomamos la data de las categorías
@@ -139,14 +181,9 @@ export class HeaderMobileComponent implements OnInit {
 
 		                    )
 
-
 						}
 
-
 					}
-
-
-											
 
 				})
 
