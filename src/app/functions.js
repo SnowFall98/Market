@@ -740,3 +740,16 @@ export let Sweetalert = {
     }
 
 }
+
+/*=============================================
+Tooltip
+=============================================*/
+
+export let Tooltip = {
+
+    fnc: function(){
+
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+
+}

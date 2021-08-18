@@ -44,6 +44,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/account-breadcrumb.component';
+import { AccountProfileComponent } from './pages/account/account-profile/account-profile.component';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/a
     LoginComponent,
     RegisterComponent,
     AccountComponent,
-    AccountBreadcrumbComponent
+    AccountBreadcrumbComponent,
+    AccountProfileComponent
   ],
   imports: [
     BrowserModule,
