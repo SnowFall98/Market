@@ -427,7 +427,7 @@ export class LoginComponent implements OnInit {
 
             let body = {	
 
-              idToken: user.b.b.g
+              idToken: user.h.b.h
             }
 
             localUsersService.patchData(id, body)
@@ -437,7 +437,7 @@ export class LoginComponent implements OnInit {
               Almacenamos el Token de seguridad en el localstorage
               =============================================*/
 
-              localStorage.setItem("idToken", user.b.b.g);
+              localStorage.setItem("idToken", user.h.b.h);
 
               /*=============================================
               Almacenamos el email en el localstorage
@@ -564,7 +564,7 @@ export class LoginComponent implements OnInit {
 
 							let body = {	
 
-								idToken: user.b.b.g
+								idToken: user.h.b.h
 							}
 
 							localUsersService.patchData(id, body)
@@ -574,7 +574,7 @@ export class LoginComponent implements OnInit {
 								Almacenamos el Token de seguridad en el localstorage
 								=============================================*/
 
-								localStorage.setItem("idToken", user.b.b.g);
+								localStorage.setItem("idToken", user.h.b.h);
 
 								/*=============================================
 								Almacenamos el email en el localstorage
