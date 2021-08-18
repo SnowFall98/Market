@@ -43,6 +43,7 @@ import { RelatedProductComponent } from './pages/product/related-product/related
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
+import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/account-breadcrumb.component';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { AccountComponent } from './pages/account/account.component';
     RelatedProductComponent,
     LoginComponent,
     RegisterComponent,
-    AccountComponent
+    AccountComponent,
+    AccountBreadcrumbComponent
   ],
   imports: [
     BrowserModule,
