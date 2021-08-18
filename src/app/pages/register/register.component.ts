@@ -246,7 +246,7 @@ export class RegisterComponent implements OnInit {
      
         localUser.displayName = user.displayName;
         localUser.email = user.email;
-        localUser.idToken = user.b.b.g;
+        localUser.idToken = user.h.b.h;
         localUser.method = "facebook";
         localUser.username = user.email.split('@')[0];
         localUser.picture = user.photoURL;
@@ -347,7 +347,7 @@ export class RegisterComponent implements OnInit {
      
         localUser.displayName = user.displayName;
         localUser.email = user.email;
-        localUser.idToken = user.b.b.g;
+        localUser.idToken = user.h.b.h;
         localUser.method = "google";
         localUser.username = user.email.split('@')[0];
         localUser.picture = user.photoURL;
