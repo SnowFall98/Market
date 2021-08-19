@@ -4,6 +4,7 @@ import { DinamicPrice, Sweetalert } from '../../../../functions';
 import { UsersService } from '../../../../services/users.service';
 import { ProductsService } from '../../../../services/products.service';
 import { Subject } from 'rxjs';
+import notie from 'notie';
 
 declare var jQuery:any;
 declare var $:any;
@@ -22,9 +23,13 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 	wishlist:any[] = [];
   	products:any[] = [];
 	price:any[] = [];
+	render:boolean = true;
 
 	dtOptions: DataTables.Settings = {};
 	dtTrigger: Subject<any> = new Subject();
+
+	
+	popoverMessage:string = '¿Estás seguro de eliminarlo?';
 
   constructor(private usersService: UsersService, private productsService: ProductsService) { }
 
@@ -115,11 +120,128 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 
   }
 
-    /*=============================================
-	Destruímos el trigger de angular
-	=============================================*/
+  /*=============================================
+  Removemos el producto de la lista de deseos
+  =============================================*/
 
-	ngOnDestroy():void{
+  removeProduct(product){
+
+    /*=============================================
+    Buscamos coincidencia para remover el producto
+    =============================================*/
+
+    this.wishlist.forEach((list, index)=>{
+      
+      if(list == product){
+
+        this.wishlist.splice(index, 1);
+
+      }
+
+    })
+
+    /*=============================================
+    Actualizamos en Firebase la lista de deseos
+    =============================================*/
+
+    let body ={
+
+      wishlist: JSON.stringify(this.wishlist)
+    
+    }
+
+    this.usersService.patchData(this.childItem, body)
+    .subscribe(resp=>{
+
+        if(resp["wishlist"] != ""){
+
+          Sweetalert.fnc("success", "Producto eliminado", "account")
+
+        }
+
+    })
+
+  }
+
+  /*=============================================
+  Callback
+  =============================================*/
+  callback(){
+
+    if(this.render){
+
+      this.render = false;
+
+      if(window.matchMedia("(max-width:991px)").matches){   
+
+        let localWishlist = this.wishlist;
+        let localUsersService = this.usersService;
+        let localChildItem = this.childItem;
+
+        $(document).on("click", ".removeProduct", function(){
+
+          let product = $(this).attr("remove");
+
+          notie.confirm({
+
+            text: "¿Estás seguro de eliminarlo?",
+            cancelCallback: function(){
+              return;
+            },
+            submitCallback: function(){
+
+              /*=============================================
+              Buscamos coincidencia para remover el producto
+              =============================================*/
+
+              localWishlist.forEach((list, index)=>{
+                
+                if(list == product){
+
+                  localWishlist.splice(index, 1);
+
+                }
+
+              })
+
+              /*=============================================
+              Actualizamos en Firebase la lista de deseos
+              =============================================*/
+
+              let body ={
+
+                wishlist: JSON.stringify(localWishlist)
+              
+              }
+
+              localUsersService.patchData(localChildItem, body)
+              .subscribe(resp=>{
+
+                  if(resp["wishlist"] != ""){
+
+                    Sweetalert.fnc("success", "Producto eliminado", "account")
+
+                  }
+
+              })
+
+            }
+
+          })      
+
+        })
+
+      }
+    
+    }
+
+  }
+
+  /*=============================================
+  Destruímos el trigger de angular
+  =============================================*/
+
+  	ngOnDestroy():void{
 
 		this.dtTrigger.unsubscribe();
 

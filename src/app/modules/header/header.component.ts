@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
 	render:boolean = true;
 	authValidate:boolean = false;
 	picture:string;
+	wishlist:number = 0;
 
 	constructor(private categoriesService: CategoriesService, 
 		private subCategoriesService: SubCategoriesService, 
@@ -41,6 +42,16 @@ export class HeaderComponent implements OnInit {
 				.subscribe(resp=>{
 
 					for(const i in resp){
+
+						/*=============================================
+						Mostramos cantidad de productos en su lista de deseos
+						=============================================*/
+
+						if(resp[i].wishlist != undefined){
+
+							this.wishlist = Number(JSON.parse(resp[i].wishlist).length)
+
+						}
 						
 						/*=============================================
 						Mostramos foto del usuario
