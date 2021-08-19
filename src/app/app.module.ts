@@ -45,6 +45,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AccountBreadcrumbComponent } from './pages/account/account-breadcrumb/account-breadcrumb.component';
 import { AccountProfileComponent } from './pages/account/account-profile/account-profile.component';
+import { AccountWishlistComponent } from './pages/account/account-profile/account-wishlist/account-wishlist.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { AccountProfileComponent } from './pages/account/account-profile/account
     RegisterComponent,
     AccountComponent,
     AccountBreadcrumbComponent,
-    AccountProfileComponent
+    AccountProfileComponent,
+    AccountWishlistComponent
   ],
   imports: [
     BrowserModule,
