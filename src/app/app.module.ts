@@ -7,6 +7,8 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 
+import { DataTablesModule } from 'angular-datatables';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { HeaderPromotionComponent } from './modules/header-promotion/header-promotion.component';
@@ -94,7 +96,8 @@ import { AccountWishlistComponent } from './pages/account/account-profile/accoun
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
