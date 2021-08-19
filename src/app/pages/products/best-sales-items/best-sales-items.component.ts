@@ -3,6 +3,7 @@ import { Path } from '../../../config';
 import { OwlCarouselConfig, CarouselNavigation, Rating, DinamicRating, DinamicReviews, DinamicPrice } from '../../../functions';
 import { ProductsService } from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -23,7 +24,7 @@ export class BestSalesItemsComponent implements OnInit {
 	price:any[] = [];
 	cargando:boolean = false;
 
-  constructor(private productsService: ProductsService,private activateRoute: ActivatedRoute) { }
+  constructor(private productsService: ProductsService,private activateRoute: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
 
@@ -134,5 +135,14 @@ export class BestSalesItemsComponent implements OnInit {
     }
 
   }
+
+  /*=============================================
+	Función para agregar productos a la lista de deseos
+	=============================================*/
+
+	addWishlist(product){
+
+		this.usersService.addWishlist(product);
+	}
 
 }

@@ -3,6 +3,7 @@ import { Path } from '../../../config';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice, Pagination, Select2Cofig, Tabs } from '../../../functions';
 import { ProductsService} from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -32,8 +33,7 @@ export class SearchShowcaseComponent implements OnInit {
   properties:any[] = ["category","name","store","sub_category","tags","title_list","url"];
   listProducts:any[] = [];
 
-   constructor(private productsService: ProductsService,
-             private activateRoute: ActivatedRoute) { }
+   constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
 
@@ -334,9 +334,9 @@ export class SearchShowcaseComponent implements OnInit {
 
    }
 
-   /*=============================================
- Función que nos avisa cuando finaliza el renderizado de Angular
- =============================================*/
+    /*=============================================
+    Función que nos avisa cuando finaliza el renderizado de Angular
+    =============================================*/
 
    callback(params){
 
@@ -360,5 +360,15 @@ export class SearchShowcaseComponent implements OnInit {
       })
      }
    }
+
+  /*=============================================
+	Función para agregar productos a la lista de deseos	
+	=============================================*/
+
+	addWishlist(product){
+
+		this.usersService.addWishlist(product);
+		
+	}
 
 }

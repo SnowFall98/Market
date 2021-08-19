@@ -3,6 +3,7 @@ import { Path } from '../../../config';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity } from '../../../functions';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-product-left',
@@ -25,7 +26,7 @@ export class ProductLeftComponent implements OnInit {
     tags:string = null;
     totalReviews:string;
     
-  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -160,5 +161,15 @@ export class ProductLeftComponent implements OnInit {
     }
 
   }
+
+  /*=============================================
+	Función para agregar productos a la lista de deseos	
+	=============================================*/
+
+	addWishlist(product){
+
+		this.usersService.addWishlist(product);
+		
+	}
 
 }

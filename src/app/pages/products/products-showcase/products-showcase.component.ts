@@ -3,6 +3,7 @@ import { Path } from '../../../config';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice, Pagination, Select2Cofig, Tabs } from '../../../functions';
 import { ProductsService} from '../../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
+import { UsersService } from '../../../services/users.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -30,7 +31,7 @@ export class ProductsShowcaseComponent implements OnInit {
 	sortItems:any[] = [];
 	sortValues:any[] = [];
 
-  constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute) { }
+  constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
     
@@ -341,6 +342,16 @@ export class ProductsShowcaseComponent implements OnInit {
 
 		  })
 		}
+	}
+
+	/*=============================================
+	Función para agregar productos a la lista de deseos	
+	=============================================*/
+
+	addWishlist(product){
+
+		this.usersService.addWishlist(product);
+		
 	}
 
 }

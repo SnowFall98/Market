@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice} from '../../../functions';
+import { UsersService } from '../../../services/users.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
@@ -20,7 +21,7 @@ export class ProductRightComponent implements OnInit {
   render:boolean = true;
   cargando:boolean = false;
 
-  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
 
@@ -113,5 +114,15 @@ export class ProductRightComponent implements OnInit {
 
     }
   }
+
+  /*=============================================
+	Función para agregar productos a la lista de deseos	
+	=============================================*/
+
+	addWishlist(product){
+
+		this.usersService.addWishlist(product);
+		
+	}
 
 }
