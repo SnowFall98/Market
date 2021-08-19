@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 
 import { DataTablesModule } from 'angular-datatables';
 
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { HeaderPromotionComponent } from './modules/header-promotion/header-promotion.component';
@@ -97,7 +99,10 @@ import { AccountWishlistComponent } from './pages/account/account-profile/accoun
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    DataTablesModule
+    DataTablesModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType:'danger'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
