@@ -111,6 +111,16 @@ class="d-flex justify-content-center">
 </div>
 
 <!--=====================================
+Wishlist
+======================================-->
+
+<app-account-wishlist
+*ngIf="!preload"
+[childItem]="id"
+></app-account-wishlist>
+
+
+<!--=====================================
 Ventana modal para escribir nueva contraseña
 ======================================-->
 

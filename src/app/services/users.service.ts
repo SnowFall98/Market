@@ -211,6 +211,15 @@ export class UsersService {
 
 	}
 
+	/*=============================================
+	Tomar información de un solo usuario
+	=============================================*/
+
+	getUniqueData(value:string){
+
+		return this.http.get(`${this.api}users/${value}.json`);
+	}
+
 
 
 

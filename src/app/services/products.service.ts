@@ -47,4 +47,10 @@ export class ProductsService {
 		return this.http.patch(`${this.api}products/${id}.json`,value);
 
 	}
+
+	getUniqueData(value: string){
+
+		return this.http.get(`${this.api}products/${value}.json`);
+		
+	}
 }
