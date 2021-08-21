@@ -1,4 +1,6 @@
-<div class="ps-section--default ps-customer-bought">
+<div 
+*ngIf = "!preload"
+class="ps-section--default ps-customer-bought">
 
     <div class="ps-section__header">
 
@@ -96,3 +98,15 @@
     </div>
 
 </div><!--  End Customers who bought -->
+
+<!--=============================
+Preload
+===============================-->
+
+<div
+*ngIf ="preload"
+class="d-flex justify-content-center">
+
+    <div class="spinner-border text-muted my-5"></div>
+
+</div>

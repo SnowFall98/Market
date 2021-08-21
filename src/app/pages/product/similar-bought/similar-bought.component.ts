@@ -12,19 +12,19 @@ import { UsersService } from '../../../services/users.service';
 })
 export class SimilarBoughtComponent implements OnInit {
 
-  path:string = Path.url;	
+  	path:string = Path.url;	
   	products:any[] = [];
   	rating:any[] = [];
   	reviews:any[] = [];
   	price:any[] = [];
   	render:boolean = true;
-  	cargando:boolean = false;
+  	preload:boolean = false;
 
   	constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   	ngOnInit(): void {
 
-  		this.cargando = true;
+  		this.preload = true;
 
   		this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"]) 
   		.subscribe( resp => { 
@@ -96,7 +96,7 @@ export class SimilarBoughtComponent implements OnInit {
 
 	        	this.price.push(DinamicPrice.fnc(this.products[index]));
 				
-				this.cargando = false;
+				this.preload = false;
 			}
 
 

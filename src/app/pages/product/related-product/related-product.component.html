@@ -2,7 +2,9 @@
 Related products
 ======================================--> 
 
-<div class="ps-section--default">
+<div
+*ngIf = "!preload"
+class="ps-section--default">
 
     <div class="ps-section__header">
 
@@ -93,3 +95,15 @@ Related products
         </div>
     </div>
 </div> <!-- End Related products -->	
+
+<!--=============================
+Preload
+===============================-->
+
+<div
+*ngIf ="preload"
+class="d-flex justify-content-center">
+
+    <div class="spinner-border text-muted my-5"></div>
+
+</div>
