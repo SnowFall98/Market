@@ -1,6 +1,6 @@
-
-
-<div class="ps-product--detail ps-product--fullwidth">
+<div
+*ngIf = "!preload"
+class="ps-product--detail ps-product--fullwidth">
 
 	<!--=====================================
 	Product Header
@@ -118,12 +118,9 @@
                
             </div>
 
-            <!--=====================================
-            Solucion para el error de ofertas, borrar el TODO EL COMPONENTE DIV de la linea 125
-            ====================================== -->
 
             <div 
-            *ngIf="p.offer != ''"
+            *ngIf="p.offer != '' && offer"
             class="ps-product__countdown">
 
                 <figure>
@@ -348,4 +345,15 @@
 
 </div>
 
+<!--=============================
+Preload
+===============================-->
+
+<div
+*ngIf ="preload"
+class="d-flex justify-content-center">
+
+    <div class="spinner-border text-muted my-5"></div>
+
+</div>
 

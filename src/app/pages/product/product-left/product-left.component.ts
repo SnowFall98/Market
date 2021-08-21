@@ -17,7 +17,7 @@ export class ProductLeftComponent implements OnInit {
     rating:any[] = [];
     reviews:any[] = [];
     price:any[] = [];
-    cargando:boolean = false;
+    preload:boolean = false;
     render:boolean = true;
     countd:any[] = [];
     gallery:any[] = [];
@@ -25,11 +25,12 @@ export class ProductLeftComponent implements OnInit {
     video:string = null;
     tags:string = null;
     totalReviews:string;
+    offer:boolean = false;
     
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.cargando = true;
+    this.preload = true;
     this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"])  
     .subscribe( resp => {
       
@@ -80,19 +81,36 @@ export class ProductLeftComponent implements OnInit {
       
       if(this.product[index].offer != ""){
 
-        const date = JSON.parse(this.product[index].offer)[2]; 
-        
-        this.countd.push(
+        let today = new Date();
 
-          new Date(
-            parseInt(date.split("-")[0]),
-            parseInt(date.split("-")[1])-1,
-            parseInt(date.split("-")[2])
+        let offerDate = new Date(
 
-          )
+          parseInt(JSON.parse(this.product[index].offer)[2].split("-")[0]),
+          parseInt(JSON.parse(this.product[index].offer)[2].split("-")[1])-1,
+          parseInt(JSON.parse(this.product[index].offer)[2].split("-")[2])
 
         )
 
+        /*=============================================
+        Funcion para las fechas de ofertas
+        =============================================*/ 
+
+        if (today < offerDate) {
+
+          this.offer = true;
+        
+          const date = JSON.parse(this.product[index].offer)[2]; 
+        
+          this.countd.push(
+  
+            new Date(
+              parseInt(date.split("-")[0]),
+              parseInt(date.split("-")[1])-1,
+              parseInt(date.split("-")[2])
+  
+            )
+          )  
+        }
       }
 
       /*=============================================
@@ -129,7 +147,7 @@ export class ProductLeftComponent implements OnInit {
         this.totalReviews = JSON.parse(this.product[index].reviews).length;
 
 
-      this.cargando = false;
+      this.preload = false;
 
     })
 
