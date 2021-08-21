@@ -19,13 +19,13 @@ export class ProductRightComponent implements OnInit {
   reviews:any[] = [];
   price:any[] = [];
   render:boolean = true;
-  cargando:boolean = false;
+  preload:boolean = false;
 
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
 
   ngOnInit(): void {
 
-    this.cargando = true;
+    this.preload = true;
 
     this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"]) 
     .subscribe( resp => { 
@@ -97,7 +97,7 @@ export class ProductRightComponent implements OnInit {
 
             this.price.push(DinamicPrice.fnc(this.products[index]));
         
-        this.cargando = false;
+        this.preload = false;
       }
 
     })

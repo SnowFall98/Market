@@ -16,7 +16,9 @@
 
 </aside>
 
-<aside class="widget widget_same-brand">
+<aside
+*ngIf = "!preload"
+class="widget widget_same-brand">
 
     <h3>Same Store</h3>
 
@@ -102,4 +104,18 @@
     </div>
 
 </aside>
+
+<!--=============================
+Preload
+===============================-->
+
+<div
+*ngIf ="preload"
+class="d-flex justify-content-center">
+
+    <div class="spinner-border text-muted my-5"></div>
+
+</div>
+
+
 
