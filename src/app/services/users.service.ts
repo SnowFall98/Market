@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import {Api, Register, Login, SendEmailVerification, 
 		ConfirmEmailVerification, GetUserData, SendPasswordResetEmail, 
 		VerifyPasswordResetCode, ConfirmPasswordReset, ChangePassword } from '../config';
-
 import { UsersModel } from '../models/users.model';
 import { Sweetalert } from '../functions';
+import { ProductsService } from './products.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -26,7 +26,7 @@ export class UsersService {
 	private confirmPasswordReset:string = ConfirmPasswordReset.url;
 	private changePassword:string = ChangePassword.url;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private productsService: ProductsService) { }
 
    	/*=============================================
 	Registro en Firebase Authentication
@@ -383,6 +383,16 @@ export class UsersService {
 		})
 
 	}
+
+	/*=============================================
+    Función para agregar productos al carrito de compras
+    =============================================*/
+
+    addSoppingCart(item:object){
+
+        
+    
+    }
 
 
 
