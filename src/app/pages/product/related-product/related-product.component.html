@@ -31,7 +31,8 @@ class="ps-section--default">
 	                <ul class="ps-product__actions">
 
 	                    <li>
-	                    	<a href="#" data-toggle="tooltip" data-placement="top" title="Read More">
+	                    	<a style="cursor:pointer" (click)="addShoppingCart(product.url, 1, [])" 
+							data-toggle="tooltip" data-placement="top" title="Add to car">
 	                        	<i class="icon-bag2"></i>
 	                        </a>
 	                    </li>

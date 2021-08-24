@@ -3,7 +3,7 @@ import { Path } from '../../../config';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice} from '../../../functions';
 import { UsersService } from '../../../services/users.service';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 
 @Component({
@@ -21,7 +21,10 @@ export class ProductRightComponent implements OnInit {
   render:boolean = true;
   preload:boolean = false;
 
-  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
+  constructor(private activateRoute: ActivatedRoute,
+    private productsService: ProductsService,
+    private usersService: UsersService,
+    private router:Router) { }
 
   ngOnInit(): void {
 
@@ -123,6 +126,26 @@ export class ProductRightComponent implements OnInit {
 
 		this.usersService.addWishlist(product);
 		
+	}
+
+  /*=============================================
+	Función para agregar productos al carrito de compras
+	=============================================*/
+
+	addShoppingCart(product, unit, details){
+
+		let url = this.router.url;
+
+		let item = {
+		
+			product: product,
+			unit: unit,
+			details: details,
+			url:url
+		}
+
+		this.usersService.addShoppingCart(item);
+
 	}
 
 }

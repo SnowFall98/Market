@@ -5,7 +5,7 @@ import { OwlCarouselConfig, CarouselNavigation, Rating, DinamicRating, DinamicRe
 import { ProductsService} from '../../../services/products.service';
 import { UsersService } from '../../../services/users.service';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-recommended',
@@ -22,7 +22,10 @@ export class ProductsRecommendedComponent implements OnInit {
 	price:any[] = [];
 	cargando:boolean = false;
 
-  	constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute, private usersService: UsersService) { }
+  	constructor(private productsService: ProductsService, 
+		private activateRoute: ActivatedRoute, 
+		private usersService: UsersService,
+		private router:Router) { }
 
   	ngOnInit(): void {
 
@@ -143,5 +146,25 @@ export class ProductsRecommendedComponent implements OnInit {
 
 		this.usersService.addWishlist(product);
 		
+	}
+
+	/*=============================================
+	Función para agregar productos al carrito de compras
+	=============================================*/
+
+	addShoppingCart(product, unit, details){
+
+		let url = this.router.url;
+
+		let item = {
+		
+			product: product,
+			unit: unit,
+			details: details,
+			url:url
+		}
+
+		this.usersService.addShoppingCart(item);
+
 	}
 }

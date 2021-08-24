@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../../config';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
 import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity } from '../../../functions';
 import { UsersService } from '../../../services/users.service';
@@ -27,7 +27,10 @@ export class ProductLeftComponent implements OnInit {
     totalReviews:string;
     offer:boolean = false;
     
-  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService) { }
+  constructor(private activateRoute: ActivatedRoute,
+    private productsService: ProductsService,
+    private usersService: UsersService,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.preload = true;
@@ -188,6 +191,26 @@ export class ProductLeftComponent implements OnInit {
 
 		this.usersService.addWishlist(product);
 		
+	}
+
+  /*=============================================
+	Función para agregar productos al carrito de compras
+	=============================================*/
+
+	addShoppingCart(product, unit, details){
+
+		let url = this.router.url;
+
+		let item = {
+		
+			product: product,
+			unit: unit,
+			details: details,
+			url:url
+		}
+
+		this.usersService.addShoppingCart(item);
+
 	}
 
 }
