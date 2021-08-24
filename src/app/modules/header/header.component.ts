@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../config';
-import { Search, DinamicPrice } from '../../functions';
+import { Search, DinamicPrice, Sweetalert } from '../../functions';
 import { CategoriesService } from '../../services/categories.service';
 import { SubCategoriesService } from '../../services/sub-categories.service';
 import { UsersService } from '../../services/users.service';
 import { ProductsService } from '../../services/products.service';
+import { Router } from '@angular/router';
 
 declare var jQuery:any;
 declare var $:any;
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit {
 	constructor(private categoriesService: CategoriesService, 
 		private subCategoriesService: SubCategoriesService, 
 		private usersService: UsersService,
-		private productsService: ProductsService,) { }
+		private productsService: ProductsService,
+		private router:Router) { }
 
 	ngOnInit(): void {
 
@@ -275,6 +277,10 @@ export class HeaderComponent implements OnInit {
 
 	}
 
+	/*=============================================
+	Función para añadir, sumar productos de la lista de carrito de compras
+	=============================================*/
+
 	callbackShopping(){
 
 		if(this.renderShopping){
@@ -312,6 +318,39 @@ export class HeaderComponent implements OnInit {
 			},totalProduct.length * 500)
 
 		}
+	}
+
+	/*=============================================
+	Función para remover productos de la lista de carrito de compras
+	=============================================*/
+
+	removeProduct(product, details){
+
+		
+		if(localStorage.getItem("list")){
+
+			let shoppingCart = JSON.parse(localStorage.getItem("list"));
+
+			shoppingCart.forEach((list, index)=>{
+
+				if(list.product == product){
+
+					shoppingCart.splice(index, 1);
+					
+				}
+
+			})
+
+			/*=============================================
+    		Actualizamos en LocalStorage la lista del carrito de compras
+    		=============================================*/
+
+    		localStorage.setItem("list", JSON.stringify(shoppingCart));
+
+    		Sweetalert.fnc("success", "Producto Eliminado", this.router.url)
+
+		}
+
 	}
 
 
