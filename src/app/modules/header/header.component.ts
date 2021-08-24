@@ -134,64 +134,20 @@ export class HeaderComponent implements OnInit {
 				this.productsService.getFilterData("url", list[i].product)
 				.subscribe(resp=>{
 					
-					
-					for(const f in resp){
-
-						let details = `<div class="list-details small text-secondary">`
-
-						if(list[i].details.length > 0){
-
-							let specification = JSON.parse(list[i].details);	
-
-							for(const i in specification){
-
-								let property = Object.keys(specification[i]);
-
-								for(const f in property){
-
-									details += `<div>${property[f]}: ${specification[i][property[f]]}</div>`
-								}
-
-							}
-
-						}else{
-
-							/*=============================================
-							Mostrar los detalles por defecto del producto 
-							=============================================*/
-
-							if(resp[f].specification != ""){
-
-								let specification = JSON.parse(resp[f].specification);
-
-								for(const i in specification){
-
-									let property = Object.keys(specification[i]).toString();
-
-									details += `<div>${property}: ${specification[i][property][0]}</div>`
-
-								}
-
-							}
-
-						}
-
-						details += `</div>`;
-
+					for (const f in resp){
+						
 						this.shoppingCart.push({
 
-							url:resp[f].url,
-							name:resp[f].name,
-							category:resp[f].category,
-							image:resp[f].image,
-							delivery_time:resp[f].delivery_time,
-							quantity:list[i].unit,
-							price: DinamicPrice.fnc(resp[f])[0],
-							shipping:Number(resp[f].shipping)*Number(list[i].unit),
-							details:details,
-							listDetails:list[i].details
+						url:resp[f].url,
+						name:resp[f].name,
+						category:resp[f].category,
+						image:resp[f].image,
+						delivery_time:resp[f].delivery_time,
+						quantity:list[i].unit,
+						price: DinamicPrice.fnc(resp[f])[0],
+						shipping:Number(resp[f].shipping)*Number(list[i].unit)
 
-						})
+					})
 
 					}
 
