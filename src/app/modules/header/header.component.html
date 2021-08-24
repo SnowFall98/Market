@@ -172,8 +172,8 @@
 
                                 <div class="ps-cart__items">
 
-                                    <div
-                                    *ngFor="let product of shoppingCart" 
+                                    <div 
+                                    *ngFor="let product of shoppingCart; let lastShopping = last"
                                     class="ps-product--cart-mobile">
 
                                         <div class="ps-product__thumbnail">
@@ -183,9 +183,11 @@
                                         </div>
 
                                         <div class="ps-product__content">
-                                        	<a class="ps-product__remove" href="#">
-                                        		<i class="icon-cross"></i>
-                                        	</a>
+
+                                            <a class="ps-product__remove" style="cursor:pointer">
+                                                <i class="icon-cross"></i>
+                                            </a>
+
                                             <a href="product/{{product.url}}">{{product.name}}</a>
 
                                             <div [innerHTML]="product.details"></div>                                        
@@ -199,16 +201,17 @@
                                                 <span class="pShoppingHeader" [innerHTML]="product.price"></span>
 
                                             </small>
-
                                         </div>
 
+                                    {{ lastShopping ? callbackShopping() : ""}}
+
                                     </div>
+
 
                                 </div>
 
                                 <div class="ps-cart__footer">
-
-                                    <h3>Sub Total:<strong>$59.99</strong></h3>
+                                    <div [innerHTML]= "subTotal"></div>
                                     <figure>
                                     	<a class="ps-btn" href="shopping-cart.html">View Cart</a>
                                     	<a class="ps-btn" href="checkout.html">Checkout</a>

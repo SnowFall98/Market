@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
 	wishlist:number = 0;
 	totalShoppingCart:number = 0;
 	shoppingCart:any[] = [];
+	renderShopping:boolean = true;
+	subTotal:string= `<h3>Sub Total:<strong class="subTotalHeader"><div class="spinner-border"></div></strong></h3>`; 
 
 	constructor(private categoriesService: CategoriesService, 
 		private subCategoriesService: SubCategoriesService, 
@@ -271,6 +273,45 @@ export class HeaderComponent implements OnInit {
 			})
 		}
 
+	}
+
+	callbackShopping(){
+
+		if(this.renderShopping){
+
+			this.renderShopping = false;
+
+			/*=============================================
+			Sumar valores para el precio total
+			=============================================*/
+
+			let totalProduct = $(".ps-product--cart-mobile");
+
+			setTimeout(function(){
+
+				let price = $(".pShoppingHeader .end-price")
+				let quantity = $(".qShoppingHeader");
+				let shipping = $(".sShoppingHeader");
+
+				let totalPrice = 0;
+
+				for(let i = 0; i < price.length; i++){
+									
+					/*=============================================
+					Sumar precio con envío
+					=============================================*/
+
+					let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
+					
+					totalPrice +=  Number($(quantity[i]).html() * shipping_price)
+		
+				}
+
+				$(".subTotalHeader").html(`$${totalPrice.toFixed(2)}`)
+
+			},totalProduct.length * 500)
+
+		}
 	}
 
 
