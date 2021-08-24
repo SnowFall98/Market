@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Path } from '../../../../config';
 import { DinamicPrice  } from '../../../../functions';
 import { ProductsService } from '../../../../services/products.service';
@@ -21,7 +22,7 @@ export class BoughtTogetherComponent implements OnInit {
 	price:any[] = [];
 	render:boolean = true;
 
-  	constructor(private productsService: ProductsService, private usersService: UsersService,) { }
+  	constructor(private productsService: ProductsService, private usersService: UsersService, private router:Router) { }
 
   	ngOnInit(): void {
 
@@ -144,6 +145,43 @@ export class BoughtTogetherComponent implements OnInit {
 			localUsersService.addWishlist(product2);
 
 		},1000)
+
+	}
+
+	/*=============================================
+	Función para agregar productos al carrito de compras
+	=============================================*/
+
+	addShoppingCart(product1, unit1, details1, product2, unit2, details2){
+
+		let url = this.router.url;
+
+		let item1 = {
+		
+			product: product1,
+			unit: unit1,
+			details: details1,
+			url:url
+		}
+
+		this.usersService.addShoppingCart(item1);
+
+		let localUsersService = this.usersService;
+
+		setTimeout(function(){
+
+
+			let item2 = {
+			
+				product: product2,
+				unit: unit2,
+				details: details2,
+				url:url
+			}
+
+  			localUsersService.addShoppingCart(item2);
+
+  		},1000)
 
 	}
 
