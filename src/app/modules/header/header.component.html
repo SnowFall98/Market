@@ -163,28 +163,43 @@
                         <div class="ps-cart--mini">
 
                         	<a class="header__extra" href="#">
-                        		<i class="icon-bag2"></i><span><i>0</i></span>
+                        		<i class="icon-bag2"></i><span><i>{{totalShoppingCart}}</i></span>
                         	</a>
 
-                            <div class="ps-cart__content">
+                            <div
+                            *ngIf="shoppingCart.length > 0"
+                            class="ps-cart__content">
 
                                 <div class="ps-cart__items">
 
-                                    <div class="ps-product--cart-mobile">
+                                    <div
+                                    *ngFor="let product of shoppingCart" 
+                                    class="ps-product--cart-mobile">
 
                                         <div class="ps-product__thumbnail">
-                                        	<a href="#">
-                                        		<img src="{{path}}img/products/clothing/7.jpg" alt="">
-                                        	</a>
+                                            <a href="product/{{product.url}}">
+                                                <img src="{{path}}img/products/{{product.category}}/{{product.image}}" >
+                                            </a>
                                         </div>
 
                                         <div class="ps-product__content">
                                         	<a class="ps-product__remove" href="#">
                                         		<i class="icon-cross"></i>
                                         	</a>
-                                        	<a href="product-default.html">MVMTH Classical Leather Watch In Black</a>
-                                            <p><strong>Sold by:</strong> YOUNG SHOP</p>
-                                            <small>1 x $59.99</small>
+                                            <a href="product/{{product.url}}">{{product.name}}</a>
+
+                                            <div [innerHTML]="product.details"></div>                                        
+                                            <small class="ps-product text-left p-0 m-0">
+                                                
+                                                Quantity:
+                                                <span class="qShoppingHeader">{{product.quantity}}</span> 
+                                                x Shipping: $
+                                                <span class="sShoppingHeader">{{product.shipping}}</span> 
+                                                + 
+                                                <span class="pShoppingHeader" [innerHTML]="product.price"></span>
+
+                                            </small>
+
                                         </div>
 
                                     </div>

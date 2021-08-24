@@ -163,7 +163,7 @@ export class BestSalesItemsComponent implements OnInit {
 			url:url
 		}
 
-		this.usersService.addSoppingCart(item);
+		this.usersService.addShoppingCart(item);
 
   }
 
