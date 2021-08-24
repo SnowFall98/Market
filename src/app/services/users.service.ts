@@ -388,9 +388,90 @@ export class UsersService {
     Función para agregar productos al carrito de compras
     =============================================*/
 
-    addSoppingCart(item:object){
+    addShoppingCart(item:object){
 
-        
+        this.productsService.getFilterData("url", item["product"])
+		.subscribe(resp =>{
+
+			/*=============================================
+            Recorremos el producto para encontrar su información
+            =============================================*/
+
+			for (const i in resp) {
+
+				/*=============================================
+                Preguntamos primero que el producto tenga stock
+                =============================================*/
+
+                if(resp[i]["stock"] == 0){
+
+                    Sweetalert.fnc("error", "Agotado", null);
+
+                    return;
+                }
+
+			}
+
+		})
+
+		/*=============================================
+        Agregamos al LocalStorage la variable listado carrito de compras
+        =============================================*/
+
+        if(localStorage.getItem("list")){
+
+            let arrayList = JSON.parse(localStorage.getItem("list"));
+
+            /*=============================================
+            Preguntar si el producto se repite
+            =============================================*/
+
+            let count = 0;
+            let index;
+
+            for(const i in arrayList){
+                
+                if(arrayList[i].product == item["product"]){
+
+                    count --
+                    index = i;
+                
+                }else{
+
+                    count ++
+                }
+
+            }
+
+            /*=============================================
+            Validamos si el producto se repite
+            =============================================*/
+
+            if(count == arrayList.length){
+                     
+                arrayList.push(item);
+
+            }else{
+
+                arrayList[index].unit += item["unit"];
+
+            }         
+
+            localStorage.setItem("list", JSON.stringify(arrayList));
+
+            Sweetalert.fnc("success", "Producto agregado al carrito de compras", item["url"])
+
+        }else{
+
+            let arrayList = [];
+
+            arrayList.push(item);
+
+            localStorage.setItem("list", JSON.stringify(arrayList));
+
+            Sweetalert.fnc("success", "Producto agregado al carrito de compras", item["url"])
+
+        }
     
     }
 
