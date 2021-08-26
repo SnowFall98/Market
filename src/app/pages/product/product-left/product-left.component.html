@@ -112,9 +112,7 @@ class="ps-product--detail ps-product--fullwidth">
 
             </div>
 
-            <div class="ps-product__variations">
-            
-                <div [innerHTML]="p.specification"></div>
+            <div class="ps-product__variations" [attr.specification]="p.specification">
                
             </div>
 
