@@ -285,6 +285,10 @@ export class ProductLeftComponent implements OnInit {
     }
   }
 
+  /*=============================================
+  Función Callback Galería
+  =============================================*/ 
+
   callbackGallery(){
 
     if(this.renderGallery){
@@ -314,6 +318,20 @@ export class ProductLeftComponent implements OnInit {
 
 	addShoppingCart(product, unit, details){
 
+    /*=============================================
+    Preguntamos si existe detalles en localStorage
+    =============================================*/
+
+    if(localStorage.getItem("details")){
+
+      details = localStorage.getItem("details");
+    
+    }
+
+    /*=============================================
+    Agregar producto al carrito de compras
+    =============================================*/
+
 		let url = this.router.url;
 
 		let item = {
@@ -323,6 +341,9 @@ export class ProductLeftComponent implements OnInit {
 			details: details,
 			url:url
 		}
+
+    
+    localStorage.removeItem("details");
 
 		this.usersService.addShoppingCart(item);
 
