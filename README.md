@@ -9,6 +9,27 @@ Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su últi
 3. Conectar DB y otras API's key que se requieran
 4. Ejecutar ng serve -o para levantar el servidor
 
+# Instalación de Dependencias para el correcto funcionamiento
+
+Debemos instalar estas dependencias dentro del proyecto en la consola para el correcto funcionamiento.
+
+SDK DE FIREBASE:
+`npm install --save firebase`
+
+JQUERY DATATABLE PLUGIN:
+`npm i angular-datatables`
+`npm i @types/datatables.net --save-dev`
+
+CONFIRMATION POPOVER PLUGIN:
+`npm install --save angular-confirmation-popover`
+
+NOTIE ALERT PLUGIN:
+`npm install notie`
+
+CREACIÓN DE COOKIES EN ANGULAR:
+`npm install js-cookie --save`
+`npm install @types/js-cookie --save`
+
 # Errores de ejecución
 Se pueden presentar errores como: 
 1. "An unhandled exception occurred: Script file ./node_modules/js-cookie/src/js.cookie.js does not exist." 
