@@ -13,6 +13,9 @@ Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su últi
 
 Debemos instalar estas dependencias dentro del proyecto en la consola para el correcto funcionamiento.
 
+TYPE SCRIPT FUNCTION: 
+`npm install --save @types/chart.js`
+
 SDK DE FIREBASE:
 `npm install --save firebase`
 
