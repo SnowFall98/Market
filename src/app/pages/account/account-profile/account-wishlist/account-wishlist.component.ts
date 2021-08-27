@@ -4,6 +4,7 @@ import { DinamicPrice, Sweetalert } from '../../../../functions';
 import { UsersService } from '../../../../services/users.service';
 import { ProductsService } from '../../../../services/products.service';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import notie from 'notie';
 
 declare var jQuery:any;
@@ -31,7 +32,7 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 	
 	popoverMessage:string = '¿Estás seguro de eliminarlo?';
 
-  constructor(private usersService: UsersService, private productsService: ProductsService) { }
+  constructor(private usersService: UsersService, private productsService: ProductsService, private router:Router) { }
 
   ngOnInit(): void {
 
@@ -234,6 +235,26 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
       }
     
     }
+
+  }
+
+  /*=============================================
+  Función para agregar productos al carrito de compras
+  =============================================*/
+
+  addShoppingCart(product, unit, details){
+
+    let url = this.router.url;
+
+    let item = {
+    
+      product: product,
+      unit: unit,
+      details: details,
+      url:url
+    }
+
+    this.usersService.addShoppingCart(item);
 
   }
 

@@ -99,7 +99,7 @@ Nav Account
                     <td>
                         <a 
                         *ngIf="product.stock > 0"
-                        class="ps-btn" href="#">
+                        class="ps-btn" style="cursor:pointer" (click)="addShoppingCart(product.url, 1, [])">
                             Añadir al carrito
                         </a>
                     </td>
