@@ -183,7 +183,8 @@ export class HeaderMobileComponent implements OnInit {
 						quantity:list[i].unit,
 						price: DinamicPrice.fnc(resp[f])[0],
 						shipping:Number(resp[f].shipping)*Number(list[i].unit),
-						details:details
+						details:details,
+						listDetails:list[i].details
 
 					})
 
@@ -302,9 +303,9 @@ export class HeaderMobileComponent implements OnInit {
 
 			setTimeout(function(){
 
-				let price = $(".pShoppingHeader .end-price")
-				let quantity = $(".qShoppingHeader");
-				let shipping = $(".sShoppingHeader");
+				let price = $(".pShoppingHeaderM .end-price")
+				let quantity = $(".qShoppingHeaderM");
+				let shipping = $(".sShoppingHeaderM");
 
 				let totalPrice = 0;
 
@@ -340,7 +341,7 @@ export class HeaderMobileComponent implements OnInit {
 
 			shoppingCart.forEach((list, index)=>{
 
-				if(list.product == product){
+				if(list.product == product && list.details == details.toString()){
 
 					shoppingCart.splice(index, 1);
 					
