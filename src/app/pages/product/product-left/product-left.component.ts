@@ -29,6 +29,7 @@ export class ProductLeftComponent implements OnInit {
     tags:string = null;
     totalReviews:string;
     offer:boolean = false;
+    quantity:number = 1;
     
   constructor(private activateRoute: ActivatedRoute,
     private productsService: ProductsService,
@@ -313,6 +314,45 @@ export class ProductLeftComponent implements OnInit {
 	}
 
   /*=============================================
+  Función cambio de cantidad
+  =============================================*/ 
+
+  changeQuantity(quantity, unit, move){
+
+    let number = 1;
+
+    if(Number(quantity) > 10) {
+
+      quantity = 10;
+    }
+
+    if (Number(quantity) < 1) {
+      
+      quantity = 1;
+
+    }
+
+    if (move ="up" && Number(quantity) < 10 ){
+
+      number = Number(quantity)+unit;
+
+    }else if(move ="down" && Number(quantity) > 1 ){
+
+      number = Number(quantity)-unit;
+
+    }else {
+
+      number = Number(quantity);
+
+    }
+
+    $(".quantity input").val(quantity);
+
+    this.quantity = number;
+
+  }
+
+  /*=============================================
 	Función para agregar productos al carrito de compras
 	=============================================*/
 
@@ -337,7 +377,7 @@ export class ProductLeftComponent implements OnInit {
 		let item = {
 		
 			product: product,
-			unit: unit,
+			unit: this.quantity,
 			details: details,
 			url:url
 		}

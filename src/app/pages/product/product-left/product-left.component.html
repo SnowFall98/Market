@@ -171,15 +171,16 @@ class="ps-product--detail ps-product--fullwidth">
 
                     <div class="form-group--number quantity">
 
-                        <button class="up">
+                        <button class="up" (click)="changeQuantity(quantity.value, 1, 'up')">
                         	<i class="fa fa-plus"></i>
                         </button>
 
-                        <button class="down">
+                        <button class="down" (click)="changeQuantity(quantity.value, 1, 'down')">
                         	<i class="fa fa-minus"></i>
                         </button>
 
-                        <input class="form-control px-5" type="number" value="1" min="1" max="9" step="1">
+                        <input class="form-control px-5" type="number" value="1" min="1" max="9" step="1"
+                        #quantity (change)="changeQuantity(quantity.value, 0, null)">
                         <!--Para delimitar el numero de compras eliminar o cambiar el valor de max=""-->
 
                     </div>
