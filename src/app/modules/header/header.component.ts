@@ -187,7 +187,8 @@ export class HeaderComponent implements OnInit {
 						quantity:list[i].unit,
 						price: DinamicPrice.fnc(resp[f])[0],
 						shipping:Number(resp[f].shipping)*Number(list[i].unit),
-						details:details
+						details:details,
+						listDetails: list[i].details
 
 						})
 
