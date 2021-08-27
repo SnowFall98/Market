@@ -410,6 +410,34 @@ export class UsersService {
                     return;
                 }
 
+				/*=============================================
+                Validar si detalles viene vacío
+                =============================================*/
+
+				if(item["details"].length == 0){
+
+					if(resp[i].specification != ""){
+
+						let specification = JSON.parse(resp[i].specification);
+
+						item["details"] = `[{`;
+						
+						for(const i in specification){
+
+							let property = Object.keys(specification[i]).toString();
+
+							item["details"] += `"${property}":"${specification[i][property][0]}",`
+
+						}
+
+						item["details"] = item["details"].slice(0, -1);
+
+						item["details"] += `}]`; 		
+
+					}
+
+				}
+
 			}
 
 		})
@@ -431,7 +459,8 @@ export class UsersService {
 
             for(const i in arrayList){
                 
-                if(arrayList[i].product == item["product"]){
+                if(arrayList[i].product == item["product"] && 
+				   arrayList[i].details.toString() == item["details"].toString()){
 
                     count --
                     index = i;
