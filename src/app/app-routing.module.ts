@@ -10,6 +10,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AuthGuard } from './guards/aut.guard';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
 	{path: 'login', component: LoginComponent },
 	{path: 'register', component: RegisterComponent },
 	{path: 'account', component: AccountComponent, canActivate: [ AuthGuard ]},
+	{path: 'shopping-cart', component: ShoppingCartComponent  },
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
