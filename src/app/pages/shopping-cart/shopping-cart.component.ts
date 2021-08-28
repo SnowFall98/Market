@@ -15,29 +15,29 @@ import { confirm } from 'notie';
 })
 export class ShoppingCartComponent implements OnInit, OnDestroy {
 
-  path:string = Path.url;
+  	path:string = Path.url;
 	shoppingCart:any[] = [];
 	totalShoppingCart:number = 0;
 	render:boolean = true;
-  totalP:string = `<div class="p-2"><h3>Total <span class="totalP"><div class="spinner-border"></div></span></h3></div>   `;
+    totalP:string = `<div class="p-2"><h3>Total <span class="totalP"><div class="spinner-border"></div></span></h3></div>   `;
 	dtOptions: DataTables.Settings = {};
 	dtTrigger: Subject<any> = new Subject();
 	popoverMessage:string = 'Are you sure to remove it?';
 
   constructor(private productsService: ProductsService, private router:Router) { }
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 
 		/*=============================================
-	  	Agregamos opciones a DataTable
-	  	=============================================*/
+		Agregamos opciones a DataTable
+		=============================================*/
 
-	  	this.dtOptions = {
-	  		pagingType: 'full_numbers',
-	  		processing: true
-	  	}
+		this.dtOptions = {
+			pagingType: 'full_numbers',
+			processing: true
+		}
 
-	  	/*=============================================
+		/*=============================================
 		Tomamos la data del Carrito de Compras del LocalStorage
 		=============================================*/
 
@@ -137,8 +137,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 	}
 
 	/*=============================================
-  Función Callback
-  =============================================*/ 
+	Función Callback
+	=============================================*/ 
 
 	callback(){
 
@@ -158,130 +158,130 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 	}
 
 	/*=============================================
-  Función cambio de cantidad
-  =============================================*/ 
+	Función cambio de cantidad
+	=============================================*/ 
 
-  changeQuantity(quantity, unit, move, product, details){
+	changeQuantity(quantity, unit, move, product, details){
 
-    let number = 1;
+		let number = 1;
 
-    /*=============================================
-    Controlar máximos y mínimos de la cantidad
-    =============================================*/ 
+		/*=============================================
+		Controlar máximos y mínimos de la cantidad
+		=============================================*/ 
 
-    if(Number(quantity) > 10){
+		if(Number(quantity) > 10){
 
-      quantity = 10;
+		quantity = 10;
 
-    }
+		}
 
-    if(Number(quantity) < 1){
+		if(Number(quantity) < 1){
 
-      quantity = 1;
-    }
+		quantity = 1;
+		}
 
-    /*=============================================
-    Modificar cantidad de acuerdo a la dirección
-    =============================================*/ 
+		/*=============================================
+		Modificar cantidad de acuerdo a la dirección
+		=============================================*/ 
 
-    if(move == "up" && Number(quantity) < 10){
+		if(move == "up" && Number(quantity) < 10){
 
-      number = Number(quantity)+unit;
+		number = Number(quantity)+unit;
 
-    }
+		}
 
-    else if(move == "down" && Number(quantity) > 1){
+		else if(move == "down" && Number(quantity) > 1){
 
-      number = Number(quantity)-unit;
+		number = Number(quantity)-unit;
 
-    }else{
+		}else{
 
-      number = Number(quantity);
+		number = Number(quantity);
 
-    }
+		}
 
-    /*=============================================
-    Actualizar la variable list del localStorage
-    =============================================*/ 
-    if(localStorage.getItem("list")){
+		/*=============================================
+		Actualizar la variable list del localStorage
+		=============================================*/ 
+		if(localStorage.getItem("list")){
 
-      let shoppingCart = JSON.parse(localStorage.getItem("list"));
+		let shoppingCart = JSON.parse(localStorage.getItem("list"));
 
-      shoppingCart.forEach(list=>{
+		shoppingCart.forEach(list=>{
 
-        if(list.product == product && list.details == details.toString()){
-          
-          list.unit = number;
-        }
+			if(list.product == product && list.details == details.toString()){
+			
+			list.unit = number;
+			}
 
-      })
+		})
 
-      localStorage.setItem("list", JSON.stringify(shoppingCart));
+		localStorage.setItem("list", JSON.stringify(shoppingCart));
 
-      this.totalPrice(shoppingCart.length)
+		this.totalPrice(shoppingCart.length)
 
-    }
+		}
 
-  }
+	}
 
-  /*=============================================
-  Actualizar subtotal y total
-  =============================================*/ 
+	/*=============================================
+	Actualizar subtotal y total
+	=============================================*/ 
 
-  totalPrice(totalShoppingCart){
+	totalPrice(totalShoppingCart){
 
-    setTimeout(function(){
+		setTimeout(function(){
 
-      let price = $(".pShoppingCart .end-price");
-      let quantity = $(".qShoppingCart");
-      let shipping = $(".sShoppingCart");
-      let subTotalPrice = $(".subTotalPrice");
+		let price = $(".pShoppingCart .end-price");
+		let quantity = $(".qShoppingCart");
+		let shipping = $(".sShoppingCart");
+		let subTotalPrice = $(".subTotalPrice");
 
-      let total = 0;
+		let total = 0;
 
-      for(let i = 0; i < price.length; i++){			
-        
-      /*=============================================
-      Sumar precio con envío
-      =============================================*/
-      let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
-      
-      /*=============================================
-      Multiplicar cantidad por precio con envío
-      =============================================*/
+		for(let i = 0; i < price.length; i++){			
+			
+		/*=============================================
+		Sumar precio con envío
+		=============================================*/
+		let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
+		
+		/*=============================================
+		Multiplicar cantidad por precio con envío
+		=============================================*/
 
-      let subTotal = Number($(quantity[i]).val())*shipping_price;
+		let subTotal = Number($(quantity[i]).val())*shipping_price;
 
-      /*=============================================
-      Mostramos subtotales de cada producto
-      =============================================*/
+		/*=============================================
+		Mostramos subtotales de cada producto
+		=============================================*/
 
-      $(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
+		$(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
 
-      /*=============================================
-      Definimos el total de los precios
-      =============================================*/
+		/*=============================================
+		Definimos el total de los precios
+		=============================================*/
 
-      total += subTotal;
+		total += subTotal;
 
-      }
+		}
 
-      $(".totalP").html(`$${total.toFixed(2)}`)
+		$(".totalP").html(`$${total.toFixed(2)}`)
 
 
-    },totalShoppingCart*500)
+		},totalShoppingCart*500)
 
-  }
+	}
 
-  /*=============================================
+	/*=============================================
 	Función para remover productos de la lista de carrito de compras
 	=============================================*/
 
 	removeProduct(product, details){
 		
 		/*=============================================
-    Buscamos coincidencia para remover el producto
-    =============================================*/
+		Buscamos coincidencia para remover el producto
+		=============================================*/
 
 		if(localStorage.getItem("list")){
 
@@ -298,12 +298,12 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 			})
 
 			/*=============================================
-      Actualizamos en LocalStorage la lista del carrito de compras
-      =============================================*/
+			Actualizamos en LocalStorage la lista del carrito de compras
+			=============================================*/
 
-      localStorage.setItem("list", JSON.stringify(shoppingCart));
+			localStorage.setItem("list", JSON.stringify(shoppingCart));
 
-      Sweetalert.fnc("success", "product removed", this.router.url)
+			Sweetalert.fnc("success", "product removed", this.router.url)
 
 		}
 
