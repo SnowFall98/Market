@@ -11,4 +11,9 @@ export class UsersModel{
 	picture:string;
 	idToken:string;
 	needConfirm:boolean;
+	country:string;
+	country_code:string;
+	city:string;
+	address:string;
+	phone:string;
 }
