@@ -504,6 +504,16 @@ export class UsersService {
     
     }
 
+	/*=============================================
+    Función para tomar la lista de países
+    =============================================*/
+
+    getCountries(){
+
+		return this.http.get('./assets/json/countries.json');
+	
+	}
+
 
 
 

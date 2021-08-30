@@ -67,7 +67,7 @@ Checkout
 
                             <div class="form-group">
 
-                                <label>Email Address<sup>*</sup></label>
+                                <label>Email Address</label>
 
                                 <div class="form-group__content">
 
@@ -90,12 +90,19 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <input 
-                                    class="form-control" 
+                                    <select 
+									class="form-control" 
 									name="country"
 									[(ngModel)]="user.country"
 									required
-									#inputCountry>
+									#inputCountry
+									(change)="changeCountry(inputCountry)"
+                                    >
+                                    <option
+									*ngFor="let country of countries"
+                                    [value]="country.name">{{country.name}}</option>
+                                
+                                    </select>
 
                                 </div>
 
@@ -123,6 +130,10 @@ Checkout
                                 <label>Phone<sup>*</sup></label>
 
                                 <div class="form-group__content">
+
+                                    <div class="input-group-append">
+                                		<span class="input-group-text">{{dialCode}}</span>
+                                	</div>
 
                                     <input 
                                     class="form-control" 
@@ -215,33 +226,34 @@ Checkout
 
                                             <tbody>
 
-                                                <tr>
+                                                <tr
+												*ngFor="let product of shoppingCart; let lastIndex = last"
+                                                >
 
                                                     <td>
-                                                        <a href="#"> MVMTH Classical Leather Watch In Black ×1</a>
-                                                        <p>Sold By:<strong>YOUNG SHOP</strong></p>
+                                                        <a href="product/{{product.url}}"> {{product.name}}</a>
+                                                        <div [innerHTML]="product.details"></div>
+                                                        <div class="small text-secondary">Quantity:
+															<span class="qCheckout">{{product.quantity}}</span>
+                                                        </div>
+                                                        <div class="d-none sCheckout">{{product.shipping}}</div>
                                                     </td>
 
-                                                    <td class="text-right">$57.99</td>
+                                                    <td class="text-right ps-product">
+                                                    	<div class="d-none pCheckout" [innerHTML]="product.price"></div>
+                                                    	<div class="subTotalPriceCheckout"><div class="spinner-border"></div></div>
 
-                                                </tr>
-
-                                                <tr>
-
-                                                    <td>
-                                                        <a href="#"> Apple Macbook Retina Display 12” × 1</a>
-                                                        <p>Sold By:<strong>ROBERT’S STORE</strong></p>
                                                     </td>
 
-                                                    <td class="text-right">$625.50</td>
+                                                {{ lastIndex ? callback() : ""}}
 
-                                                </tr>
+                                                </tr>  
 
                                             </tbody>
 
                                         </table>
                                         
-                                        <h3 class="text-right">Total <span>$683.49</span></h3>
+                                        <div [innerHTML]= "totalP"></div>
 
                                     </div>
 
