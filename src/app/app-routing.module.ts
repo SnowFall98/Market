@@ -24,7 +24,7 @@ const routes: Routes = [
 	{path: 'register', component: RegisterComponent },
 	{path: 'account', component: AccountComponent, canActivate: [ AuthGuard ]},
 	{path: 'shopping-cart', component: ShoppingCartComponent  },
-	{path: 'checkout', component: CheckoutComponent  },
+	{path: 'checkout', component: CheckoutComponent,  canActivate: [ AuthGuard ]  },
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
