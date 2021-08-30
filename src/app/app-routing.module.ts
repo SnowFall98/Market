@@ -11,6 +11,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AccountComponent } from './pages/account/account.component';
 import { AuthGuard } from './guards/aut.guard';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
 	{path: 'register', component: RegisterComponent },
 	{path: 'account', component: AccountComponent, canActivate: [ AuthGuard ]},
 	{path: 'shopping-cart', component: ShoppingCartComponent  },
+	{path: 'checkout', component: CheckoutComponent  },
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
