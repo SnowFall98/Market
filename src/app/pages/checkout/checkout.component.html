@@ -34,7 +34,10 @@ Checkout
 
         <div class="ps-section__content">
 
-            <form class="ps-form--checkout" action="do_action" method="post">
+            <form 
+            (ngSubmit)="onSubmit(f)"
+            #f="ngForm"
+            class="ps-form--checkout" action="do_action" method="post">
 
                 <div class="row">
 
@@ -46,23 +49,17 @@ Checkout
 
                             <div class="form-group">
 
-                                <label>First Name<sup>*</sup></label>
+                                <label>Name</label>
 
                                 <div class="form-group__content">
 
-                                    <input class="form-control" type="text">
-
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-
-                                <label>Last Name<sup>*</sup></label>
-
-                                <div class="form-group__content">
-
-                                    <input class="form-control" type="text">
+                                    <input 
+                                    class="form-control" 
+                                    type="text"
+                                    name="displayName"
+                                    [(ngModel)]="user.displayName"
+                                    readonly
+                                    required>
 
                                 </div>
 
@@ -74,7 +71,14 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <input class="form-control" type="email">
+                                    <input 
+                                    class="form-control" 
+                                    type="email"
+                                    name="email"
+                                    [(ngModel)]="user.email"
+                                    email
+                                    readonly
+                                    required>
 
                                 </div>
 
@@ -86,7 +90,29 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <input class="form-control" type="text">
+                                    <input 
+                                    class="form-control" 
+									name="country"
+									[(ngModel)]="user.country"
+									required
+									#inputCountry>
+
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <label>City<sup>*</sup></label>
+
+                                <div class="form-group__content">
+
+                                    <input 
+                                    class="form-control" 
+									name="city"
+									[(ngModel)]="user.city"
+									required
+                                    #inputCity>
 
                                 </div>
 
@@ -98,7 +124,13 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <input class="form-control" type="text">
+                                    <input 
+                                    class="form-control" 
+                                    type="text"
+                                    name="phone"
+                                    [(ngModel)]="user.phone"
+                                    required
+                                    #inputPhone>
 
                                 </div>
 
@@ -110,7 +142,13 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <input class="form-control" type="text">
+                                    <input 
+                                    class="form-control" 
+                                    type="text"
+                                    name="address"
+                                    [(ngModel)]="user.address"
+                                    required
+                                    #inputAddress>
 
                                 </div>
 
@@ -120,7 +158,14 @@ Checkout
 
                                 <div class="ps-checkbox">
 
-                                    <input class="form-control" type="checkbox" id="create-account">
+                                    <input 
+                                    class="form-control" 
+                                    type="checkbox" 
+                                    id="create-account"
+                                    name="saveAddress"
+                                    [(ngModel)]="saveAddress"
+                                    #inputSaveAddress
+                                    (change)="saveAddressFnc(inputCountry, inputCity, inputPhone, inputAddress, inputSaveAddress)">
 
                                     <label for="create-account">Save address?</label>
 
