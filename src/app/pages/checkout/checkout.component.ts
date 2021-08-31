@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../config';
-import { Sweetalert, DinamicPrice } from '../../functions';
+import { Sweetalert, DinamicPrice, Paypal } from '../../functions';
 import { Router } from '@angular/router';
 import { UsersModel } from '../../models/users.model';
 import { UsersService } from '../../services/users.service';
@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
 	totalP:string = ` <h3 class="text-right">Total <span class="totalCheckout"><div class="spinner-border"></div></span></h3>`
 	totalPrice:any[] = [];
 	subTotalPrice:any[] = [];
+	paymentMethod:string = "";
 
 	constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, ) { 
 
@@ -188,7 +189,7 @@ export class CheckoutComponent implements OnInit {
 	
 	}
 
-  /*=============================================
+    /*=============================================
 	Guardar datos de envíos del usuario
 	=============================================*/
 
@@ -258,6 +259,7 @@ export class CheckoutComponent implements OnInit {
 
       		let totalShoppingCart = this.totalShoppingCart;
 			let localSubTotalPrice = this.subTotalPrice;
+			let localTotalPrice = this.totalPrice;
 
 			/*=============================================
 			Mostrar lista del carrito de compras con los precios definitivos
@@ -303,15 +305,118 @@ export class CheckoutComponent implements OnInit {
 
 				$(".totalCheckout").html(`$${total.toFixed(2)}`)
 
+	    		localTotalPrice.push(total.toFixed(2));
+
 	    	},totalShoppingCart*500)
 		}
 
 	}
 
+	/*=============================================
+  	Envío del formulario checkout
+  	=============================================*/
 
-  onSubmit(f: NgForm){
+	onSubmit(f: NgForm){
 
-  }
+		/*=============================================
+		Validamos formulario para evitar campos vacíos
+		=============================================*/
+
+		if(f.invalid ){
+
+			Sweetalert.fnc("error", "Invalid Request", null);
+	
+			return;
+	
+		}
+
+		/*=============================================
+		Sweetalert para esperar el proceso de ejecución
+		=============================================*/
+
+		Sweetalert.fnc("loading", "Loading...", null)  
+
+		/*=============================================
+		Pasarelas de pago
+		=============================================*/
+
+		if(f.value.paymentMethod == "paypal"){
+
+		 	/*=============================================
+			Checkout con Paypal		
+			=============================================*/
+			
+			Sweetalert.fnc("html", `<div id="paypal-button-container"></div>`, null);
+
+			/*=============================================
+			Ejecutamos función de Paypal pasando el precio total de la venta
+			=============================================*/	
+
+			Paypal.fnc(this.totalPrice[0]).then(resp=>{
+
+				if(resp){
+
+					let totalRender = 0;
+
+					/*=============================================
+					Tomamos la información de la venta
+					=============================================*/
+
+					this.shoppingCart.forEach((product, index)=>{
+
+						totalRender ++
+
+						/*=============================================
+						Enviar actualización de cantidad de producto vendido a la base de datos
+						=============================================*/	
+
+						this.productsService.getFilterData("url", product.url)
+						.subscribe(resp=>{
+
+							for(const i in resp){
+
+								let id = Object.keys(resp).toString();
+
+								let value = {
+
+									sales: Number(resp[i].sales)+Number(product.quantity)
+								
+								}
+
+								this.productsService.patchDataAuth(id, value, localStorage.getItem("idToken"))
+								.subscribe(resp=>{})
+
+							}
+
+						})
+
+
+					})					
+
+				}else{
+
+
+					Sweetalert.fnc("error", "No se realizó la compra, inténtalo de nuevo.", null);
+
+				}
+
+			})
+
+
+		}else if (f.value.paymentMethod =="payu"){
+
+		}else if (f.value.paymentMethod ="mercado-pago"){
+
+		}else {
+
+			Sweetalert.fnc("error", "Invalid request", null)
+
+	      	return;
+
+		}
+
+
+	}
   
 
 }
