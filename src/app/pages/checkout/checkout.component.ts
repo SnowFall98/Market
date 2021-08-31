@@ -322,6 +322,13 @@ export class CheckoutComponent implements OnInit {
 	onSubmit(f: NgForm){
 
 		/*=============================================
+		Para validar usuarios de pruebas en 
+		Paypal: https://developer.paypal.com/developer/accounts
+		Payu: 
+		MecadoPago: 
+		=============================================*/
+
+		/*=============================================
 		Validamos formulario para evitar campos vacíos
 		=============================================*/
 
