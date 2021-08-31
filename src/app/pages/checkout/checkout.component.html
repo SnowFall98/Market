@@ -208,8 +208,13 @@ Checkout
 
                                 <div class="form-group__content">
 
-                                    <textarea class="form-control" rows="7" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-
+                                    <textarea 
+                                    class="form-control" 
+                                    rows="7" 
+                                    placeholder="Notes about your order, e.g. special notes for delivery."
+                                    name="addInfo"
+                                    [(ngModel)]="addInfo"></textarea>
+                                    
                                 </div>
 
                             </div>
