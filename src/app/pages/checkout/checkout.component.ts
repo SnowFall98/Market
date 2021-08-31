@@ -16,26 +16,27 @@ export class CheckoutComponent implements OnInit {
   
 	path: string = Path.url;
 	user: UsersModel;
-  id: string = null;
+ 	id: string = null;
 	saveAddress:boolean = false;
 	countries:any=null;
-  dialCode: string = null;
+  	dialCode: string = null;
 	shoppingCart: any[] = [];
 	totalShoppingCart:number = 0;
-  render: boolean = true;
-  totalP:string = ` <h3 class="text-right">Total <span class="totalCheckout"><div class="spinner-border"></div></span></h3>`
-  totalPrice:any[] = [];
+	render: boolean = true;
+	totalP:string = ` <h3 class="text-right">Total <span class="totalCheckout"><div class="spinner-border"></div></span></h3>`
+	totalPrice:any[] = [];
 	subTotalPrice:any[] = [];
 
-  constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, ) { 
+	constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, ) { 
 
-		this.user = new UsersModel();
+	this.user = new UsersModel();
 
-  }
+	}
 
-  ngOnInit(): void {
 
-    /*=============================================
+	ngOnInit(): void {
+
+    	/*=============================================
 		Validar si existe usuario autenticado
 		=============================================*/
 
@@ -46,36 +47,36 @@ export class CheckoutComponent implements OnInit {
 				this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
 				.subscribe(resp=>{
 
-					this.id = Object.keys(resp).toString();
+				this.id = Object.keys(resp).toString();
 
-					for(const i in resp){
+				for(const i in resp){
 
-						this.user.displayName = resp[i].displayName;
-						this.user.username = resp[i].username;
-						this.user.email = resp[i].email;
-						this.user.country = resp[i].country;
-						this.user.city = resp[i].city;
-						this.user.address = resp[i].address;
+					this.user.displayName = resp[i].displayName;
+					this.user.username = resp[i].username;
+					this.user.email = resp[i].email;
+					this.user.country = resp[i].country;
+					this.user.city = resp[i].city;
+					this.user.address = resp[i].address;
 
-            if(resp[i].phone != undefined){
+					if(resp[i].phone != undefined){
 
-							this.user.phone = resp[i].phone.split("-")[1]
-							this.dialCode = resp[i].phone.split("-")[0]
+						this.user.phone = resp[i].phone.split("-")[1]
+						this.dialCode = resp[i].phone.split("-")[0]
 
-						}
-
-            /*=============================================
-						Traer listado de países
-						=============================================*/
-
-						this.usersService.getCountries()
-						.subscribe(resp=>{
-							
-							this.countries = resp;
-
-						})
-			
 					}
+
+					/*=============================================
+					Traer listado de países
+					=============================================*/
+
+					this.usersService.getCountries()
+					.subscribe(resp=>{
+						
+						this.countries = resp;
+
+					})
+
+				}
 
 				})
 
@@ -83,7 +84,7 @@ export class CheckoutComponent implements OnInit {
 
 		})
 
-    /*=============================================
+    	/*=============================================
 		Traer la lista del carrito de compras
 		=============================================*/
 
@@ -91,7 +92,7 @@ export class CheckoutComponent implements OnInit {
 
 			let list = JSON.parse(localStorage.getItem("list"));
       
-      this.totalShoppingCart = list.length;
+      		this.totalShoppingCart = list.length;
 
 			if(list.length == 0){
 
@@ -101,7 +102,7 @@ export class CheckoutComponent implements OnInit {
 
 			}
 
-      /*=============================================
+      		/*=============================================
 			Recorremos el arreglo del listado
 			=============================================*/
 			
@@ -177,15 +178,15 @@ export class CheckoutComponent implements OnInit {
 				})
 
 			}
-    }else{
+    	}else{
 
 			this.router.navigateByUrl("/shopping-cart");
 
 			return;
 
 		}
-
-  }
+	
+	}
 
   /*=============================================
 	Guardar datos de envíos del usuario
@@ -194,26 +195,26 @@ export class CheckoutComponent implements OnInit {
 	saveAddressFnc(inputCountry, inputCity, inputPhone, inputAddress, inputSaveAddress){	
 
 		if(this.saveAddress){
-
+			
 			if(inputCountry.value != "" && inputCity.value != "" && inputPhone.value != "" && inputAddress.value != ""){
 
-        let body = {
-          
-          country: this.user.country,
-          country_code: this.user.country_code,
-          city: this.user.city,
-          phone: `${this.dialCode}-${this.user.phone}`,
-          address: this.user.address
+			let body = {
+				
+				country: this.user.country,
+				country_code: this.user.country_code,
+				city: this.user.city,
+				phone: `${this.dialCode}-${this.user.phone}`,
+				address: this.user.address
 
-      }
+			}
 
-        this.usersService.patchData(this.id, body)
-        .subscribe(resp=>{
+				this.usersService.patchData(this.id, body)
+				.subscribe(resp=>{
 
-          Sweetalert.fnc("success", "Tus datos fueron actualizados", null)
+				Sweetalert.fnc("success", "Tus datos fueron actualizados", null)
 
-        })
-
+				})
+	
 			}else{
 
 				inputSaveAddress.checked = false;
@@ -226,7 +227,7 @@ export class CheckoutComponent implements OnInit {
 
 	}
 
-  /*=============================================
+ 	/*=============================================
 	Agregar código dial al input telefónico
 	=============================================*/
 
@@ -255,7 +256,7 @@ export class CheckoutComponent implements OnInit {
 
 			this.render = false;
 
-      let totalShoppingCart = this.totalShoppingCart;
+      		let totalShoppingCart = this.totalShoppingCart;
 			let localSubTotalPrice = this.subTotalPrice;
 
 			/*=============================================
@@ -264,45 +265,45 @@ export class CheckoutComponent implements OnInit {
 
 			setTimeout(function(){
 
-        let price = $(".pCheckout .end-price");
-        let quantity = $(".qCheckout");
-        let shipping = $(".sCheckout");
-        let subTotalPrice = $(".subTotalPriceCheckout");
+				let price = $(".pCheckout .end-price");
+				let quantity = $(".qCheckout");
+				let shipping = $(".sCheckout");
+				let subTotalPrice = $(".subTotalPriceCheckout");
 
-        let total = 0;
+				let total = 0;
 
-        for(let i = 0; i < price.length; i++){		
+				for(let i = 0; i < price.length; i++){		
 
-        /*=============================================
-        Sumar precio con envío
-        =============================================*/
-        let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());			
-        
-        /*=============================================
-        Multiplicar cantidad por precio con envío
-        =============================================*/
+				/*=============================================
+				Sumar precio con envío
+				=============================================*/
+				let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());			
+				
+				/*=============================================
+				Multiplicar cantidad por precio con envío
+				=============================================*/
 
-        let subTotal = Number($(quantity[i]).html())*shipping_price;					
+				let subTotal = Number($(quantity[i]).html())*shipping_price;					
 
-        /*=============================================
-        Mostramos subtotales de cada producto
-        =============================================*/
+				/*=============================================
+				Mostramos subtotales de cada producto
+				=============================================*/
 
-        $(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
+				$(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
 
-        localSubTotalPrice.push(subTotal.toFixed(2))
+				localSubTotalPrice.push(subTotal.toFixed(2))
 
-        /*=============================================
-        Definimos el total de los precios
-        =============================================*/
+				/*=============================================
+				Definimos el total de los precios
+				=============================================*/
 
-        total += subTotal;
+				total += subTotal;
 
-        }
+				}
 
-        $(".totalCheckout").html(`$${total.toFixed(2)}`)
+				$(".totalCheckout").html(`$${total.toFixed(2)}`)
 
-	    },totalShoppingCart*500)
+	    	},totalShoppingCart*500)
 		}
 
 	}
