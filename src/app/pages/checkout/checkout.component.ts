@@ -6,6 +6,7 @@ import { UsersModel } from '../../models/users.model';
 import { UsersService } from '../../services/users.service';
 import { NgForm } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
+import { OrdersService } from '../../services/orders.service';
 
 @Component({
   selector: 'app-checkout',
@@ -27,8 +28,9 @@ export class CheckoutComponent implements OnInit {
 	totalPrice:any[] = [];
 	subTotalPrice:any[] = [];
 	paymentMethod:string = "";
+	addInfo:string = "";
 
-	constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, ) { 
+	constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, private ordersService:OrdersService, ) { 
 
 	this.user = new UsersModel();
 
@@ -170,7 +172,8 @@ export class CheckoutComponent implements OnInit {
 							price: DinamicPrice.fnc(resp[f])[0],
 							shipping:Number(resp[f].shipping)*Number(list[i].unit),
 							details:details,
-							listDetails:list[i].details
+							listDetails:list[i].details,
+							store:resp[f].store
 
 						})
 
@@ -247,7 +250,7 @@ export class CheckoutComponent implements OnInit {
 
 	}
 
-  /*=============================================
+  	/*=============================================
 	Función Callback()
 	=============================================*/
 
@@ -258,8 +261,8 @@ export class CheckoutComponent implements OnInit {
 			this.render = false;
 
       		let totalShoppingCart = this.totalShoppingCart;
-			let localSubTotalPrice = this.subTotalPrice;
 			let localTotalPrice = this.totalPrice;
+			let localSubTotalPrice = this.subTotalPrice;
 
 			/*=============================================
 			Mostrar lista del carrito de compras con los precios definitivos
@@ -389,6 +392,72 @@ export class CheckoutComponent implements OnInit {
 							}
 
 						})
+
+						/*=============================================
+						Crear el proceso de entrega de la venta
+						=============================================*/
+
+						let moment = Math.floor(Number(product.delivery_time)/2);
+
+						let sentDate = new Date();
+						sentDate.setDate(sentDate.getDate()+moment);
+
+						let deliveredDate = new Date();
+						deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time));
+
+						let proccess = [
+
+							{
+								stage:"reviewed",
+								status:"ok",
+								comment:"Hemos recibido su pedido, iniciamos el proceso de entrega",
+								date:new Date()
+							},
+
+							{
+								stage:"sent",
+								status:"pending",
+								comment:"",
+								date:sentDate
+							},
+							{
+								stage:"delivered",
+								status:"pending",
+								comment:"",
+								date:deliveredDate
+							}
+
+						]
+
+						/*=============================================
+						Crear orden de venta en la base de datos
+						=============================================*/
+
+						let body = {
+
+							store:product.store,
+							user: this.user.username,
+							product: product.name,
+							url:product.url,
+							details:product.details,
+							quantity:product.quantity,
+							price: this.subTotalPrice[index],
+							email:f.value.email,
+							country:f.value.country,
+							city:f.value.city,
+							phone:`${this.dialCode}-${f.value.phone}`,
+							address:f.value.address,
+							info:f.value.addInfo,
+							process:JSON.stringify(proccess),
+							status:"pending"
+
+						}
+
+						this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
+						.subscribe(resp=>{
+
+
+						});
 
 
 					})					
