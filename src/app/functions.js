@@ -728,6 +728,20 @@ export let Sweetalert = {
 
             break; 
 
+            case "html":
+
+            Swal.fire({
+                allowOutsideClick: false,
+                title: 'Click to continue with the payment...',
+                icon: 'info',
+                html:text,
+                showConfirmButton: false,
+                showCancelButton: true,
+                cancelButtonColor: '#d33'
+            })
+
+            break;
+
             case "close":
 
                 Swal.close()
@@ -753,3 +767,59 @@ export let Tooltip = {
     }
 
 }
+
+/*=============================================
+Paypal
+=============================================*/
+
+export let Paypal = {
+
+    fnc: function(price){
+
+        return new Promise(resolve=>{
+
+            paypal.Buttons({
+    
+                // Sets up the transaction when a payment button is clicked
+                createOrder: function(data, actions) {
+                  return actions.order.create({
+                    purchase_units: [{
+                      amount: {
+                        value: price // Can reference variables or functions. Example: `value: document.getElementById('...').value`
+                      }
+                    }]
+                  });
+                },
+        
+                // Finalize the transaction after payer approval
+                onApprove: function(data, actions) {
+                  return actions.order.capture().then(function(orderData) {
+    
+                    if(orderData.status == "COMPLETED"){
+    
+                        resolve(true);
+    
+                    }
+                  });
+    
+                },
+    
+                onCancel: function (data) {
+    
+                    resolve(false);
+    
+                },
+    
+                onError: function (err) {
+    
+                    resolve(false);
+    
+                }
+            }).render('#paypal-button-container');
+
+        })
+
+
+    }
+}
+
