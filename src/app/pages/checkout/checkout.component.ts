@@ -413,7 +413,7 @@ export class CheckoutComponent implements OnInit {
 						sentDate.setDate(sentDate.getDate()+moment);
 
 						let deliveredDate = new Date();
-						deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time));
+						deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time))
 
 						let proccess = [
 
@@ -472,29 +472,31 @@ export class CheckoutComponent implements OnInit {
 								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
 								=============================================*/
 
-								let comisión = 0;
+								let commision = 0;
 								let unitPrice = 0;
 
-								comisión = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+								commision = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
 								unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+								let id_payment = localStorage.getItem("id_payment");
 
 								let body = {
 
 									id_order: resp["name"],
 									client: this.user.username,
 									product: product.name,
-									url: product.url,
-									quantity: product.quantity,
+									url:product.url,
+									quantity:product.quantity,
 									unit_price: unitPrice.toFixed(2),
-									comisión: comisión.toFixed(2),
+									commision: commision.toFixed(2), 
 									total: this.subTotalPrice[index],
 									payment_method: f.value.paymentMethod,
-									id_payment: localStorage.getItem("id_payment"),
+									id_payment: id_payment,
 									date: new Date(),
 									status: "pending"
 								}
 
-								this.salesService.registerDatabase(body, localStorage.getItem["idToken"])
+								this.salesService.registerDatabase(body, localStorage.getItem("idToken"))
 								.subscribe(resp=>{})
 
 							}
@@ -516,7 +518,6 @@ export class CheckoutComponent implements OnInit {
 					}
 
 				}else{
-
 
 					Sweetalert.fnc("error", "No se realizó la compra, inténtalo de nuevo.", null);
 
