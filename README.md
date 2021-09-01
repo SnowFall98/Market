@@ -51,6 +51,14 @@ Con esto ya no debería presentar fallas y la ejecución del proyecto debería f
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
 
+## Información sobre FireBase Database Realtiem
+
+Los nombres de las `CATEGORÍAS` de la Base de Datos `NO PUEDEN IR CON NINGÚN SIGNO DE PUNTUACIÓN, SÍMBOLOS O CARACTERES ESPECIALES`
+
+Ya que, al poseer alguno de estos, `NO SE REGISTRARÁ VISTAS o VIEWS` cuando entran a esta categoría.
+
+Lo mismo aplica para las `SUBCATEGORÍAS`
+
 # Levantar el servidor
 
 Para levantar el servidor con certificado `SSL (https)` se debe realizar lo siguiente:
