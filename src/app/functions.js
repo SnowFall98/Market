@@ -796,6 +796,8 @@ export let Paypal = {
                   return actions.order.capture().then(function(orderData) {
     
                     if(orderData.status == "COMPLETED"){
+
+                        localStorage.setItem("id_payment", details.id)
     
                         resolve(true);
     

@@ -7,6 +7,7 @@ import { UsersService } from '../../services/users.service';
 import { NgForm } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
 import { OrdersService } from '../../services/orders.service';
+import { SalesService } from '../../services/sales.service';
 
 @Component({
   selector: 'app-checkout',
@@ -30,7 +31,9 @@ export class CheckoutComponent implements OnInit {
 	paymentMethod:string = "";
 	addInfo:string = "";
 
-	constructor(private router:Router, private usersService:UsersService, private productsService: ProductsService, private ordersService:OrdersService, ) { 
+	constructor(private router:Router, private usersService:UsersService,
+		private productsService: ProductsService, private ordersService:OrdersService,
+		private salesService: SalesService,) { 
 
 	this.user = new UsersModel();
 
@@ -463,11 +466,54 @@ export class CheckoutComponent implements OnInit {
 						this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
 						.subscribe(resp=>{
 
+							if(resp["name"] != ""){
 
-						});
+								/*=============================================
+								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
+								=============================================*/
 
+								let comisión = 0;
+								let unitPrice = 0;
 
-					})					
+								comisión = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+								unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+								let body = {
+
+									id_order: resp["name"],
+									client: this.user.username,
+									product: product.name,
+									url: product.url,
+									quantity: product.quantity,
+									unit_price: unitPrice.toFixed(2),
+									comisión: comisión.toFixed(2),
+									total: this.subTotalPrice[index],
+									payment_method: f.value.paymentMethod,
+									id_payment: localStorage.getItem("id_payment"),
+									date: new Date(),
+									status: "pending"
+								}
+
+								this.salesService.registerDatabase(body, localStorage.getItem["idToken"])
+								.subscribe(resp=>{})
+
+							}
+
+						})
+
+					})
+					
+					/*=============================================
+					Preguntamos cuando haya finalizado el proceso de guardar todo en la base de datos
+					=============================================*/	
+
+					if(totalRender == this.shoppingCart.length){
+
+						localStorage.removeItem("list");
+						localStorage.removeItem("id_payment");
+
+						Sweetalert.fnc("succes", "La compra fue exitosa", "account");
+					}
 
 				}else{
 
