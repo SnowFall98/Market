@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
+import * as Cookies from 'js-cookie';
+import { StoresService } from 'src/app/services/stores.service';
 
 
 @Component({
@@ -12,7 +14,7 @@ export class ProductBreadcrumbComponent implements OnInit {
 
   breadcrumb:string = null;
 
-  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private storesService: StoresService) { }
 
    ngOnInit(): void {
 
@@ -41,5 +43,26 @@ export class ProductBreadcrumbComponent implements OnInit {
         .subscribe(resp=>{})
       }
     })
+    
+    /*=============================================
+    Capturamos el parámetro URL del cupón de la tienda
+    =============================================*/ 
+
+    if(this.activateRoute.snapshot.queryParams["coupon"] != undefined){
+
+      this.storesService.getFilterData("url", this.activateRoute.snapshot.queryParams["coupon"])
+      .subscribe(resp=>{
+          
+        for(const i in resp){
+
+          Cookies.set('coupon', resp[i].url, { expires: 7 }) // Cambiar la fecha de expiración cambiando el número
+
+        }
+
+      })
+                    
+    }
+
   }
+
 }
