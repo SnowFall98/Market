@@ -7,13 +7,13 @@ import { Api } from '../config';
 })
 export class StoresService {
 
-    private api:string = Api.url;
+  private api:string = Api.url;
 
-    constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { }
 
-    getData(){
+  getData(){
 
-    return this.http.get(`${this.api}stores.json`);
+  return this.http.get(`${this.api}stores.json`);
 
   }
 
@@ -22,5 +22,6 @@ export class StoresService {
     return this.http.get(`${this.api}stores.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
 
   }
-
+  
 }
+
