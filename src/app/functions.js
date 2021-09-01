@@ -797,7 +797,9 @@ export let Paypal = {
     
                     if(orderData.status == "COMPLETED"){
 
-                        localStorage.setItem("id_payment", details.id)
+                        //En caso de presentar fallas en la DB, cambiar "orderData" por "details" para que coincida la ruta
+
+                        localStorage.setItem("id_payment", orderData.id)
     
                         resolve(true);
     

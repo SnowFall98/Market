@@ -8,6 +8,8 @@ import { NgForm } from '@angular/forms';
 import { ProductsService } from '../../services/products.service';
 import { OrdersService } from '../../services/orders.service';
 import { SalesService } from '../../services/sales.service';
+import { StoresService } from '../../services/stores.service';
+import * as Cookies from 'js-cookie';
 
 @Component({
   selector: 'app-checkout',
@@ -30,10 +32,11 @@ export class CheckoutComponent implements OnInit {
 	subTotalPrice:any[] = [];
 	paymentMethod:string = "";
 	addInfo:string = "";
+	validateCoupon:boolean = false;
 
 	constructor(private router:Router, private usersService:UsersService,
 		private productsService: ProductsService, private ordersService:OrdersService,
-		private salesService: SalesService,) { 
+		private salesService: SalesService, private storesService: StoresService) { 
 
 	this.user = new UsersModel();
 
@@ -41,6 +44,19 @@ export class CheckoutComponent implements OnInit {
 
 
 	ngOnInit(): void {
+
+		/*=============================================
+  		Validar la existencia de un cupón de la tienda
+  		=============================================*/
+  		if(Cookies.get('coupon') != undefined){
+
+			this.storesService.getFilterData("url", Cookies.get('coupon'))
+			.subscribe(resp=>{
+
+				this.validateCoupon = true;		
+
+			})
+		}
 
     	/*=============================================
 		Validar si existe usuario autenticado
@@ -465,18 +481,31 @@ export class CheckoutComponent implements OnInit {
 
 						this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
 						.subscribe(resp=>{
-
+							
 							if(resp["name"] != ""){
 
 								/*=============================================
 								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
-								=============================================*/
+								=============================================*/	
 
 								let commision = 0;
 								let unitPrice = 0;
 
-								commision = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
-								unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+								if(this.validateCoupon){
+
+									commision = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									unitPrice = Number(this.subTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
+
+								}else{
+
+									commision = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+								}				
+
+								/*=============================================
+								Enviar información de la venta a la base de datos
+								=============================================*/	
 
 								let id_payment = localStorage.getItem("id_payment");
 
@@ -498,13 +527,13 @@ export class CheckoutComponent implements OnInit {
 
 								this.salesService.registerDatabase(body, localStorage.getItem("idToken"))
 								.subscribe(resp=>{})
-
+							
 							}
 
 						})
 
 					})
-					
+
 					/*=============================================
 					Preguntamos cuando haya finalizado el proceso de guardar todo en la base de datos
 					=============================================*/	
@@ -513,13 +542,16 @@ export class CheckoutComponent implements OnInit {
 
 						localStorage.removeItem("list");
 						localStorage.removeItem("id_payment");
+						Cookies.remove('coupon');
 
-						Sweetalert.fnc("succes", "La compra fue exitosa", "account");
-					}
+						Sweetalert.fnc("success", "La compra fue exitosa", "account");
+					
+					}						
 
 				}else{
 
-					Sweetalert.fnc("error", "No se realizó la compra, inténtalo de nuevo.", null);
+
+					Sweetalert.fnc("error", "Ocurrió un error al realizar la compra, inténtalo de nuevo.", null);
 
 				}
 
