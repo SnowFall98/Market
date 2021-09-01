@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Path } from '../../../../config';
-import { StoresService } from '../../../../services/store.service';
+import { StoresService } from '../../../../services/stores.service';
 
 @Component({
   selector: 'app-vendor-store',
