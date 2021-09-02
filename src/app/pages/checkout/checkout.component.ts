@@ -819,6 +819,57 @@ export class CheckoutComponent implements OnInit {
 		}else if (f.value.paymentMethod ="mercado-pago"){
 
 
+			/*=============================================
+			Checkout con Mercado Pago
+			=============================================*/
+			
+			let formMP = `<img src="assets/img/payment-method/mp_logo.png" style="width:100px" />
+						  <div><a class="ps-btn p-0 px-5 popupMP">Next</a></div>`
+
+			/*=============================================
+			Sacar el botón de MercadoPago en una alerta suave
+			=============================================*/	
+
+			Sweetalert.fnc("html", formMP, null);
+
+			/*=============================================
+			Abrir ventana emergente de MP
+			=============================================*/
+
+			let localTotalPrice = this.totalPrice[0].toString();
+
+			/*=============================================
+			Capturar la descripción
+			=============================================*/
+
+			let description = "";
+
+			this.shoppingCart.forEach(product=>{
+
+				description += `${product.name} x${product.quantity}, `
+
+			})
+
+			description = description.slice(0, -2);
+
+			/*=============================================
+			Capturar el email
+			=============================================*/
+
+			let email = this.user.email;
+
+			$(document).on("click", ".popupMP", function(){
+
+				Cookies.set("_x", window.btoa(localTotalPrice), {expires: 1});
+				Cookies.set("_p", description, {expires: 1});
+				Cookies.set("_e", email, {expires: 1});
+
+				window.open(
+					`http://localhost/market/src/mercadopago/index.php?_x=${Md5.init(localTotalPrice)}`,
+					"_blank","width=950,height=650,scrollbars=NO")
+			})
+
+
 
 
 
