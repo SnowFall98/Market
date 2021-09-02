@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Path, Payu } from '../../config';
 import { Sweetalert, DinamicPrice, Paypal } from '../../functions';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsersModel } from '../../models/users.model';
 import { UsersService } from '../../services/users.service';
 import { NgForm } from '@angular/forms';
@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
 
 	constructor(private router:Router, private usersService:UsersService,
 		private productsService: ProductsService, private ordersService:OrdersService,
-		private salesService: SalesService, private storesService: StoresService) { 
+		private salesService: SalesService, private storesService: StoresService, private activatedRoute: ActivatedRoute) { 
 
 	this.user = new UsersModel();
 
@@ -283,6 +283,16 @@ export class CheckoutComponent implements OnInit {
       		let totalShoppingCart = this.totalShoppingCart;
 			let localTotalPrice = this.totalPrice;
 			let localSubTotalPrice = this.subTotalPrice;
+			let localActivatedRoute = this.activatedRoute;
+			let localShoppingCart = this.shoppingCart;
+			let localProductsService = this.productsService;
+			let localUser = this.user;
+			let localDialCode = this.dialCode;
+			let localAddInfo = this.addInfo;
+			let localOrdersService = this.ordersService;
+			let localValidateCoupon = this.validateCoupon;
+			let localPaymentMethod  =  this.paymentMethod;
+			let localSalesService = this.salesService;
 
 			/*=============================================
 			Mostrar lista del carrito de compras con los precios definitivos
@@ -329,6 +339,181 @@ export class CheckoutComponent implements OnInit {
 				$(".totalCheckout").html(`$${total.toFixed(2)}`)
 
 	    		localTotalPrice.push(total.toFixed(2));
+
+				/*=============================================
+				Validar la compra de PAYU
+				=============================================*/	
+
+				if(localActivatedRoute.snapshot.queryParams["transactionState"] == 4){
+					
+					let totalRender = 0;
+
+					/*=============================================
+					Tomamos la información de la venta
+					=============================================*/
+
+					localShoppingCart.forEach((product, index)=>{
+
+						totalRender ++
+
+						/*=============================================
+						Enviar actualización de cantidad de producto vendido a la base de datos
+						=============================================*/	
+
+						localProductsService.getFilterData("url", product.url)
+						.subscribe(resp=>{
+
+							for(const i in resp){
+
+								let id = Object.keys(resp).toString();
+
+								let value = {
+
+									sales: Number(resp[i].sales)+Number(product.quantity)
+								
+								}
+
+								localProductsService.patchDataAuth(id, value, localStorage.getItem("idToken"))
+								.subscribe(resp=>{})
+
+							}
+
+						})
+
+						/*=============================================
+						Crear el proceso de entrega de la venta
+						=============================================*/
+
+						let moment = Math.floor(Number(product.delivery_time)/2);
+
+						let sentDate = new Date();
+						sentDate.setDate(sentDate.getDate()+moment);
+
+						let deliveredDate = new Date();
+						deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time))
+
+						let proccess = [
+
+							{
+								stage:"reviewed",
+								status:"ok",
+								comment:"Hemos recibido su pedido, iniciamos el proceso de entrega",
+								date:new Date()
+							},
+
+							{
+								stage:"sent",
+								status:"pending",
+								comment:"",
+								date:sentDate
+							},
+							{
+								stage:"delivered",
+								status:"pending",
+								comment:"",
+								date:deliveredDate
+							}
+
+						]
+
+						/*=============================================
+						Crear orden de venta en la base de datos
+						=============================================*/
+
+						let body = {
+
+							store:product.store,
+							user: localUser.username,
+							product: product.name,
+							url:product.url,
+							image:product.image,
+							category: product.category,
+							details:product.details,
+							quantity:product.quantity,
+							price: localSubTotalPrice[index],
+							email:localUser.email,
+							country:localUser.country,
+							city:localUser.city,
+							phone:`${localDialCode}-${localUser.phone}`,
+							address:localUser.address,
+							info:localAddInfo,
+							process:JSON.stringify(proccess),
+							status:"pending"
+
+						}
+
+						localOrdersService.registerDatabase(body, localStorage.getItem("idToken"))
+						.subscribe(resp=>{
+							
+							if(resp["name"] != ""){
+
+								/*=============================================
+								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
+								=============================================*/	
+
+								let commision = 0;
+								let unitPrice = 0;
+
+								if(localValidateCoupon){
+
+									commision = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									unitPrice = Number(localSubTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
+
+								}else{
+
+									commision = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									unitPrice = Number(localSubTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+								}				
+
+								/*=============================================
+								Enviar información de la venta a la base de datos
+								=============================================*/	
+
+								let body = {
+
+									id_order: resp["name"],
+									client: localUser.username,
+									product: product.name,
+									url:product.url,									
+									quantity:product.quantity,
+									unit_price: unitPrice.toFixed(2),
+									commision: commision.toFixed(2), 
+									total: localSubTotalPrice[index],
+									payment_method: "Payu",
+									id_payment: localActivatedRoute.snapshot.queryParams["transactionId"],
+									date: new Date(),
+									status: "pending"
+
+								}
+
+								localSalesService.registerDatabase(body, localStorage.getItem("idToken"))
+								.subscribe(resp=>{})
+							
+							}
+
+						})
+
+
+					})
+
+					/*=============================================
+					Preguntamos cuando haya finalizado el proceso de guardar todo en la base de datos
+					=============================================*/	
+
+					if(totalRender == localShoppingCart.length){
+
+						localStorage.removeItem("list");
+						localStorage.removeItem("id_payment");
+						Cookies.remove('coupon');
+
+						Sweetalert.fnc("success", "La compra fue exitosa", "account/");
+					
+					}						
+
+
+				}
+				
 
 	    	},totalShoppingCart*500)
 		}
