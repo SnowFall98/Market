@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Path } from '../../config';
+import { Path, Payu } from '../../config';
 import { Sweetalert, DinamicPrice, Paypal } from '../../functions';
 import { Router } from '@angular/router';
 import { UsersModel } from '../../models/users.model';
@@ -10,6 +10,7 @@ import { OrdersService } from '../../services/orders.service';
 import { SalesService } from '../../services/sales.service';
 import { StoresService } from '../../services/stores.service';
 import * as Cookies from 'js-cookie';
+import { Md5 } from 'md5-typescript';
 
 @Component({
   selector: 'app-checkout',
@@ -564,6 +565,40 @@ export class CheckoutComponent implements OnInit {
 			Checkout con Payu
 			=============================================*/
 
+			let action = Payu.action;
+			let merchantId = Payu.merchantId;
+			let accountId = Payu.accountId;
+			let responseUrl = Payu.responseUrl;
+			let confirmationUrl = Payu.confirmationUrl;
+			let apiKey = Payu.apiKey;
+			let test = Payu.test;
+
+			/*=============================================
+			Capturar la descripción
+			=============================================*/
+
+			let description = "";
+
+			this.shoppingCart.forEach(product=>{
+
+				description += `${product.name} x${product.quantity}, `
+
+			})
+
+			description = description.slice(0, -2);
+
+			/*=============================================
+			Creamos el código de referencia
+			=============================================*/
+
+			let referenceCode = Math.ceil(Math.random()*1000000);
+
+			/*=============================================
+			Creamos la firma de Payu
+			=============================================*/
+
+			let signature = Md5.init(`${apiKey}~${merchantId}~${referenceCode}~${this.totalPrice[0]}~USD`);
+
 			/*=============================================
 			Formulario web checkout de Payu
 			=============================================*/
@@ -572,20 +607,20 @@ export class CheckoutComponent implements OnInit {
 
 			<img src="assets/img/payment-method/payu_logo.png" style="width:100px" />
 
-			<form method="post" action="https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/">
-				<input name="merchantId"    type="hidden"  value="508029"   >
-				<input name="accountId"     type="hidden"  value="512321" >
-				<input name="description"   type="hidden"  value="Test PAYU"  >
-				<input name="referenceCode" type="hidden"  value="TestPayU" >
-				<input name="amount"        type="hidden"  value="20000"   >
-				<input name="tax"           type="hidden"  value="3193"  >
-				<input name="taxReturnBase" type="hidden"  value="16806" >
-				<input name="currency"      type="hidden"  value="COP" >
-				<input name="signature"     type="hidden"  value="7ee7cf808ce6a39b17481c54f2c57acc"  >
-				<input name="test"          type="hidden"  value="0" >
-				<input name="buyerEmail"    type="hidden"  value="test@test.com" >
-				<input name="responseUrl"    type="hidden"  value="http://www.test.com/response" >
-				<input name="confirmationUrl"    type="hidden"  value="http://www.test.com/confirmation" >
+			<form method="post" action="${action}">
+				<input name="merchantId"    type="hidden"  value="${merchantId}"   >
+				<input name="accountId"     type="hidden"  value="${accountId}" >
+				<input name="description"   type="hidden"  value="${description}"  >
+				<input name="referenceCode" type="hidden"  value="${referenceCode}" >
+				<input name="amount"        type="hidden"  value="${this.totalPrice[0]}"   >
+				<input name="tax"           type="hidden"  value="0"  >
+				<input name="taxReturnBase" type="hidden"  value="0" >
+				<input name="currency"      type="hidden"  value="USD" >
+				<input name="signature"     type="hidden"  value="${signature}"  >
+				<input name="test"          type="hidden"  value="${test}" >
+				<input name="buyerEmail"    type="hidden"  value="${this.user.email}" >
+				<input name="responseUrl"    type="hidden"  value="${responseUrl}" >
+				<input name="confirmationUrl"    type="hidden"  value="${confirmationUrl}" >
 				<input name="Submit" type="submit" class="ps-btn p-0 px-5" value="Next" >
 			</form>`;
 

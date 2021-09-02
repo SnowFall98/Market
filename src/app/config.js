@@ -116,3 +116,27 @@ export let Server = {
 	url:'http://localhost/Market/src/assets/img/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 }
 
+export let Payu = {
+
+	//Para más detalles de como cambiar los valores ID revisar http://developers.payulatam.com/es/web_checkout/sandbox.html
+
+	//Sandbox
+	action: 'https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/',
+	merchantId: '508029',
+	accountId: '512321', //Solo para Colombia
+	responseUrl: 'http://localhost:4200/checkout',
+	confirmationUrl: 'http://www.test.com/confirmation',
+	apiKey: '4Vj8eK4rloUd272L48hsrarnUA',
+	test: 1
+
+	//live
+	//action: 'https://checkout.payulatam.com/ppp-web-gateway-payu/',
+	//merchantId: '',
+	//accountId: '',
+	//responseUrl: '',
+	//confirmationUrl: '',
+	//apiKey:''
+	//test: 0 
+
+
+}
