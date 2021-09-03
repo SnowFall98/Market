@@ -1,10 +1,59 @@
-<?php
-    require_once 'vendor/autoload.php'; // You have to require the library from your Composer vendor folder
+<?php 
 
-    MercadoPago\SDK::setAccessToken("TEST-1529378998632258-072301-678c1d145b153dec6f1cd6b12007575a-242250285"); // Either Production or SandBox AccessToken
+require __DIR__  . '/vendor/autoload.php';
 
 /*=============================================
-Formulario de MercadoPago 
+Dominio
+=============================================*/
+
+$domain = "localhost";
+
+/*=============================================
+Credenciales
+=============================================*/
+
+$sandbox = true;
+
+if($sandbox){
+
+	$public_key = "TEST-1686acec-b1f6-45ac-a399-bcc58e12c45a";
+	$access_token = "TEST-1529378998632258-072301-678c1d145b153dec6f1cd6b12007575a-242250285";
+
+}else{
+
+	$public_key = "";
+	$access_token = "";
+
+}
+
+
+/*=============================================
+Petición a la API de Cambio de Moneda
+=============================================*/
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/usd/cop.json",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => array(
+    "Cookie: __cfduid=d33a8b671902df6f1dfc8eb1d98756da61592509616"
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+
+$jsonResponse = json_decode($response, true);
+
+/*=============================================
+Formulario de MercadoPago
 =============================================*/
 
 if(isset($_GET["_x"]) && $_GET["_x"] == md5(base64_decode($_COOKIE["_x"]))){
@@ -17,10 +66,10 @@ if(isset($_GET["_x"]) && $_GET["_x"] == md5(base64_decode($_COOKIE["_x"]))){
 	<form action="http://localhost/market/src/mercadopago/index.php" method="POST">
 	  <script
 	    src="https://www.mercadopago.com.co/integrations/v1/web-tokenize-checkout.js"
-	    data-public-key="TEST-1529378998632258-072301-678c1d145b153dec6f1cd6b12007575a-242250285"
+	    data-public-key="'.$public_key.'"
 	    data-button-label="Next"
 	    data-summary-product-label="'.$_COOKIE["_p"].'"
-	    data-transaction-amount="'.base64_decode($_COOKIE["_x"]).'">
+	    data-transaction-amount="'.$jsonResponse["cop"]*base64_decode($_COOKIE["_x"]).'">
 	  </script>
 	</form>
 
@@ -30,18 +79,56 @@ if(isset($_GET["_x"]) && $_GET["_x"] == md5(base64_decode($_COOKIE["_x"]))){
 
 }
 
-    $payment = new MercadoPago\Payment();
-    
-    $payment->transaction_amount = 141;
-    $payment->token = "YOUR_CARD_TOKEN";
-    $payment->description = "Ergonomic Silk Shirt";
-    $payment->installments = 1;
-    $payment->payment_method_id = "visa";
-    $payment->payer = array(
-      "email" => "yordymora98@email.com"
-    );
+/*=============================================
+Recibir la respuesta de Mercado Pago
+=============================================*/
 
+if(isset($_REQUEST["token"])){
+
+	/*=============================================
+	Obtener los datos del comprador
+	=============================================*/
+
+	$token = $_REQUEST["token"];
+	$payment_method_id = $_REQUEST["payment_method_id"];
+	$installments = $_REQUEST["installments"];
+	$issuer_id = $_REQUEST["issuer_id"];
+
+	/*=============================================
+	Realizar el pago con el SDK de Mercado Pago
+	=============================================*/
+
+	MercadoPago\SDK::setAccessToken($access_token);
+    //...
+    $payment = new MercadoPago\Payment();
+    $payment->transaction_amount = ceil($jsonResponse["cop"]*base64_decode($_COOKIE["_x"]));
+    $payment->token = $token;
+    $payment->description = $_COOKIE["_p"];
+    $payment->installments = $installments;
+    $payment->payment_method_id = $payment_method_id;
+    $payment->issuer_id = $issuer_id;
+    $payment->payer = array(
+    "email" => $_COOKIE["_e"]
+    );
+    // Guarda y postea el pago
     $payment->save();
 
     echo $payment->status;
-  ?>
+
+    //...
+    // Imprime el estado del pago
+    if($payment->status == "approved"){
+
+    	setcookie('_i', $payment->id, time() + 3600, "/", $domain);
+    	setcookie('_k', $public_key, time() + 3600, "/", $domain);
+    	setcookie('_a', $access_token, time() + 3600, "/", $domain);
+
+    	echo '<script>
+
+			window.close();
+
+    	</script>';
+
+    }
+
+}

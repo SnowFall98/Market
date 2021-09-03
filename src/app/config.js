@@ -140,3 +140,20 @@ export let Payu = {
 
 
 }
+
+/*=============================================
+Exportamos las credenciales de MERCADO PAGO
+=============================================*/
+
+export let MercadoPago = {
+
+	//Sandbox
+	public_key: "TEST-1686acec-b1f6-45ac-a399-bcc58e12c45a",
+	access_token: "TEST-1529378998632258-072301-678c1d145b153dec6f1cd6b12007575a-242250285"
+
+	//Live
+	// public_key: "APP_USR-8cd49018-96f1-4745-8776-708dcb265755",
+	// access_token:"APP_USR-1682012079503888-061818-0f2e62c0cbd82a7c9863d55cb615502d-184874455"
+
+
+}
