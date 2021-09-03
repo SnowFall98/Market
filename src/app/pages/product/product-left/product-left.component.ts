@@ -389,4 +389,38 @@ export class ProductLeftComponent implements OnInit {
 
 	}
 
+  /*=============================================
+  Función para agregar productos al carrito de compras
+  =============================================*/
+
+  buyNow(product, unit, details){
+
+    /*=============================================
+    Preguntamos si existe detalles en localStorage
+    =============================================*/
+
+    if(localStorage.getItem("details")){
+
+      details = localStorage.getItem("details");
+
+    }
+
+    /*=============================================
+    Agregar producto al carrito de compras
+    =============================================*/
+
+    let item = {
+
+      product: product,
+      unit: this.quantity,
+      details: details,
+      url:'checkout'
+    }
+
+    localStorage.removeItem("details");
+
+    this.usersService.addShoppingCart(item);
+
+  }
+
 }
