@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Path, Payu } from '../../config';
+import { Path, Payu, MercadoPago } from '../../config';
 import { Sweetalert, DinamicPrice, Paypal } from '../../functions';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersModel } from '../../models/users.model';
@@ -504,10 +504,9 @@ export class CheckoutComponent implements OnInit {
 					if(totalRender == localShoppingCart.length){
 
 						localStorage.removeItem("list");
-						localStorage.removeItem("id_payment");
 						Cookies.remove('coupon');
 
-						Sweetalert.fnc("success", "La compra fue exitosa", "account/");
+						Sweetalert.fnc("success", "La compra fue exitosa", "account/my-shopping");
 					
 					}						
 
@@ -529,8 +528,8 @@ export class CheckoutComponent implements OnInit {
 		/*=============================================
 		Para validar usuarios de pruebas en 
 		Paypal: https://developer.paypal.com/developer/accounts
-		Payu: 
-		MecadoPago: 
+		Payu: http://developers.payulatam.com/es/web_checkout/sandbox.html
+		MecadoPago: https://www.mercadopago.com.co/developers/es/guides/online-payments/web-tokenize-checkout/testing
 		=============================================*/
 
 		/*=============================================
@@ -539,7 +538,7 @@ export class CheckoutComponent implements OnInit {
 
 		if(f.invalid ){
 
-			Sweetalert.fnc("error", "Invalid Request", null);
+			Sweetalert.fnc("error", "Solicitud no válida", null);
 	
 			return;
 	
@@ -651,6 +650,8 @@ export class CheckoutComponent implements OnInit {
 							user: this.user.username,
 							product: product.name,
 							url:product.url,
+							image:product.image,
+							category: product.category,
 							details:product.details,
 							quantity:product.quantity,
 							price: this.subTotalPrice[index],
@@ -730,7 +731,7 @@ export class CheckoutComponent implements OnInit {
 						localStorage.removeItem("id_payment");
 						Cookies.remove('coupon');
 
-						Sweetalert.fnc("success", "La compra fue exitosa", "account");
+						Sweetalert.fnc("success", "La compra fue exitosa", "account/my-shopping");
 					
 					}						
 
@@ -862,16 +863,232 @@ export class CheckoutComponent implements OnInit {
 
 				Cookies.set("_x", window.btoa(localTotalPrice), {expires: 1});
 				Cookies.set("_p", description, {expires: 1});
-				Cookies.set("_e", email, {expires: 1});
+				Cookies.set("_e", email, {expires: 1}); 
 
 				window.open(
 					`http://localhost/market/src/mercadopago/index.php?_x=${Md5.init(localTotalPrice)}`,
 					"_blank","width=950,height=650,scrollbars=NO")
 			})
 
+			/*=============================================
+			Validar la compra de Mercado Pago
+			=============================================*/	
+
+			let count = 0;
+
+			/*=============================================
+			Convertir variables globales en locales
+			=============================================*/	
+
+			let localSubTotalPrice = this.subTotalPrice;
+			let localShoppingCart = this.shoppingCart;
+			let localProductsService = this.productsService;
+			let localUser = this.user;
+			let localDialCode = this.dialCode;
+			let localAddInfo = this.addInfo;
+			let localOrdersService = this.ordersService;
+			let localValidateCoupon = this.validateCoupon;
+			let localPaymentMethod  =  this.paymentMethod;
+			let localSalesService = this.salesService;
+
+			let interval = setInterval(function(){
+
+				count++ 
+
+				/*=============================================
+				Validar la compra de Mercado Pago
+				=============================================*/	
+
+				if( Cookies.get('_i') != undefined && 
+					Cookies.get('_k') != undefined  && 
+					Cookies.get('_a') != undefined && 
+					Cookies.get('_k') == MercadoPago.public_key && 
+					Cookies.get('_a') == MercadoPago.access_token){
 
 
+					let totalRender = 0;
 
+					/*=============================================
+					Tomamos la información de la venta
+					=============================================*/
+
+					localShoppingCart.forEach((product, index)=>{
+
+						totalRender ++
+
+						/*=============================================
+						Enviar actualización de cantidad de producto vendido a la base de datos
+						=============================================*/	
+
+						localProductsService.getFilterData("url", product.url)
+						.subscribe(resp=>{
+
+							for(const i in resp){
+
+								let id = Object.keys(resp).toString();
+
+								let value = {
+
+									sales: Number(resp[i].sales)+Number(product.quantity)
+								
+								}
+
+								localProductsService.patchDataAuth(id, value, localStorage.getItem("idToken"))
+								.subscribe(resp=>{})
+
+							}
+
+						})
+
+						/*=============================================
+						Crear el proceso de entrega de la venta
+						=============================================*/
+
+						let moment = Math.floor(Number(product.delivery_time)/2);
+
+						let sentDate = new Date();
+						sentDate.setDate(sentDate.getDate()+moment);
+
+						let deliveredDate = new Date();
+						deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time))
+
+						let proccess = [
+
+							{
+								stage:"reviewed",
+								status:"ok",
+								comment:"Hemos recibido su pedido, iniciamos el proceso de entrega",
+								date:new Date()
+							},
+
+							{
+								stage:"sent",
+								status:"pending",
+								comment:"",
+								date:sentDate
+							},
+							{
+								stage:"delivered",
+								status:"pending",
+								comment:"",
+								date:deliveredDate
+							}
+
+						]
+
+						/*=============================================
+						Crear orden de venta en la base de datos
+						=============================================*/
+
+						let body = {
+
+							store:product.store,
+							user: localUser.username,
+							product: product.name,
+							url:product.url,
+							image:product.image,
+							category: product.category,
+							details:product.details,
+							quantity:product.quantity,
+							price: localSubTotalPrice[index],
+							email:localUser.email,
+							country:localUser.country,
+							city:localUser.city,
+							phone:`${localDialCode}-${localUser.phone}`,
+							address:localUser.address,
+							info:localAddInfo,
+							process:JSON.stringify(proccess),
+							status:"pending"
+
+						}
+
+						localOrdersService.registerDatabase(body, localStorage.getItem("idToken"))
+						.subscribe(resp=>{
+							
+							if(resp["name"] != ""){
+
+								/*=============================================
+								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
+								=============================================*/	
+
+								let commision = 0;
+								let unitPrice = 0;
+
+								if(localValidateCoupon){
+
+									commision = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									unitPrice = Number(localSubTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
+
+								}else{
+
+									commision = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									unitPrice = Number(localSubTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+								}				
+
+								/*=============================================
+								Enviar información de la venta a la base de datos
+								=============================================*/
+
+								let id_payment = Cookies.get('_i');
+
+								let body = {
+
+									id_order: resp["name"],
+									client: localUser.username,
+									product: product.name,
+									url:product.url,
+									quantity:product.quantity,
+									unit_price: unitPrice.toFixed(2),
+									commision: commision.toFixed(2), 
+									total: localSubTotalPrice[index],
+									payment_method: "Mercado Pago",
+									id_payment: id_payment,
+									date: new Date(),
+									status: "pending"
+
+								}
+
+								localSalesService.registerDatabase(body, localStorage.getItem("idToken"))
+								.subscribe(resp=>{})
+							
+							}
+
+						})
+
+
+					})
+
+					/*=============================================
+					Preguntamos cuando haya finalizado el proceso de guardar todo en la base de datos
+					=============================================*/	
+
+					if(totalRender == localShoppingCart.length){
+
+						clearInterval(interval);
+						Cookies.remove('_a')
+						Cookies.remove('_k')
+
+						localStorage.removeItem("list");
+						Cookies.remove('coupon');
+
+						Sweetalert.fnc("success", "La compra fue exitosa", "account/my-shopping");
+					
+					}			
+
+				}
+
+			},1000)
+
+			/*=============================================
+			Detenemos el intervalo
+			=============================================*/			
+
+			if(count > 300){
+
+				clearInterval(interval);
+				window.open("account", "_parent");
+			}
 
 		}else {
 
