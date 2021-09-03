@@ -115,9 +115,18 @@ Wishlist
 ======================================-->
 
 <app-account-wishlist
-*ngIf="!preload"
+*ngIf="!preload && accountUrl == undefined"
 [childItem]="id"
 ></app-account-wishlist>
+
+<!--=====================================
+My Shopping
+======================================-->
+
+<app-account-my-shopping
+*ngIf="!preload && accountUrl == 'my-shopping'"
+[childItem]="username"
+></app-account-my-shopping>
 
 
 <!--=====================================
