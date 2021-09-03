@@ -22,6 +22,16 @@ export class OrdersService {
 
 	}
 
+	/*=============================================
+	Filtrado de datos
+	=============================================*/
+
+	getFilterData(orderBy:string, equalTo:string){
+
+		return this.http.get(`${this.api}orders.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
+
+	}
+
 
 
 }
