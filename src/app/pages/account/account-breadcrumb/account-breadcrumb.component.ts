@@ -42,6 +42,7 @@ export class AccountBreadcrumbComponent implements OnInit {
 
 	localStorage.removeItem('idToken');
     localStorage.removeItem('expiresIn');
+	localStorage.removeItem('list'); //Eliminar cache del carrito de compras
     window.open('login', '_top')
 
 	}
