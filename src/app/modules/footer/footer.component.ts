@@ -15,7 +15,7 @@ import { SubCategoriesService } from '../../services/sub-categories.service';
 export class FooterComponent implements OnInit {
 
 	path:string = Path.url;	
-	categories:object = null;
+	categories:any[] = [];
 	render:boolean = true;
 	categoriesList:any[] = [];
 
@@ -30,11 +30,11 @@ export class FooterComponent implements OnInit {
 		this.categoriesService.getData()
 		.subscribe(resp => {
 			
-			this.categories = resp;
-
 			let i;
 
 			for(i in resp){
+
+				this.categories.push(resp[i]);
 
 				/*=============================================
 				Separamos los nombres de categorías

@@ -19,7 +19,7 @@ declare var $:any;
 export class HeaderMobileComponent implements OnInit {
 
 	path:string = Path.url;	
-	categories:object = null;
+	categories:any[] = [];
 	render:boolean = true;
 	categoriesList:any[] = [];
 	authValidate:boolean = false;
@@ -80,8 +80,6 @@ export class HeaderMobileComponent implements OnInit {
 
 		this.categoriesService.getData()
 		.subscribe(resp => {
-			
-			this.categories = resp;
 
 			/*=============================================
 			Recorrido por el objeto de la data de categorías
@@ -90,6 +88,8 @@ export class HeaderMobileComponent implements OnInit {
 			let i;
 
 			for(i in resp){
+			
+				this.categories.push(resp[i]);
 
 				/*=============================================
 				Separamos los nombres de categorías

@@ -18,7 +18,7 @@ declare var $:any;
 export class HeaderComponent implements OnInit {
 
 	path:string = Path.url;	
-	categories:object = null;
+	categories:any[] = [];
 	arrayTitleList:any[] = [];
 	render:boolean = true;
 	authValidate:boolean = false;
@@ -94,8 +94,6 @@ export class HeaderComponent implements OnInit {
 
 		this.categoriesService.getData()
 		.subscribe(resp => {
-			
-			this.categories = resp;
 
 			/*=============================================
 			Recorremos la colección de categorías para tomar la lista de títulos
@@ -104,6 +102,8 @@ export class HeaderComponent implements OnInit {
 			let i;
 
 			for(i in resp){
+			
+				this.categories.push(resp[i]);
 
 				/*=============================================
 				Separamos la lista de títulos en índices de un array
