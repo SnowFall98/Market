@@ -290,17 +290,23 @@ export class ProductLeftComponent implements OnInit {
   Función Callback Galería
   =============================================*/ 
 
-  callbackGallery(){
+  callbackGallery(i){
 
     if(this.renderGallery){
 
       this.renderGallery = false;
 
-      SlickConfig.fnc()
-      ProductLightbox.fnc()
+      $(".ps-product__thumbnail").hide();
 
+      setTimeout(function(){
+
+        $(".ps-product__thumbnail").show();
+
+        SlickConfig.fnc()
+        ProductLightbox.fnc()
+
+      },i*500)
     }
-
   }
 
   /*=============================================

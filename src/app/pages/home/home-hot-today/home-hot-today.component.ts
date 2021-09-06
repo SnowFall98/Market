@@ -227,7 +227,13 @@ export class HomeHotTodayComponent implements OnInit {
 			Recorremos todos los índices de productos
 			=============================================*/
 
+			let count = 0;
+
+			$(".ps-carousel--deal-hot").hide();
+
 			for(let i = 0; i < galleryMix_1.length; i++){
+
+				count++;
 
 				/*=============================================
 				Recorremos todos las fotografías de la galería de cada producto
@@ -367,11 +373,16 @@ export class HomeHotTodayComponent implements OnInit {
 			Ejecutar funciones globales con respecto a la galería mixta
 			=============================================*/
 	
-			OwlCarouselConfig.fnc();
-			CarouselNavigation.fnc();
-			SlickConfig.fnc();
-			ProductLightbox.fnc();			
+			setTimeout(function(){
 
+				$(".ps-carousel--deal-hot").show();
+				
+				OwlCarouselConfig.fnc();
+				CarouselNavigation.fnc();
+				SlickConfig.fnc();
+				ProductLightbox.fnc();	
+
+			},count*100)	
 			/*=============================================
 			Ejecutar funciones globales con respecto a las ofertas
 			=============================================*/			

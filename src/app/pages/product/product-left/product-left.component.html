@@ -23,8 +23,8 @@ class="ps-product--detail ps-product--fullwidth">
                         <div 
                         *ngFor="let image of gallery[0]"
                         class="item">
-                        	<a href="{{path}}img/products/{{product[0].category}}/{{image}}">
-                        		<img src="{{path}}img/products/{{product[0].category}}/{{image}}" alt="{{product[0].name}}">
+                        	<a href="{{path}}img/products/{{product[0].category}}/gallery/{{image}}">
+                        		<img src="{{path}}img/products/{{product[0].category}}/gallery/{{image}}" alt="{{product[0].name}}">
                         	</a>
 
                          
@@ -38,11 +38,11 @@ class="ps-product--detail ps-product--fullwidth">
 
             <div class="ps-product__variants" data-item="4" data-md="4" data-sm="4" data-arrow="false">
                 <div 
-                *ngFor="let image of gallery[0]; let lastIndex = last"
+                *ngFor="let image of gallery[0]; let lastIndex = last; let i = index"
                 class="item">
                 	<img src="{{path}}img/products/{{product[0].category}}/{{image}}" alt="{{product[0].name}}">
 
-                {{ lastIndex ? callbackGallery() : ""}}
+                {{ lastIndex ? callbackGallery(i) : ""}}
                 </div>          
 
             </div>
