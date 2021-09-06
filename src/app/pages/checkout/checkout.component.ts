@@ -369,7 +369,8 @@ export class CheckoutComponent implements OnInit {
 
 								let value = {
 
-									sales: Number(resp[i].sales)+Number(product.quantity)
+									sales: Number(resp[i].sales)+Number(product.quantity),
+									stock: Number(resp[i].stock)-Number(product.quantity)
 								
 								}
 
@@ -593,7 +594,8 @@ export class CheckoutComponent implements OnInit {
 
 								let value = {
 
-									sales: Number(resp[i].sales)+Number(product.quantity)
+									sales: Number(resp[i].sales)+Number(product.quantity),
+									stock: Number(resp[i].stock)-Number(product.quantity)
 								
 								}
 
@@ -929,7 +931,8 @@ export class CheckoutComponent implements OnInit {
 
 								let value = {
 
-									sales: Number(resp[i].sales)+Number(product.quantity)
+									sales: Number(resp[i].sales)+Number(product.quantity),
+									stock: Number(resp[i].stock)-Number(product.quantity)
 								
 								}
 
