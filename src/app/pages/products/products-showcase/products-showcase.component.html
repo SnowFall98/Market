@@ -83,7 +83,7 @@ Products found
 
                             <div class="ps-product__thumbnail">
 
-                                <a href="product/{{product.url}}">
+                                <a routerLink="/product/{{product.url}}">
                                     <img src="{{path}}img/products/{{product.category}}/{{product.image}}" alt="{{product.name}}">
                                 </a>
 
@@ -98,7 +98,7 @@ Products found
                                     </li>
 
                                     <li>
-                                        <a href="product/{{product.url}}" data-toggle="tooltip" data-placement="top" title="Quick View">
+                                        <a routerLink="/product/{{product.url}}" data-toggle="tooltip" data-placement="top" title="Quick View">
                                             <i class="icon-eye"></i>
                                         </a>
                                     </li>
@@ -119,7 +119,7 @@ Products found
 
                                 <div class="ps-product__content">
 
-                                    <a class="ps-product__title" href="product/{{product.url}}">
+                                    <a class="ps-product__title" routerLink="/product/{{product.url}}">
                                     {{product.name}}</a>
 
                                     <div class="ps-product__rating">
@@ -142,7 +142,7 @@ Products found
 
                                 <div class="ps-product__content hover">
 
-                                    <a class="ps-product__title" href="product/{{product.url}}">
+                                    <a class="ps-product__title" routerLink="/product/{{product.url}}">
                                     {{product.name}}</a>
 
                                     <div [innerHTML]="price[i][0]"></div>
@@ -192,7 +192,7 @@ Products found
 
                     <div class="ps-product__thumbnail">
 
-                        <a href="product/{{product.url}}">
+                        <a routerLink="/product/{{product.url}}">
                             <img src="{{path}}img/products/{{product.category}}/{{product.image}}" alt="{{product.name}}">
                         </a>
 
@@ -202,7 +202,7 @@ Products found
 
                         <div class="ps-product__content">
 
-                            <a class="ps-product__title" href="product/{{product.url}}">
+                            <a class="ps-product__title" routerLink="/product/{{product.url}}">
                             {{product.name}}</a>
 
                             <div class="ps-product__rating">
@@ -234,7 +234,7 @@ Products found
                             <a class="ps-btn" href="#">Add to cart</a>
 
                             <ul class="ps-product__actions">
-                                <li><a href="product/{{product.url}}"><i class="icon-eye"></i>View</a></li>
+                                <li><a routerLink="/product/{{product.url}}"><i class="icon-eye"></i>View</a></li>
                                 <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>       
                             </ul>
 
