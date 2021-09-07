@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Path } from '../../config.js';
 
 @Component({
   selector: 'app-become-a-vendor',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./become-a-vendor.component.css']
 })
 export class BecomeAVendorComponent implements OnInit {
+
+  path:string = Path.url; 
 
   constructor() { }
 
