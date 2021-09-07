@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Path } from '../../../../config';
 import { StoresService } from '../../../../services/stores.service';
 import  { NgForm } from '@angular/forms';
+import { StoresModel } from '../../../../models/stores.model';
+import { UsersService } from '../../../../services/users.service';
+import { Sweetalert, Capitalize, CreateUrl}  from '../../../../functions';
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,8 +21,13 @@ export class AccountNewStoreComponent implements OnInit {
   path:string = Path.url;
   accept:boolean=false; // Variable para aceptar términos y condiciones
   storeOk:boolean=false;//Variable para saber que la creación de la tienda está lista
+  store: StoresModel;//  Variable para el modelo de tiendas y productos
 
-  constructor(private storesService:StoresService) { }
+  constructor(private storesService:StoresService, private usersService: UsersService,) {
+    
+    this.store = new StoresModel();
+
+  }
 
   ngOnInit(): void {
 
@@ -34,6 +42,21 @@ export class AccountNewStoreComponent implements OnInit {
 
         window.open("account/my-store", "_top");
 
+      }
+    })
+    /*=============================================
+    Traer la información del usuario existente
+    =============================================*/
+
+    this.usersService.getFilterData("username", this.childItem)
+    .subscribe(resp=>{
+
+      for(const i in resp){
+
+        this.store.email = resp[i].email;
+        this.store.country = resp[i].country;
+        this.store.city = resp[i].city;
+        this.store.address = resp[i].address;
       }
     })
   }
@@ -132,6 +155,79 @@ export class AccountNewStoreComponent implements OnInit {
 
   }
 
+  /*=============================================
+  Validación extra para cada campo del formulario
+  =============================================*/
+
+  validate(input){
+
+    /*=============================================
+    Validamos el nombre de la tienda
+    =============================================*/
+
+    if($(input).attr("name") == "storeName" || $(input).attr("name") == "productName"){
+
+      /*=============================================
+      Validamos expresión regular del nombre de la tienda
+      =============================================*/ 
+
+      let pattern = /^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+
+      }else{
+
+        if($(input).attr("name") == "storeName"){ 
+
+          /*=============================================
+          Validamos que el nombre de la tienda no esté repetido
+          =============================================*/
+
+          this.storesService.getFilterData("store", input.value)
+          .subscribe(resp=>{
+
+            if(Object.keys(resp).length > 0){
+
+              $(input).parent().addClass('was-validated')
+              input.value = "";
+              this.store.url = "";
+
+              Sweetalert.fnc("error", "Store name already exists", null)
+
+              return;
+
+            }else{
+
+              /*=============================================
+              Capitulamos el nombre de la tienda
+              =============================================*/
+
+              input.value = Capitalize.fnc(input.value);
+
+              /*=============================================
+              Creamos la URL de la tienda
+              =============================================*/
+
+              this.store.url = CreateUrl.fnc(input.value);
+            }
+
+          })
+
+        }
+
+      }
+
+    }
+
+  }
+
+
 
 
 
@@ -159,6 +255,16 @@ export class AccountNewStoreComponent implements OnInit {
         $(formProduct[i]).parent().addClass("was-validated")
 
       }
+    }
+    /*=============================================
+    Validación completa del formulario
+    =============================================*/
+
+    if(f.invalid){
+
+      Sweetalert.fnc("error", "Invalid Request", null);
+
+      return;
     }
     
 

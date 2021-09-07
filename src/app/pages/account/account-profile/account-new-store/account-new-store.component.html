@@ -182,6 +182,173 @@ Nav Account
                                     <input type="text"
                                     class="form-control formStore"
                                     name="storeName"
+                                    [(ngModel)]="store.store"
+                                    (change)="validate(storeName)"
+                                    #storeName
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Url de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Url<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formStore"
+                                    name="storeUrl"
+                                    [(ngModel)]="store.url"
+                                    readonly
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Información de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store About<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <textarea
+                                    class="form-control formStore"
+                                    rows="7"
+                                    name="storeAbout"
+                                    required
+                                    ></textarea>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Email de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Email<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="email"
+                                    class="form-control formStore"
+                                    name="storeEmail"
+                                    [(ngModel)]="store.email"
+                                    email
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            País de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Country<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <select
+                                    class="form-control formStore"
+                                    name="storeCountry"
+                                    required>
+
+                                    </select>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Ciudad de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store City<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formStore"
+                                    name="storeCity"
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Teléfono de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Phone<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content input-group">
+
+                                    
+                                    <input type="text"
+                                    class="form-control formStore"
+                                    name="storePhone"
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Dirección de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Address<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formStore"
+                                    name="storeAddress"
+                                    [(ngModel)]="store.address"
                                     required>
 
                                     <div class="valid-feedback">Valid.</div>
