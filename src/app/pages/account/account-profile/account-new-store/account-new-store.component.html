@@ -66,6 +66,7 @@ Nav Account
                         <div class="card-footer text-center">
 
                             <button 
+                            [disabled]="!accept"
                             class="btn btn-warning btn-lg">
                             <span class="badge badge-secondary">2</span> Create Store</button>
                         
@@ -88,6 +89,7 @@ Nav Account
                         <div class="card-footer text-center">
 
                             <button 
+                            [disabled]="!storeOk"
                             class="btn btn-warning btn-lg">
                             <span class="badge badge-secondary">3</span> Create Product</button>
                         
@@ -104,6 +106,7 @@ Nav Account
             ======================================-->
 
             <form
+            (ngSubmit)="onSubmit(f)"
              #f="ngForm"
             >
 
@@ -136,6 +139,8 @@ Nav Account
                                     class="form-control"
                                     id="accept"
                                     name="accept"
+                                    [(ngModel)]="accept"
+                                    (change)="changeAccept()"
                                     >
 
                                     <label for="accept">Accept terms and conditions</label>
@@ -149,6 +154,112 @@ Nav Account
                         </div>
         
                     </div>
+
+                    <!--=====================================
+                    Crear tienda
+                    ======================================-->
+
+                    <div id="createStore" class="container tab-pane fade">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center">2.Create Store</h4>
+                        </div>
+                        
+                        <!-- Modal body -->
+                        <div class="modal-body p-5 text-left">
+                            
+                            <!--=====================================
+                            Nombre de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Store Name<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formStore"
+                                    name="storeName"
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            
+
+                        </div>
+                        
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button 
+                            [disabled]="!accept" 
+                            type="button" 
+                            class="btn btn-warning"
+                            (click)="createProduct()">Next</button>
+                        </div>
+
+                    </div>
+
+                    <!--=====================================
+                    Crear Producto
+                    ======================================-->
+
+                    <div id="createProduct" class="container tab-pane fade">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center">3.Create Product</h4>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body p-5 text-left">
+                            
+                            <!--=====================================
+                            Nombre del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Product Name<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formProduct"
+                                    name="productName"
+                                    #productName
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+
+                            <div class="form-group submtit">
+                                
+                                <button 
+                                [disabled]="!accept" 
+                                class="ps-btn ps-btn--fullwidth">Create Store and Product</button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </form>
