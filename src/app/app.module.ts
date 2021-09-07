@@ -54,6 +54,7 @@ import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.compo
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AccountMyShoppingComponent } from './pages/account/account-profile/account-my-shopping/account-my-shopping.component';
 import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.component';
+import { AccountNewStoreComponent } from './pages/account/account-profile/account-new-store/account-new-store.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.
     ShoppingCartComponent,
     CheckoutComponent,
     AccountMyShoppingComponent,
-    BecomeAVendorComponent
+    BecomeAVendorComponent,
+    AccountNewStoreComponent
   ],
   imports: [
     BrowserModule,
