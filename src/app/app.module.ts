@@ -53,6 +53,7 @@ import { AccountWishlistComponent } from './pages/account/account-profile/accoun
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AccountMyShoppingComponent } from './pages/account/account-profile/account-my-shopping/account-my-shopping.component';
+import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { AccountMyShoppingComponent } from './pages/account/account-profile/acco
     AccountWishlistComponent,
     ShoppingCartComponent,
     CheckoutComponent,
-    AccountMyShoppingComponent
+    AccountMyShoppingComponent,
+    BecomeAVendorComponent
   ],
   imports: [
     BrowserModule,
