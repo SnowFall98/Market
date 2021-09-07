@@ -129,6 +129,15 @@ My Shopping
 [childItem]="username"
 ></app-account-my-shopping>
 
+<!--=====================================
+New Store
+======================================-->
+<app-account-new-store
+*ngIf="!preload && accountUrl == 'new-store'"
+[childItem]="username">   
+</app-account-new-store>
+
+
 
 <!--=====================================
 Ventana modal para escribir nueva contraseña

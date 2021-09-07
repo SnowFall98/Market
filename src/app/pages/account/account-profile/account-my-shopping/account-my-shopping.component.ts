@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Path } from '../../../../config';
 import { Subject  } from 'rxjs';
 import { OrdersService } from '../../../../services/orders.service';
+import { StoresService } from '../../../../services/stores.service';
 
 
 @Component({
@@ -18,8 +19,9 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject();
   myShopping: any [] = [];
   process: any [] = [];
+	is_vendor:boolean = false;
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(private ordersService: OrdersService, private storesService:StoresService) { }
 
   ngOnInit(): void {
 
@@ -31,6 +33,21 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       processing: true
     }
+
+    /*=============================================
+		Validamos si el usuario ya tiene una tienda habilitada
+		=============================================*/
+
+    this.storesService.getFilterData("username", this.childItem)
+    .subscribe(resp=>{
+
+      if(Object.keys(resp).length > 0){
+        
+        this.is_vendor = true;
+
+      }
+
+    })
 
     /*=============================================
     Traemos las órdenes de compras de este usuario

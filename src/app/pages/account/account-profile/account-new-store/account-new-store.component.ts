@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Path } from '../../../../config';
 
 @Component({
   selector: 'app-account-new-store',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-new-store.component.css']
 })
 export class AccountNewStoreComponent implements OnInit {
+
+  path:string = Path.url;
 
   constructor() { }
 

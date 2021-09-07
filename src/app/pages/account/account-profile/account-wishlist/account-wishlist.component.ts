@@ -6,6 +6,7 @@ import { ProductsService } from '../../../../services/products.service';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import notie from 'notie';
+import { StoresService } from 'src/app/services/stores.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -22,9 +23,10 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 
 	path:string = Path.url;
 	wishlist:any[] = [];
-  	products:any[] = [];
+  products:any[] = [];
 	price:any[] = [];
 	render:boolean = true;
+  is_vendor:boolean = false;
 
 	dtOptions: DataTables.Settings = {};
 	dtTrigger: Subject<any> = new Subject();
@@ -32,7 +34,7 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 	
 	popoverMessage:string = '¿Estás seguro de eliminarlo?';
 
-  constructor(private usersService: UsersService, private productsService: ProductsService, private router:Router) { }
+  constructor(private usersService: UsersService, private productsService: ProductsService, private router:Router, private storesService:StoresService) { }
 
   ngOnInit(): void {
 
@@ -51,6 +53,21 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
 
 	this.usersService.getUniqueData(this.childItem)
 	.subscribe(resp=>{
+
+    /*=============================================
+    Validamos si el usuario ya tiene una tienda habilitada
+    =============================================*/
+
+    this.storesService.getFilterData("username", resp["username"])
+    .subscribe(resp=>{
+
+      if(Object.keys(resp).length > 0){
+
+        this.is_vendor = true;
+
+      }
+
+    })
 		
 		if(resp["wishlist"] != undefined){
 
