@@ -10,3 +10,151 @@ Nav Account
         <li class="active"><a href="/account/new-store">My Store</a></li>
         <li><a href="my-account_my-sales.html">My Sales</a></li>
     </ul>
+
+    <!--=====================================
+    New Store
+    ======================================--> 
+    <div class="ps-page__content text-center row">
+
+        <div class="container">
+
+            <div class="ps-section__header">
+
+                <h1>New to MarketPlace?</h1>
+
+                <h4>Join a marketplace where nearly 50 million buyers around <br> the world shop for unique items</h4>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4 col-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+                    
+                            <img src="{{path}}img/shop-1.jpg" class="img-fluid">
+
+                        </div>
+
+                        <div class="card-footer text-center">
+
+                            <button 
+                            data-toggle="tab"
+                            href="#terms"
+                            class="btn btn-warning btn-lg"
+                            (click)="goTerms()">
+                            <span class="badge badge-secondary">1</span> Accept terms and conditions</button>
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 col-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+                    
+                            <img src="{{path}}img/shop-2.jpg" class="img-fluid">
+
+                        </div>
+
+                        <div class="card-footer text-center">
+
+                            <button 
+                            class="btn btn-warning btn-lg">
+                            <span class="badge badge-secondary">2</span> Create Store</button>
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 col-12">
+
+                    <div class="card">
+
+                        <div class="card-body">
+                    
+                            <img src="{{path}}img/shop-3.jpg" class="img-fluid">
+
+                        </div>
+
+                        <div class="card-footer text-center">
+
+                            <button 
+                            class="btn btn-warning btn-lg">
+                            <span class="badge badge-secondary">3</span> Create Product</button>
+                        
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div><!-- Row -->
+
+            <!--=====================================
+            Formulario para crear tienda y producto
+            ======================================-->
+
+            <form
+             #f="ngForm"
+            >
+
+                <div class="tab-content" id="tabContent">
+
+                    <!--=====================================
+                    Términos y condiciones
+                    ======================================-->
+                    
+                    <div id="terms" class="container tab-pane fade pt-5">
+                        
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title text-center">1.Terms  and conditions</h4>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body text-left p-5">
+                            <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum possimus autem quasi placeat architecto deleniti, facilis laboriosam expedita ipsum aut doloremque porro illum, eligendi numquam temporibus quas at dignissimos quo.</div><br>
+                            <div>Nisi veritatis, dolor fugit totam voluptatem omnis odit aliquam expedita modi, vel quia. Dolore ipsa deserunt voluptate repellendus nostrum non eum! Esse sapiente iste quos pariatur minima dolores amet, inventore!</div><br>
+                            <div>Recusandae dolores fugit dolorem, placeat laboriosam. Atque sapiente nulla sequi iure reiciendis modi totam, odio aliquid repellat sunt recusandae, animi, placeat numquam enim molestiae, ullam! Quam odit distinctio, illum porro.</div><br>
+                            <div>Officiis adipisci, dolores quia dignissimos enim, ipsum asperiores aspernatur porro praesentium corporis odit cupiditate sapiente, tempora aut. Officia optio nisi fugit nulla quaerat, quam qui asperiores animi iste quos doloribus.</div><br>
+                            <div>Obcaecati repudiandae asperiores, recusandae eveniet placeat veniam provident similique a perspiciatis quidem vero, voluptates, velit quo corrupti officia fugit ipsa repellat illo minima, dignissimos praesentium quasi ea. Saepe, fugit rerum!</div>
+
+                            <div class="form-group my-5">
+
+                                <div class="ps-checkbox">
+                                
+                                    <input type="checkbox"
+                                    class="form-control"
+                                    id="accept"
+                                    name="accept"
+                                    >
+
+                                    <label for="accept">Accept terms and conditions</label>
+
+                                </div>
+
+                            </div>
+
+                            <label class="text-danger"><sup>*</sup>Required</label>
+
+                        </div>
+        
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

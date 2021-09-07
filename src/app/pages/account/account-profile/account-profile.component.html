@@ -137,7 +137,13 @@ New Store
 [childItem]="username">   
 </app-account-new-store>
 
-
+<!--=====================================
+My Store
+======================================-->
+<app-account-my-store
+*ngIf="!preload && accountUrl == 'my-store'"
+[childItem]="username">   
+</app-account-my-store>
 
 <!--=====================================
 Ventana modal para escribir nueva contraseña
