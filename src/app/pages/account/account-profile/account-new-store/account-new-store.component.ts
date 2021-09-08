@@ -24,6 +24,7 @@ export class AccountNewStoreComponent implements OnInit {
   store: StoresModel;//  Variable para el modelo de tiendas y productos
   dialCode:string = null;// Variable para el numero indicativo del pais
   countries:any = null;//variable para capturar el listado de paises
+  social:object = { facebook:"", instagram:"", twitter:"", linkedin:"", youtube:""} //Variable de tipo objeto para redes sociales
 
   constructor(private storesService:StoresService, private usersService: UsersService,) {
     
@@ -348,6 +349,30 @@ export class AccountNewStoreComponent implements OnInit {
         $(input).parent().addClass('was-validated');
 
         input.value = "";
+
+        return;
+
+      }
+
+    }
+
+    /*=============================================
+    Validamos las redes sociales de la tienda
+    =============================================*/
+
+    if($(input).attr("social") == "socialNetwork"){
+
+      /*=============================================
+      Validamos expresión regular de la dirección de la tienda
+      =============================================*/ 
+
+      let pattern = /^[-\\_\\.\\0-9a-zA-Z]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        // input.value = "";
 
         return;
 

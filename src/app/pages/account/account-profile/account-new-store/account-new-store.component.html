@@ -454,6 +454,143 @@ Nav Account
  
                             </div>
 
+                            <!--=====================================
+                            Redes sociales de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                                
+                                <label>Social Networks</label>
+
+                                <!--=====================================
+                                Facebook
+                                ======================================-->
+
+                                <div class="form-group__content input-group mb-5">
+                                    
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">https://facebook.com</span>
+                                    </div>
+
+                                    <input type="text"
+                                    class="form-control"
+                                    name="facebook"
+                                    social="socialNetwork"
+                                    pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                    [(ngModel)]="social['facebook']"
+                                    (change)="validate(facebook)"
+                                    #facebook
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                                <!--=====================================
+                                Instagram
+                                ======================================-->
+
+                                <div class="form-group__content input-group mb-5">
+                                    
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">https://instagram.com</span>
+                                    </div>
+
+                                    <input type="text"
+                                    class="form-control"
+                                    name="instagram"
+                                    social="socialNetwork"
+                                    pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                    [(ngModel)]="social['instagram']"
+                                    (change)="validate(instagram)"
+                                    #instagram
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                                <!--=====================================
+                                Twitter
+                                ======================================-->
+
+                                <div class="form-group__content input-group mb-5">
+                                    
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">https://twitter.com</span>
+                                    </div>
+
+                                    <input type="text"
+                                    class="form-control"
+                                    name="twitter"
+                                    social="socialNetwork"
+                                    pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                    [(ngModel)]="social['twitter']"
+                                    (change)="validate(twitter)"
+                                    #twitter
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                                <!--=====================================
+                                Linkedin
+                                ======================================-->
+
+                                <div class="form-group__content input-group mb-5">
+                                    
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">https://linkedin.com</span>
+                                    </div>
+
+                                    <input type="text"
+                                    class="form-control"
+                                    name="linkedin"
+                                    social="socialNetwork"
+                                    pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                    [(ngModel)]="social['linkedin']"
+                                    (change)="validate(linkedin)"
+                                    #linkedin
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                                <!--=====================================
+                                Youtube
+                                ======================================-->
+
+                                <div class="form-group__content input-group mb-5">
+                                    
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">https://youtube.com</span>
+                                    </div>
+
+                                    <input type="text"
+                                    class="form-control"
+                                    name="youtube"
+                                    social="socialNetwork"
+                                    pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                    [(ngModel)]="social['youtube']"
+                                    (change)="validate(youtube)"
+                                    #youtube
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+
+
+                            </div>
+
                             
 
                         </div>
