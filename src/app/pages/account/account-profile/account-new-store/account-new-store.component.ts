@@ -7,6 +7,8 @@ import { ProductsModel } from '../../../../models/products.model';
 import { UsersService } from '../../../../services/users.service';
 import { Sweetalert, Capitalize, CreateUrl}  from '../../../../functions';
 import { ProductsService } from '../../../../services/products.service';
+import { CategoriesService } from '../../../../services/Categories.service';
+import { SubCategoriesService } from '../../../../services/sub-categories.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -28,8 +30,14 @@ export class AccountNewStoreComponent implements OnInit {
   countries:any = null; //variable para capturar el listado de paises
   social:object = { facebook:"", instagram:"", twitter:"", linkedin:"", youtube:""} //Variable de tipo objeto para redes sociales
   product: ProductsModel; // Variable para el modelo de productos
+  /*=============================================
+  Variables de tipo arreglo para categorías y subcategorías
+  =============================================*/
+  categories:any[] = [];
+  subcategories:any[] = [];
 
-  constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,) {
+  constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
+              private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {
     
     this.store = new StoresModel();
     this.product = new ProductsModel();
@@ -183,6 +191,20 @@ export class AccountNewStoreComponent implements OnInit {
         scrollTop: $("#createProduct").offset().top-100
 
       }) 
+
+      /*=============================================
+      Traer data de categorías
+      =============================================*/
+
+      this.categoriesService.getData()
+      .subscribe(resp=>{
+
+        for(const i in resp){
+
+          this.categories.push(resp[i]);
+        }
+      
+      })
 
     }
 
@@ -482,6 +504,28 @@ export class AccountNewStoreComponent implements OnInit {
       if(input.value == country.name){
 
         this.dialCode = country.dial_code;
+      }
+
+    })
+
+  }
+
+  /*=============================================
+  Traer la data de subcategorías de acuerdo a la categoría seleccionada
+  =============================================*/
+
+  changeCategory(input){
+
+    let category = input.value.split("_")[0];
+
+    this.subCategoriesService.getFilterData("category", category)
+    .subscribe(resp=>{
+
+      this.subcategories = [];
+
+      for(const i in resp){
+
+        this.subcategories.push(resp[i])
       }
 
     })

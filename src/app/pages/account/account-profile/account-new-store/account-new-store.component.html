@@ -670,6 +670,68 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Categoría del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Product Category<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <select
+                                    class="form-control formProduct"
+                                    name="productCategory"
+                                    [(ngModel)]="product.category"
+                                    (change)="changeCategory(inputCategory)"  
+                                    #inputCategory   
+                                    required>
+                                        
+                                        <option 
+                                        *ngFor="let category of categories"
+                                        [value]="category.name+'_'+category.url">{{category.name}}</option>
+
+                                    </select>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            SubCategoría del producto
+                            ======================================-->
+
+                            <div 
+                            *ngIf="subcategories.length > 0"
+                            class="form-group">
+                            
+                                <label>Product SubCategory<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <select
+                                    class="form-control formProduct"
+                                    name="productSubCategory"
+                                    [(ngModel)]="product.sub_category"   
+                                    required>
+                                        
+                                        <option 
+                                        *ngFor="let subcategory of subcategories"
+                                        [value]="subcategory.url+'_'+subcategory.title_list">{{subcategory.name}}</option>
+
+                                    </select>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->
