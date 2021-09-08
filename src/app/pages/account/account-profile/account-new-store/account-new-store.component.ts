@@ -3,8 +3,10 @@ import { Path } from '../../../../config';
 import { StoresService } from '../../../../services/stores.service';
 import  { NgForm } from '@angular/forms';
 import { StoresModel } from '../../../../models/stores.model';
+import { ProductsModel } from '../../../../models/products.model';
 import { UsersService } from '../../../../services/users.service';
 import { Sweetalert, Capitalize, CreateUrl}  from '../../../../functions';
+import { ProductsService } from '../../../../services/products.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -20,15 +22,17 @@ export class AccountNewStoreComponent implements OnInit {
   
   path:string = Path.url;
   accept:boolean=false; // Variable para aceptar términos y condiciones
-  storeOk:boolean=false;//Variable para saber que la creación de la tienda está lista
-  store: StoresModel;//  Variable para el modelo de tiendas y productos
-  dialCode:string = null;// Variable para el numero indicativo del pais
-  countries:any = null;//variable para capturar el listado de paises
+  storeOk:boolean=false; //Variable para saber que la creación de la tienda está lista
+  store: StoresModel; // Variable para el modelo de tiendas
+  dialCode:string = null; // Variable para el numero indicativo del pais
+  countries:any = null; //variable para capturar el listado de paises
   social:object = { facebook:"", instagram:"", twitter:"", linkedin:"", youtube:""} //Variable de tipo objeto para redes sociales
+  product: ProductsModel; // Variable para el modelo de productos
 
-  constructor(private storesService:StoresService, private usersService: UsersService,) {
+  constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,) {
     
     this.store = new StoresModel();
+    this.product = new ProductsModel();
 
   }
 
@@ -247,6 +251,42 @@ export class AccountNewStoreComponent implements OnInit {
               =============================================*/
 
               this.store.url = CreateUrl.fnc(input.value);
+            }
+
+          })
+
+        }else{
+
+          /*=============================================
+          ESTA FUNCIÓN NO PERMITE PUBLICAR PRODUCTOS CON EL MISMO NOMBRE
+          =============================================*/
+
+          this.productsService.getFilterData("name", input.value)
+          .subscribe(resp=>{
+
+            if(Object.keys(resp).length > 0){
+
+              $(input).parent().addClass('was-validated')
+              input.value = "";
+              this.product.url = "";
+
+              Sweetalert.fnc("error", "El nombre del producto ya existe", null)
+
+              return;
+
+            }else{
+
+              /*=============================================
+              Capitulamos el nombre de la tienda
+              =============================================*/
+
+              input.value = Capitalize.fnc(input.value);
+
+              /*=============================================
+              Creamos la URL de la tienda
+              =============================================*/
+
+              this.product.url = CreateUrl.fnc(input.value);
             }
 
           })

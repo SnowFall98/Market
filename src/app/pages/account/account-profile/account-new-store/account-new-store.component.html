@@ -616,7 +616,7 @@ Nav Account
                         <div class="modal-header">
                             <h4 class="modal-title text-center">3.Create Product</h4>
                         </div>
-
+                        
                         <!-- Modal body -->
                         <div class="modal-body p-5 text-left">
                             
@@ -633,7 +633,34 @@ Nav Account
                                     <input type="text"
                                     class="form-control formProduct"
                                     name="productName"
+                                    pattern="[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]{1,}"
+                                    [(ngModel)]="product.name"
+                                    (change)="validate(productName)"
                                     #productName
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Url del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                            
+                                <label>Product Url<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+                                    
+                                    <input type="text"
+                                    class="form-control formProduct"
+                                    name="productUrl"
+                                    [(ngModel)]="product.url"
+                                    readonly
                                     required>
 
                                     <div class="valid-feedback">Valid.</div>
@@ -645,7 +672,7 @@ Nav Account
 
                         </div>
 
-                        <!-- Modal footer -->
+                       <!-- Modal footer -->
                         <div class="modal-footer">
 
                             <div class="form-group submtit">
