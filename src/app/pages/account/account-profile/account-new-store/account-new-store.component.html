@@ -182,6 +182,7 @@ Nav Account
                                     <input type="text"
                                     class="form-control formStore"
                                     name="storeName"
+                                    pattern="[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]{1,}"
                                     [(ngModel)]="store.store"
                                     (change)="validate(storeName)"
                                     #storeName
@@ -231,9 +232,13 @@ Nav Account
                                     <textarea
                                     class="form-control formStore"
                                     rows="7"
+                                    placeholder="Notes about your store in maximum 1000 characters, ex: We are a store specialized in technology..."
                                     name="storeAbout"
-                                    required
-                                    ></textarea>
+                                    pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}"
+                                    [(ngModel)]="store.about"
+                                    (change)="validate(about)"
+                                    #about
+                                    required></textarea>
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -279,7 +284,14 @@ Nav Account
                                     <select
                                     class="form-control formStore"
                                     name="storeCountry"
+                                    [(ngModel)]="store.country"
+                                    (change)="changeCountry(inputCountry)"  
+                                    #inputCountry   
                                     required>
+                                        
+                                        <option 
+                                        *ngFor="let country of countries"
+                                        [value]="country.name">{{country.name}}</option>
 
                                     </select>
 
@@ -303,6 +315,10 @@ Nav Account
                                     <input type="text"
                                     class="form-control formStore"
                                     name="storeCity"
+                                    pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}"
+                                    [(ngModel)]="store.city"
+                                    (change)="validate(city)"
+                                    #city
                                     required>
 
                                     <div class="valid-feedback">Valid.</div>
@@ -322,10 +338,17 @@ Nav Account
 
                                 <div class="form-group__content input-group">
 
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">{{dialCode}}</span>
+                                    </div>
                                     
                                     <input type="text"
                                     class="form-control formStore"
                                     name="storePhone"
+                                    pattern="[-\\0-9 ]{1,}"
+                                    [(ngModel)]="store.phone"
+                                    (change)="validate(phone)"
+                                    #phone
                                     required>
 
                                     <div class="valid-feedback">Valid.</div>
@@ -348,7 +371,10 @@ Nav Account
                                     <input type="text"
                                     class="form-control formStore"
                                     name="storeAddress"
+                                    pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}"
                                     [(ngModel)]="store.address"
+                                    (change)="validate(address)"
+                                    #address
                                     required>
 
                                     <div class="valid-feedback">Valid.</div>

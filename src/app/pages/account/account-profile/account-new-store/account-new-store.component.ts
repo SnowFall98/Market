@@ -22,6 +22,8 @@ export class AccountNewStoreComponent implements OnInit {
   accept:boolean=false; // Variable para aceptar términos y condiciones
   storeOk:boolean=false;//Variable para saber que la creación de la tienda está lista
   store: StoresModel;//  Variable para el modelo de tiendas y productos
+  dialCode:string = null;// Variable para el numero indicativo del pais
+  countries:any = null;//variable para capturar el listado de paises
 
   constructor(private storesService:StoresService, private usersService: UsersService,) {
     
@@ -57,6 +59,28 @@ export class AccountNewStoreComponent implements OnInit {
         this.store.country = resp[i].country;
         this.store.city = resp[i].city;
         this.store.address = resp[i].address;
+
+        /*=============================================
+        Dar formato al número teléfonico
+        =============================================*/
+
+        if(resp[i].phone != undefined){
+
+          this.store.phone = resp[i].phone.split("-")[1];
+          this.dialCode = resp[i].phone.split("-")[0];
+        }
+
+        /*=============================================
+        Traer listado de países
+        =============================================*/
+
+        this.usersService.getCountries()
+        .subscribe(resp=>{
+
+          this.countries = resp;
+
+        })
+
       }
     })
   }
@@ -198,7 +222,7 @@ export class AccountNewStoreComponent implements OnInit {
               input.value = "";
               this.store.url = "";
 
-              Sweetalert.fnc("error", "Store name already exists", null)
+              Sweetalert.fnc("error", "El nombre de la tienda ya existe", null)
 
               return;
 
@@ -224,6 +248,122 @@ export class AccountNewStoreComponent implements OnInit {
       }
 
     }
+
+    /*=============================================
+    Validamos la información de la tienda
+    =============================================*/
+
+    if($(input).attr("name") == "storeAbout"){
+
+      /*=============================================
+      Validamos expresión regular de la información de la tienda
+      =============================================*/ 
+
+      let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+
+      }else{
+
+        this.store.abstract = input.value.substr(0,100)+"...";
+      }
+
+    }
+
+    /*=============================================
+    Validamos la ciudad de la tienda
+    =============================================*/
+
+    if($(input).attr("name") == "storeCity"){
+
+      /*=============================================
+      Validamos expresión regular de la ciudad de la tienda
+      =============================================*/ 
+
+      let pattern = /^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+
+      }
+
+    }
+
+    /*=============================================
+    Validamos el teléfono de la tienda
+    =============================================*/
+
+    if($(input).attr("name") == "storePhone"){
+
+      /*=============================================
+      Validamos expresión regular del teléfono de la tienda
+      =============================================*/ 
+
+      let pattern = /^[-\\0-9 ]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+
+      }
+
+    }
+
+    /*=============================================
+    Validamos la dirección de la tienda
+    =============================================*/
+
+    if($(input).attr("name") == "storeAddress"){
+
+      /*=============================================
+      Validamos expresión regular de la dirección de la tienda
+      =============================================*/ 
+
+      let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+
+      }
+
+    }
+
+  }
+
+  /*=============================================
+  Agregar código dial al input telefónico
+  =============================================*/
+
+  changeCountry(input){
+
+    this.countries.forEach(country=>{
+
+      if(input.value == country.name){
+
+        this.dialCode = country.dial_code;
+      }
+
+    })
 
   }
 
