@@ -384,6 +384,76 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Logo de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                               
+                                <label>Store Logo<sup class="text-danger">*</sup></label> 
+ 
+                                 <div class="form-group__content">
+                                     
+                                    <label class="pb-5" for="storeLogo">
+                                        <img src="{{store.logo}}" class="img-fluid changeLogo" style="width:150px">
+                                    </label> 
+ 
+                                    <div class="custom-file">
+                                        
+                                         <input type="file"
+                                         class="custom-file-input formStore"
+                                         id="storeLogo"
+                                         accept="image/*"
+                                         maxSize="2000000"
+                                         (change)="validateImage($event, 'changeLogo')"
+                                         required>
+ 
+                                         <div class="valid-feedback">Valid.</div>
+                                         <div class="invalid-feedback">Please fill out this field.</div>
+ 
+                                         <label class="custom-file-label" for="storeLogo">Choose file</label>
+                                  
+                                    </div>
+ 
+                                </div>
+ 
+                            </div>
+
+                            <!--=====================================
+                            Portada de la tienda
+                            ======================================-->
+
+                            <div class="form-group">
+                               
+                                <label>Store Cover<sup class="text-danger">*</sup></label> 
+ 
+                                 <div class="form-group__content">
+                                     
+                                    <label class="pb-5" for="storeCover">
+                                        <img src="{{store.cover}}" class="img-fluid changeCover">
+                                    </label> 
+ 
+                                    <div class="custom-file">
+                                        
+                                         <input type="file"
+                                         class="custom-file-input formStore"
+                                         id="storeCover"
+                                         accept="image/*"
+                                         maxSize="2000000"
+                                         (change)="validateImage($event, 'changeCover')"
+                                         required>
+ 
+                                         <div class="valid-feedback">Valid.</div>
+                                         <div class="invalid-feedback">Please fill out this field.</div>
+ 
+                                         <label class="custom-file-label" for="storeCover">Choose file</label>
+                                  
+                                    </div>
+ 
+                                </div>
+ 
+                            </div>
+
                             
 
                         </div>

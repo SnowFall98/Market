@@ -41,10 +41,17 @@ export class AccountNewStoreComponent implements OnInit {
     .subscribe(resp=>{
 
       if(Object.keys(resp).length > 0){
-
+        
         window.open("account/my-store", "_top");
 
+      }else{
+
+        this.store.username = this.childItem;
+        this.store.logo = `assets/img/stores/default/default-logo.jpg`;
+        this.store.cover = `assets/img/stores/default/default-cover.jpg`;
+
       }
+
     })
     /*=============================================
     Traer la información del usuario existente
@@ -345,6 +352,55 @@ export class AccountNewStoreComponent implements OnInit {
         return;
 
       }
+
+    }
+
+  }
+
+
+  /*=============================================
+  Validación para las imágenes del formulario
+  =============================================*/
+
+  validateImage(e, tagPicture){
+
+    /*=============================================
+    Validamos el formato
+    =============================================*/
+
+    let image = e.target.files[0];
+
+    if(image["type"] !== "image/jpeg" && image["type"] !== "image/png"){
+
+      Sweetalert.fnc("error", "La imagen debe estar en formato JPG o PNG.", null)
+
+      return;
+    } else if(image["size"] > 2000000){
+      
+      /*=============================================
+      Validamos el tamaño
+      =============================================*/
+
+      Sweetalert.fnc("error", "La imagen no debe pesar más de 2 MB", null)
+
+      return;
+      
+    }else{
+
+      /*=============================================
+      Mostramos la imagen temporal
+      =============================================*/
+
+      let data = new FileReader();
+      data.readAsDataURL(image);
+
+      $(data).on("load", function(event){
+
+        let path = event.target.result; 
+
+        $(`.${tagPicture}`).attr("src", path)
+
+      })
 
     }
 
