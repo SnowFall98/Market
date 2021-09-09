@@ -732,6 +732,27 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Descripción del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                                
+                                <label>Product Description<sup class="text-danger">*</sup></label>
+                                
+                                <textarea
+                                class="formProduct"                               
+                                name="productDescription"
+                                [(ngModel)]="product.description"
+                                [ngxSummernote]="config"  
+                                required
+                                ></textarea>
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->

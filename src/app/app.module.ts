@@ -11,6 +11,8 @@ import { DataTablesModule } from 'angular-datatables';
 
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
+import { NgxSummernoteModule } from 'ngx-summernote';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { HeaderPromotionComponent } from './modules/header-promotion/header-promotion.component';
@@ -114,7 +116,8 @@ import { AccountMyStoreComponent } from './pages/account/account-profile/account
     DataTablesModule,
     ConfirmationPopoverModule.forRoot({
       confirmButtonType:'danger'
-    })
+    }),
+    NgxSummernoteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
