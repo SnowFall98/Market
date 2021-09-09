@@ -96,8 +96,21 @@ class="ps-product--detail ps-product--fullwidth">
                     class="ps-tag--out-stock"> Out stock</strong>
 
                 </p>
+                <!--=====================================
+                SUMMARY
+                ======================================-->
 
-                <div class="ps-list--dot" [innerHTML]="p.summary"></div>
+                <div class="ps-list--dot">
+                    
+                    <ul class="ps-product__desc">
+                        
+                        <li *ngFor="let sum of summary[i]">
+                            {{sum}}
+                        </li>
+
+                    </ul>
+
+                </div>
 
                 <!--=====================================
                 VIDEO
@@ -267,7 +280,7 @@ class="ps-product--detail ps-product--fullwidth">
         <ul class="ps-tab-list">
 
             <li class="active"><a href="#tab-1">Description</a></li>
-            <li><a href="#tab-2">Specification</a></li>
+            <li><a href="#tab-2">Details</a></li>
             <li><a href="#tab-3">Vendor</a></li>
             <li><a href="#tab-4">Reviews ({{totalReviews}})</a></li>
             <li><a href="#tab-5">Questions and Answers</a></li>
@@ -292,7 +305,18 @@ class="ps-product--detail ps-product--fullwidth">
 
             <div class="ps-tab" id="tab-2">
 
-                 <div [innerHTML]="p.details"></div>
+                <table class="table table-bordered ps-table ps-table--specification">
+                    
+                    <tbody>
+                      
+                        <tr *ngFor="let detail of details[i]">
+                          <td>{{detail.title}}</td>
+                          <td>{{detail.value}}</td>
+                        </tr> 
+
+                    </tbody>
+
+                </table>
 
             </div>
 

@@ -30,6 +30,8 @@ export class ProductLeftComponent implements OnInit {
     totalReviews:string;
     offer:boolean = false;
     quantity:number = 1;
+    summary:any[]=[];
+    details:any[]=[];
     
   constructor(private activateRoute: ActivatedRoute,
     private productsService: ProductsService,
@@ -81,6 +83,10 @@ export class ProductLeftComponent implements OnInit {
       this.reviews.push(DinamicReviews.fnc(this.rating[index]));
 
       this.price.push(DinamicPrice.fnc(this.product[index]));
+      
+      this.summary.push(JSON.parse(this.product[index].summary));
+
+      this.details.push(JSON.parse(this.product[index].details));
 
       /*=============================================
       Agregamos la fecha al descontador
