@@ -33,6 +33,9 @@ CREACIÓN DE COOKIES EN ANGULAR:
 `npm install js-cookie --save`
 `npm install @types/js-cookie --save`
 
+EDITOR DE TEXTO ENRIQUECIDO: SUMMERNOTE
+`npm install --save summernote ngx-summernote`
+
 # Errores de ejecución
 Se pueden presentar errores como: 
 1. "An unhandled exception occurred: Script file ./node_modules/js-cookie/src/js.cookie.js does not exist." 
