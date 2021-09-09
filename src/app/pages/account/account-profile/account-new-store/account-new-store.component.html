@@ -757,6 +757,188 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Resumen del producto
+                            ======================================-->
+                            
+                            <div class="form-group">
+                                
+                                <label>Product Summary<sup class="text-danger">*</sup> Ex: 20 hours of portable capabilities</label>
+
+                                <div 
+                                *ngFor="let inputSummary of summaryGroup; let i = index"
+                                class="form-group__content input-group mb-3">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                           <button type="button" class="btn btn-danger" (click)="removeInput(i,'summary')">&times;</button>
+                                        </span>
+                                    </div>
+                                    
+                                    <input
+                                    class="form-control formProduct" 
+                                    type="text"
+                                    name="input_{{i}}"
+                                    [(ngModel)]="inputSummary.input"
+                                    required
+                                    >
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                                <button type="button" class="btn btn-primary mb-2" (click)="addInput('summary')">Add Summary</button>
+
+                            </div>
+
+                            <!--=====================================
+                            Detalles del producto
+                            ======================================-->
+                            
+                            <div class="form-group">
+                                
+                                <label>Product Details<sup class="text-danger">*</sup> Ex: <strong>Title:</strong> Bluetooth, <strong>Value:</strong> Yes</label>
+
+                                <div 
+                                *ngFor="let inputDetail of detailsGroup; let i = index"
+                                class="row mb-3">
+
+                                    <!--=====================================
+                                    Entrada para el título del detalle
+                                    ======================================--> 
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                               <button type="button" class="btn btn-danger" (click)="removeInput(i, 'details')">&times;</button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Title:
+                                            </span>
+                                        </div>
+                                        
+                                        <input
+                                        class="form-control formProduct" 
+                                        type="text"
+                                        name="title_{{i}}"
+                                        [(ngModel)]="inputDetail.title"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Entrada para el valor del detalle
+                                    ======================================--> 
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Value:
+                                            </span>
+                                        </div>
+                                        
+                                        <input
+                                        class="form-control formProduct" 
+                                        type="text"
+                                        name="value_{{i}}"
+                                        [(ngModel)]="inputDetail.value"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="button" class="btn btn-primary mb-2" (click)="addInput('details')">Add Detail</button>
+
+                            </div>
+
+                            <!--=====================================
+                            Especificaciones del producto
+                            ======================================-->
+                            
+                            <div class="form-group">
+                                
+                                <label>Product Specifications Ex: <strong>Type:</strong> Color, <strong>Values:</strong> Black, Red, White</label>
+
+                                <div 
+                                *ngFor="let inputSpecification of specificationsGroup; let i = index"
+                                class="row mb-3">
+
+                                    <!--=====================================
+                                    Entrada para el tipo del especificación
+                                    ======================================--> 
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                               <button type="button" class="btn btn-danger" (click)="removeInput(i, 'specifications')">&times;</button>
+                                            </span>
+                                        </div>
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Type:
+                                            </span>
+                                        </div>
+                                        
+                                        <input
+                                        class="form-control" 
+                                        type="text"
+                                        name="type_{{i}}"
+                                        [(ngModel)]="inputSpecification.type"
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Entrada para el valor del detalle
+                                    ======================================--> 
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Values:
+                                            </span>
+                                        </div>
+                                        
+                                        <tag-input
+                                        class="form-control" 
+                                        type="text"
+                                        name="values_{{i}}"
+                                        [(ngModel)]="inputSpecification.values"
+                                        [maxItems]='5'
+                                        ></tag-input>
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                </div>
+
+                                <button type="button" class="btn btn-primary mb-2" (click)="addInput('specifications')">Add Specification</button>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->

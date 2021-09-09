@@ -38,17 +38,16 @@ export class AccountNewStoreComponent implements OnInit {
   /*=============================================
   Configuración inicial de Summernote 
   =============================================*/
-  config = {
-    placeholder:'',
-    tabsize:2,
-    height:'400px',
-    toolbar:[
+  config = { placeholder:'', tabsize:2, height:'400px', toolbar:[
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
       ['insert', ['link','picture', 'hr']]
     ]
   }
+  summaryGroup: any[] = [{ input:''}] //Variables de tipo arreglo con objeto para el resumen del producto
+  detailsGroup: any[] = [{ title:'', value:'' }] // Variables de tipo arreglo con objetos para los detalles del producto
+  specificationsGroup: any[] = [{ type:'', values:''}] // Variables de tipo arreglo con objetos para las especificaciones del producto
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
               private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {
@@ -543,6 +542,96 @@ export class AccountNewStoreComponent implements OnInit {
       }
 
     })
+
+  }
+
+  /*=============================================
+  Adicionar Input's de forma dinámica
+  =============================================*/
+
+  addInput(type){
+
+    if(type == "summary"){
+
+      if(this.summaryGroup.length < 5){
+
+        this.summaryGroup.push({
+
+          input:''
+        })
+
+      }else{
+
+        Sweetalert.fnc("error", "Entry limit has been exceeded", null)
+
+      }
+
+    }
+
+    if(type == "details"){
+
+      if(this.detailsGroup.length < 10){
+
+        this.detailsGroup.push({
+
+          title:'',
+          value:''
+        })
+
+      }else{
+
+        Sweetalert.fnc("error", "Entry limit has been exceeded", null)
+
+      }
+
+    }
+
+    if(type == "specifications"){
+
+      if(this.specificationsGroup.length < 5){
+
+        this.specificationsGroup.push({
+
+          type:'',
+          values:''
+        })
+
+      }else{
+
+        Sweetalert.fnc("error", "Entry limit has been exceeded", null)
+
+      }
+
+    }
+
+  }
+
+  /*=============================================
+  Quitar Input's de forma dinámica
+  =============================================*/
+
+  removeInput(i, type){
+
+    if(i > 0){
+
+      if(type == "summary"){
+
+        this.summaryGroup.splice(i, 1) 
+
+      }
+
+      if(type == "details"){
+
+        this.detailsGroup.splice(i, 1) 
+
+      }
+
+      if(type == "specifications"){
+
+        this.specificationsGroup.splice(i, 1) 
+
+      }
+    }
 
   }
 
