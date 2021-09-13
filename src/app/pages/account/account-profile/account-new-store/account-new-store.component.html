@@ -965,6 +965,41 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Imagen del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                               
+                                <label>Product Image<sup class="text-danger">*</sup></label> 
+ 
+                                 <div class="form-group__content">
+                                     
+                                    <label class="pb-5" for="productImage">
+                                        <img src="{{product.image}}" class="img-fluid changeImage">
+                                    </label> 
+ 
+                                    <div class="custom-file">
+                                        
+                                         <input type="file"
+                                         class="custom-file-input formProduct"
+                                         id="productImage"
+                                         accept="image/*"
+                                         maxSize="2000000"
+                                         (change)="validateImage($event, 'changeImage')"
+                                         required>
+ 
+                                         <div class="valid-feedback">Valid.</div>
+                                         <div class="invalid-feedback">Please fill out this field.</div>
+ 
+                                         <label class="custom-file-label" for="productImage">Choose file</label>
+                                  
+                                    </div>
+ 
+                                 </div>
+ 
+                             </div>
+
                         </div>
 
                        <!-- Modal footer -->

@@ -220,10 +220,13 @@ export class AccountNewStoreComponent implements OnInit {
       
       })
 
+      /*=============================================
+      Agregar imagen del producto por defecto
+      =============================================*/
+
+      this.product.image = `assets/img/products/default/default-image.jpg`;
+
     }
-
-
-
 
   }
 
