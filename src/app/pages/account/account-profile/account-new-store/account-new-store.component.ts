@@ -543,7 +543,64 @@ export class AccountNewStoreComponent implements OnInit {
 
     }
 
+    /*=============================================
+    Validamos el precio de envío y el precio de venta
+    =============================================*/
+
+    if($(input).attr("tags") == "prices"){
+
+      /*=============================================
+      Validamos expresión regular
+      =============================================*/ 
+
+      let pattern = /^[.\\,\\0-9]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        return;
+
+      }
+
+    }
+
+    /*=============================================
+    Validamos dias de entrega y stock
+    =============================================*/
+
+    if($(input).attr("tags") == "intNumber"){
+
+      /*=============================================
+      Validamos expresión regular
+      =============================================*/ 
+
+      let pattern = /^[0-9]{1,}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        return;
+
+      }else{
+
+        if($(input).attr("name") == "stock" &&  input.value > 100){ // Definir limite de unidades en Stock por producto
+
+          input.value = "";
+
+          Sweetalert.fnc("error", "The product exceeds 100 units", null)
+
+          return;
+
+        }
+
+      }
+
+    }
+
   }
+
 
   /*=============================================
   Validación para las imágenes del formulario

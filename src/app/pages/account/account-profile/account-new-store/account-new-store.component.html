@@ -1653,7 +1653,158 @@ Nav Account
  
                                 </div>
  
-                             </div>
+                            </div>
+
+                            <!--=====================================
+                            Precio de venta, precio de envío, dias de entrega y stock
+                            ======================================-->
+
+                            <div class="form-group">
+                                
+                                <div class="row mb-3">
+
+                                    <!--=====================================
+                                    Precio de venta
+                                    ======================================-->
+                                    
+                                    <div class="col-12 col-lg-3">
+                                        
+                                        <label>Product Price<sup class="text-danger">*</sup></label>
+
+                                        <div class="form-group__content input-group mx-0 pr-0">         
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    Price $:
+                                                </span>
+                                            </div>
+
+                                            <input type="number"
+                                            class="form-control formProduct"
+                                            name="price"
+                                            [(ngModel)]="product.price"
+                                            min="0"
+                                            step="any"
+                                            pattern="[.\\,\\0-9]{1,}"
+                                            (change)="validate(price)"
+                                            #price
+                                            tags="prices"
+                                            required>
+                                        
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>
+
+                                        </div>      
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Precio de envío
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-3">
+                                        
+                                        <label>Product Shipping<sup class="text-danger">*</sup></label>
+
+                                        <div class="form-group__content input-group mx-0 pr-0"> 
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    Shipping $:
+                                                </span>
+                                            </div>
+
+                                            <input type="number"
+                                            class="form-control formProduct"
+                                            name="shipping"
+                                            [(ngModel)]="product.shipping"
+                                            min="0"
+                                            step="any"
+                                            pattern="[.\\,\\0-9]{1,}"
+                                            (change)="validate(shipping)"
+                                            #shipping
+                                            tags="prices"
+                                            required>
+                                        
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div> 
+
+                                        </div>     
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Días de entrega
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-3">
+                                        
+                                        <label>Product Delivery Time<sup class="text-danger">*</sup></label>
+
+                                        <div class="form-group__content input-group mx-0 pr-0"> 
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    Days:
+                                                </span>
+                                            </div>
+
+                                            <input type="number"
+                                            class="form-control formProduct"
+                                            name="delivery_time"
+                                            [(ngModel)]="product.delivery_time"
+                                            min="0"
+                                            pattern="[0-9]{1,}"
+                                            (change)="validate(delivery_time)"
+                                            #delivery_time
+                                            tags="intNumber"
+                                            required>
+                                        
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>  
+
+                                        </div>    
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Stock
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-3">
+                                        
+                                        <label>Product Stock<sup class="text-danger">*</sup> (Max:100 unit)</label>
+
+                                        <div class="form-group__content input-group mx-0 pr-0"> 
+
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    Stock:
+                                                </span>
+                                            </div>
+
+                                            <input type="number"
+                                            class="form-control formProduct"
+                                            name="stock"
+                                            [(ngModel)]="product.stock"
+                                            min="0"
+                                            max="100"
+                                            pattern="[0-9]{1,}"
+                                            (change)="validate(stock)"
+                                            #stock
+                                            tags="intNumber"
+                                            required>
+                                        
+                                            <div class="valid-feedback">Valid.</div>
+                                            <div class="invalid-feedback">Please fill out this field.</div>  
+
+                                        </div>    
+
+                                    </div>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
