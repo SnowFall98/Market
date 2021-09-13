@@ -26,7 +26,7 @@ export class ProductLeftComponent implements OnInit {
     gallery:any[] = [];
     renderGallery:boolean = true;
     video:string = null;
-    tags:string = null;
+    tags:any[]=[];
     totalReviews:string;
     offer:boolean = false;
     quantity:number = 1;
@@ -148,11 +148,11 @@ export class ProductLeftComponent implements OnInit {
         
       }
 
-    /*=============================================
+      /*=============================================
       Agregamos los tags
       =============================================*/ 
 
-      this.tags = this.product[index].tags.split(",");
+      this.tags = JSON.parse(this.product[index].tags);
 
       /*=============================================
         Total Reviews

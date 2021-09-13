@@ -939,6 +939,32 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Palabras claves del producto
+                            ======================================--> 
+
+                            <div class="form-group">
+                                
+                                <label>Product Tags<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+
+                                    <tag-input
+                                    class="form-control formProduct" 
+                                    type="text"
+                                    name="productTags"
+                                    [(ngModel)]="tags"
+                                    [maxItems]='5'
+                                    required
+                                    ></tag-input>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->
