@@ -825,6 +825,32 @@ export class AccountNewStoreComponent implements OnInit {
 
       }
     }
+
+    /*=============================================
+    Validamos que las palabras claves tenga como mínimo una sola palabra
+    =============================================*/
+
+    if(this.tags.length == 0){
+
+      Sweetalert.fnc("error", "Product Tags is empty", null);  
+
+      return;
+
+    
+    }
+
+    /*=============================================
+    Validamos que la galería tenga como mínimo una sola imagen
+    =============================================*/
+
+    if(this.gallery.length == 0){
+
+      Sweetalert.fnc("error", "Product Gallery is empty", null);  
+
+      return;
+
+    }
+
     /*=============================================
     Validación completa del formulario
     =============================================*/
@@ -836,13 +862,6 @@ export class AccountNewStoreComponent implements OnInit {
       return;
     }
     
-
-
-
-
-
-
-  
   }
 
 
