@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Api } from '../config';
+import { ProductsModel } from '../models/products.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,12 @@ export class ProductsService {
 	patchDataAuth(id:string, value:object, idToken:string){
 
 		return this.http.patch(`${this.api}products/${id}.json?auth=${idToken}`,value);
+
+	}
+
+	registerDatabase(body: ProductsModel, idToken:string){
+
+		return this.http.post(`${this.api}/products.json?auth=${idToken}`, body);
 
 	}
 }

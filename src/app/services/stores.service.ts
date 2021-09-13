@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Api } from '../config';
+import { StoresModel } from '../models/stores.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class StoresService {
     return this.http.get(`${this.api}stores.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
 
   }
+
+	registerDatabase(body: StoresModel, idToken:string){
+
+		return this.http.post(`${this.api}/stores.json?auth=${idToken}`, body);
+
+	}
   
 }
 
