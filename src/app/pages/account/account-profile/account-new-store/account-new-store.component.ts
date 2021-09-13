@@ -65,6 +65,8 @@ export class AccountNewStoreComponent implements OnInit {
     "IMG tag":""
   }
   video:any[] = []; // Variables de tipo arreglo para el video del producto
+  offer: any[] = []; // Variables de tipo arreglo para las ofertas del producto
+
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
               private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {

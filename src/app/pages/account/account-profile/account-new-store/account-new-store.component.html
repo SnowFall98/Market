@@ -1806,6 +1806,105 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Oferta del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                                
+                                <label>Product Offer Ex: <strong>Type:</strong> Disccount, <strong>Percent %:</strong> 25, <strong>End offer:</strong> 30/06/2020</label>
+
+                                <div class="row mb-3">
+
+                                    <!--=====================================
+                                    Tipo de Oferta
+                                    ======================================-->
+                                    
+                                    <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+                                        
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Type:
+                                            </span>
+                                        </div>
+
+                                        <select name="text"
+                                        class="form-control"
+                                        name="type_offer"
+                                        [(ngModel)]="offer[0]">
+                                            
+                                            <option value="Disccount">Disccount</option>
+                                            <option value="Fixed">Fixed</option>
+
+                                        </select>
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>        
+
+                                    </div>
+
+                                    <!--=====================================
+                                    El valor de la oferta
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+                                    
+                                        <div class="input-group-append">
+                                            <span 
+                                            *ngIf="offer[0]=='Disccount'"
+                                            class="input-group-text">
+                                                Percent %:
+                                            </span>
+
+                                            <span 
+                                            *ngIf="offer[0]=='Fixed'"
+                                            class="input-group-text">
+                                                Price $:
+                                            </span>
+                                        </div>
+
+                                        <input type="number"
+                                        class="form-control"
+                                        name="value_offer"
+                                        [(ngModel)]="offer[1]"
+                                        min="0"
+                                        step="any"
+                                        pattern="[.\\,\\0-9]{1,}"
+                                        (change)="validate(value_offer)"
+                                        #value_offer
+                                        tags="prices">
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>     
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Fecha de vencimiento de la oferta
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-4 form-group__content input-group mx-0 pr-0">
+                                        
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                End Offer:
+                                            </span>
+                                        </div>
+
+                                        <input type="date"
+                                        class="form-control"
+                                        name="date_offer"
+                                        [(ngModel)]="offer[2]">
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>     
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->
