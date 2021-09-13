@@ -29,11 +29,15 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3
 		Eliminar todos los archivos que existan en ese directorio
 		=============================================*/
 
-		$files = glob($directory."/*");
+		if($_POST["path"] != "products" && $_POST["path"] != "stores"){
 
-		foreach ($files as $file) {
-			
-			unlink($file);
+			$files = glob($directory."/*");
+
+			foreach ($files as $file) {
+				
+				unlink($file);
+			}
+
 		}
 
 		/*=============================================
@@ -73,7 +77,7 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3
 		if($_FILES["file"]["type"] == "image/png"){
 
 			//definimos nombre del archivo
-			$name = mt_rand(100, 9999).'.png';
+			$name = date('m-d-Y_hia').mt_rand(100, 999999999).'.png';
 
 			//definimos el destino donde queremos guardar el archivo
 			$folderPath = $directory.'/'.$name;
