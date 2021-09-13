@@ -1591,6 +1591,70 @@ Nav Account
 
                             </div>
 
+                            <!--=====================================
+                            Video del producto
+                            ======================================-->
+
+                            <div class="form-group">
+                               
+                                <label>Product Video, Ex: <strong>Type:</strong> YouTube, <strong>Id:</strong> Sl5FaskVpD4</label> 
+ 
+                                <div class="row mb-3">
+                                    
+                                     <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0">
+                                         
+                                         <div class="input-group-append">
+                                             <span class="input-group-text">
+                                                 Type:
+                                             </span>
+                                         </div>
+ 
+                                         <select 
+                                         class="form-control"                               
+                                         name="type_video"
+                                         [(ngModel)]="video[0]"
+                                         >
+                                             
+                                             <option value="youtube">YouTube</option>
+                                             <option value="vimeo">Vimeo</option>
+ 
+                                         </select>
+ 
+                                         <div class="valid-feedback">Valid.</div>
+                                         <div class="invalid-feedback">Please fill out this field.</div>             
+ 
+ 
+                                     </div>
+ 
+                                     <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0">
+                                         
+                                         <div class="input-group-append">
+                                             <span class="input-group-text">
+                                                 Id:
+                                             </span>
+                                         </div>
+ 
+                                         <input
+                                         class="form-control"                               
+                                         name="id_video"
+                                         [(ngModel)]="video[1]"
+                                         pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,100}"
+                                         maxlength="100"
+                                         tags="tags"
+                                         (change)="validate(id_video)"
+                                         #id_video
+                                         >
+         
+                                         <div class="valid-feedback">Valid.</div>
+                                         <div class="invalid-feedback">Please fill out this field.</div>             
+ 
+ 
+                                     </div>
+ 
+                                </div>
+ 
+                             </div>
+
                         </div>
 
                        <!-- Modal footer -->

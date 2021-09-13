@@ -64,6 +64,7 @@ export class AccountNewStoreComponent implements OnInit {
     "Button tag":"",
     "IMG tag":""
   }
+  video:any[] = []; // Variables de tipo arreglo para el video del producto
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
               private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {
@@ -519,6 +520,29 @@ export class AccountNewStoreComponent implements OnInit {
         return;
       }
     }
+
+    /*=============================================
+    Validamos el video del producto
+    =============================================*/
+
+    if($(input).attr("name") == "id_video"){
+
+      /*=============================================
+      Validamos expresión regular
+      =============================================*/ 
+
+      let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,100}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        return;
+
+      }
+
+    }
+
   }
 
   /*=============================================
