@@ -30,15 +30,9 @@ export class AccountNewStoreComponent implements OnInit {
   countries:any = null; //variable para capturar el listado de paises
   social:object = { facebook:"", instagram:"", twitter:"", linkedin:"", youtube:""} //Variable de tipo objeto para redes sociales
   product: ProductsModel; // Variable para el modelo de productos
-  /*=============================================
-  Variables de tipo arreglo para categorías y subcategorías
-  =============================================*/
-  categories:any[] = [];
-  subcategories:any[] = [];
-  /*=============================================
-  Configuración inicial de Summernote 
-  =============================================*/
-  config = { placeholder:'', tabsize:2, height:'400px', toolbar:[
+  categories:any[] = []; // Variables de tipo arreglo para categorías
+  subcategories:any[] = []; // Variables de tipo arreglo para subcategorías
+  config = { placeholder:'', tabsize:2, height:'400px', toolbar:[ //Configuración inicial de Summernote 
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
@@ -50,6 +44,26 @@ export class AccountNewStoreComponent implements OnInit {
   specificationsGroup: any[] = [{ type:'', values:''}] // Variables de tipo arreglo con objetos para las especificaciones del producto
   tags:any[] = []; // Variables de tipo arreglo para las palabras claves del producto
   gallery: File[] = []; // Variables de tipo arreglo para la galería del producto
+  topBanner:object = { //Variables de tipo objeto para el banner superior del producto
+
+    "H3 tag":"",
+    "P1 tag":"",
+    "H4 tag":"", 
+    "P2 tag":"", 
+    "Span tag":"",
+    "Button tag":"",
+    "IMG tag":""
+  }
+  hSlider:object = { // Variables de tipo objeto para el slide horizontal del producto
+
+    "H4 tag":"",
+    "H3-1 tag":"",
+    "H3-2 tag":"", 
+    "H3-3 tag":"", 
+    "H3-4s tag":"",
+    "Button tag":"",
+    "IMG tag":""
+  }
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
               private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {
@@ -227,7 +241,31 @@ export class AccountNewStoreComponent implements OnInit {
 
       this.product.image = `assets/img/products/default/default-image.jpg`;
 
+      /*=============================================
+      Agregar Imagen Banner Top por defecto
+      =============================================*/
+
+      this.topBanner["IMG tag"] = `assets/img/products/default/default-top-banner.jpg`;
+
     }
+
+    /*=============================================
+    Agregar Imagen Banner Default por defecto
+    =============================================*/
+
+    this.product.default_banner = `assets/img/products/default/default-banner.jpg`;
+
+    /*=============================================
+    Agregar Imagen Slide Horizontal por defecto
+    =============================================*/
+
+    this.hSlider["IMG tag"] = `assets/img/products/default/default-horizontal-slider.jpg`;
+
+    /*=============================================
+    Agregar Imagen Slide Vertical por defecto
+    =============================================*/
+
+    this.product.vertical_slider = `assets/img/products/default/default-vertical-slider.jpg`;
 
   }
 
@@ -460,8 +498,28 @@ export class AccountNewStoreComponent implements OnInit {
 
     }
 
-  }
+    /*=============================================
+    Validamos los TAGS de los Banner's y Slider's
+    =============================================*/
 
+    if($(input).attr("tags") == "tags"){
+
+      /*=============================================
+      Validamos expresión regular
+      =============================================*/ 
+
+      let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}$/;
+
+      if(!pattern.test(input.value)){
+
+        $(input).parent().addClass('was-validated');
+
+        input.value = "";
+
+        return;
+      }
+    }
+  }
 
   /*=============================================
   Validación para las imágenes del formulario

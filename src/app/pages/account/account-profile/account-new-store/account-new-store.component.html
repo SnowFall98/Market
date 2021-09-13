@@ -1040,6 +1040,557 @@ Nav Account
                                 
                             </div>
 
+                            <!--=====================================
+                            Banner Top del producto
+                            ======================================--> 
+
+                            <div class="form-group">
+                                
+                                <label>Product Top Banner<sup class="text-danger">*</sup>, Ex:</label>
+
+                                <figure class="pb-5">
+                                    
+                                    <img src="{{path}}img/products/default/example-top-banner.png" class="img-fluid">
+
+                                </figure>
+
+                                <div class="row mb-3">
+                                    
+                                    <!--=====================================
+                                    H3 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H3 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: 20%"
+                                        name="topBannerH3Tag"
+                                        [(ngModel)]="topBanner['H3 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerH3Tag)" 
+                                        #topBannerH3Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    P1 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                P1 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Disccount"
+                                        name="topBannerP1Tag"
+                                        [(ngModel)]="topBanner['P1 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerP1Tag)" 
+                                        #topBannerP1Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    H4 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H4 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: For Books Of March"
+                                        name="topBannerH4Tag"
+                                        [(ngModel)]="topBanner['H4 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerH4Tag)" 
+                                        #topBannerH4Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    P2 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                P2 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Enter Promotion"
+                                        name="topBannerP2Tag"
+                                        [(ngModel)]="topBanner['P2 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerP2Tag)" 
+                                        #topBannerP2Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Span Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Span Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Sale2019"
+                                        name="topBannerSpanTag"
+                                        [(ngModel)]="topBanner['Span tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerSpanTag)" 
+                                        #topBannerSpanTag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    Button Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Button Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Shop now"
+                                        name="topBannerButtonTag"
+                                        [(ngModel)]="topBanner['Button tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(topBannerButtonTag)" 
+                                        #topBannerButtonTag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    IMG Tag
+                                    ======================================-->
+
+                                    <div class="form-group">
+
+                                        <label>IMG Tag:</label>
+
+                                        <div class="form-group__content">
+
+                                            <label class="pb-3" for="topBanner">
+
+                                                <img src="{{topBanner['IMG tag']}}" class="img-fluid changeTopBanner">
+
+                                            </label>
+
+                                            <div class="custom-file">
+
+                                                <input type="file" 
+                                                class="custom-file-input formProduct" 
+                                                id="topBanner"
+                                                accept="image/*"
+                                                maxSize="2000000"
+                                                (change)="validateImage($event,'changeTopBanner')"
+                                                required>
+
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field.</div>
+
+                                                <label class="custom-file-label" for="topBanner">Choose file</label>
+
+                                            </div>            
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div> 
+
+                            <!--=====================================
+                            Banner por defecto del producto
+                            ======================================--> 
+
+                            <div class="form-group">
+
+                                <label>Product Default Banner<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+
+                                    <label class="pb-5" for="productDefaultBanner">
+
+                                        <img src="{{product.default_banner}}" class="img-fluid changeDefaultBanner" style="width:500px">
+
+                                    </label>
+
+                                    <div class="custom-file">
+
+                                        <input type="file" 
+                                        class="custom-file-input formProduct" 
+                                        id="productDefaultBanner"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        (change)="validateImage($event,'changeDefaultBanner')"
+                                        required>
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                        <label class="custom-file-label" for="productDefaultBanner">Choose file</label>
+
+                                    </div>     
+                                    
+                                </div>
+
+                            </div>
+
+                            <!--=====================================
+                            Slide Horizontal del producto
+                            ======================================--> 
+
+                            <div class="form-group">
+                                
+                                <label>Product Horizontal Slider<sup class="text-danger">*</sup>, Ex:</label>
+
+                                <figure class="pb-5">
+                                    
+                                    <img src="{{path}}img/products/default/example-horizontal-slider.png" class="img-fluid">
+
+                                </figure>
+
+                                <div class="row mb-3">
+                                    
+                                    <!--=====================================
+                                    H4 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H4 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Limit Edition"
+                                        name="hSliderH4Tag"
+                                        [(ngModel)]="hSlider['H4 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderH4Tag)" 
+                                        #hSliderH4Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    H3-1 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H3-1 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Happy Summer"
+                                        name="hSliderH3_1Tag"
+                                        [(ngModel)]="hSlider['H3-1 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderH3_1Tag)" 
+                                        #hSliderH3_1Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    H3-2 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H3-2 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Combo Super Cool"
+                                        name="hSliderH3_2Tag"
+                                        [(ngModel)]="hSlider['H3-2 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderH3_2Tag)" 
+                                        #hSliderH3_2Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    H3-3 Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H3-3 Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Up to"
+                                        name="hSliderH3_3Tag"
+                                        [(ngModel)]="hSlider['H3-3 tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderH3_3Tag)" 
+                                        #hSliderH3_3Tag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    H3-4s Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                H3-4s Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: 40%"
+                                        name="hSliderH3_4sTag"
+                                        [(ngModel)]="hSlider['H3-4s tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderH3_4sTag)" 
+                                        #hSliderH3_4sTag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+
+                                    <!--=====================================
+                                    Button Tag
+                                    ======================================-->
+
+                                    <div class="col-12 col-lg-6 form-group__content input-group mx-0 pr-0 mb-3">
+
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                Button Tag:
+                                            </span>
+                                        </div>
+
+                                        <input type="text"
+                                        class="form-control formProduct"
+                                        placeholder="Ex: Shop now"
+                                        name="hSliderButtonTag"
+                                        [(ngModel)]="hSlider['Button tag']"
+                                        pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,50}"
+                                        maxlength="50"
+                                        (change)="validate(hSliderButtonTag)" 
+                                        #hSliderButtonTag
+                                        tags="tags"
+                                        required
+                                        >
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    </div>
+
+                                    <!--=====================================
+                                    IMG Tag
+                                    ======================================-->
+
+                                    <div class="form-group">
+
+                                        <label>IMG Tag:</label>
+
+                                        <div class="form-group__content">
+
+                                            <label class="pb-3" for="hSlider">
+
+                                                <img src="{{hSlider['IMG tag']}}" class="img-fluid changeHSlider">
+
+                                            </label>
+
+                                            <div class="custom-file">
+
+                                                <input type="file" 
+                                                class="custom-file-input formProduct" 
+                                                id="hSlider"
+                                                accept="image/*"
+                                                maxSize="2000000"
+                                                (change)="validateImage($event,'changeHSlider')"
+                                                required>
+
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field.</div>
+
+                                                <label class="custom-file-label" for="hSlider">Choose file</label>
+
+                                            </div>            
+                                            
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div> 
+
+                            <!--=====================================
+                            Slide Vertical del producto
+                            ======================================--> 
+
+                            <div class="form-group">
+
+                                <label>Product Vertical Slider<sup class="text-danger">*</sup></label>
+
+                                <div class="form-group__content">
+
+                                    <label class="pb-5" for="vSlider">
+
+                                        <img src="{{product.vertical_slider}}" class="img-fluid changeVSlider" style="width:260px">
+
+                                    </label>
+
+                                    <div class="custom-file">
+
+                                        <input type="file" 
+                                        class="custom-file-input formProduct" 
+                                        id="vSlider"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        (change)="validateImage($event,'changeVSlider')"
+                                        required>
+
+                                        <div class="valid-feedback">Valid.</div>
+                                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                                        <label class="custom-file-label" for="vSlider">Choose file</label>
+
+                                    </div>     
+                                    
+                                </div>
+
+                            </div>
+
                         </div>
 
                        <!-- Modal footer -->
