@@ -29,6 +29,7 @@
     "js-cookie": "^2.2.1",
     "md5-typescript": "^1.0.5",
     "ngx-chips": "^2.0.2",
+    "ngx-dropzone": "^3.0.0",
     "ngx-summernote": "^0.8.7",
     "notie": "^4.3.1",
     "rxjs": "~6.6.0",

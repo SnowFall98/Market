@@ -15,6 +15,7 @@ import { NgxSummernoteModule } from 'ngx-summernote';
 //Fallo con la libreria ngx-chips - Se cae el servidor - validar error
 import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './modules/header/header.component';
@@ -123,6 +124,7 @@ import { AccountMyStoreComponent } from './pages/account/account-profile/account
     NgxSummernoteModule,
     TagInputModule, 
     BrowserAnimationsModule,
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]
