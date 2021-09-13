@@ -52,7 +52,7 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3
 		if($_FILES["file"]["type"] == "image/jpeg"){
 
 			//definimos nombre del archivo
-			$name = mt_rand(100, 9999).'.jpg';
+			$name = date('m-d-Y_hia').mt_rand(100, 999999999).'.jpg';
 
 			//definimos el destino donde queremos guardar el archivo
 			$folderPath = $directory.'/'.$name;
