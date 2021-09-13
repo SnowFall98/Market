@@ -49,6 +49,7 @@ export class AccountNewStoreComponent implements OnInit {
   detailsGroup: any[] = [{ title:'', value:'' }] // Variables de tipo arreglo con objetos para los detalles del producto
   specificationsGroup: any[] = [{ type:'', values:''}] // Variables de tipo arreglo con objetos para las especificaciones del producto
   tags:any[] = []; // Variables de tipo arreglo para las palabras claves del producto
+  gallery: File[] = []; // Variables de tipo arreglo para la galería del producto
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
               private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService) {
@@ -639,6 +640,21 @@ export class AccountNewStoreComponent implements OnInit {
 
   }
 
+  /*=============================================
+    Funciones de Dropzone
+    =============================================*/
+
+    onSelect(event) {
+        
+    this.gallery.push(...event.addedFiles);
+
+  }
+
+  onRemove(event) {
+   
+    this.gallery.splice(this.gallery.indexOf(event), 1);
+
+  }
 
 
 

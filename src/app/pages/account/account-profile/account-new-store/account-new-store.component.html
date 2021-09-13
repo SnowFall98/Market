@@ -998,7 +998,47 @@ Nav Account
  
                                  </div>
  
-                             </div>
+                            </div>
+
+                            <!--=====================================
+                            Galería del Producto
+                            ======================================-->    
+
+                            <label>Product Gallery<sup class="text-danger">*</sup></label>   
+                            
+                            <div class="custom-dropzone mb-5"
+                            ngx-dropzone
+                            accept="image/*"
+                            (change)="onSelect($event)">
+
+                            <!--=====================================
+                            En caso tal de que haya fallos al subir la imagen del producto
+                            Eliminar el label ngx-dropzone-label
+                            ======================================--> 
+
+                            <ngx-dropzone-label>
+                                    
+                                <div>
+                                    <h2 class="text-muted">Drop your files here, size 1000px * 1000px</h2>
+                                </div>
+
+                            </ngx-dropzone-label>
+
+
+                                <ngx-dropzone-image-preview
+                                ngProjectAs="ngx-dropzone-preview"
+                                *ngFor="let f of gallery"
+                                [file]="f"
+                                [removable]="true"
+                                (removed)="onRemove(f)">
+                                   
+                                   <ngx-dropzone-label>
+                                       {{f.name }} {{f.type}}
+                                   </ngx-dropzone-label> 
+
+                                </ngx-dropzone-image-preview>  
+                                
+                            </div>
 
                         </div>
 
