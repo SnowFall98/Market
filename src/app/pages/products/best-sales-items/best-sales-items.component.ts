@@ -113,6 +113,12 @@ export class BestSalesItemsComponent implements OnInit {
 				this.price.push(DinamicPrice.fnc(this.bestSalesItem[index]));
 
 				this.cargando = false;
+        
+        setTimeout(function(){
+
+					Rating.fnc()
+				
+				},index*100)
 
 			}
 
@@ -132,7 +138,6 @@ export class BestSalesItemsComponent implements OnInit {
 
       OwlCarouselConfig.fnc();
       CarouselNavigation.fnc();
-      Rating.fnc();
     
     }
 

@@ -53,7 +53,7 @@ export class HomeHotTodayComponent implements OnInit {
 
 				getProducts.push({
 
-					"offer": JSON.parse(resp[i].offer),
+					"offer": resp[i].offer,
 					"stock": resp[i].stock
 
 				})
@@ -68,22 +68,23 @@ export class HomeHotTodayComponent implements OnInit {
 
 			for(i in getProducts){
 
-				fechaOferta = new Date(
+				if(getProducts[i]["offer"] != ""){
+					fechaOferta = new Date(
 
-					parseInt(getProducts[i]["offer"][2].split("-")[0]),
-					parseInt(getProducts[i]["offer"][2].split("-")[1])-1,
-					parseInt(getProducts[i]["offer"][2].split("-")[2])
+						parseInt(getProducts[i]["offer"][2].split("-")[0]),
+						parseInt(getProducts[i]["offer"][2].split("-")[1])-1,
+						parseInt(getProducts[i]["offer"][2].split("-")[2])
 
-				)
+					)
 
-				if(hoy < fechaOferta && getProducts[i]["stock"] > 0){
+					if(hoy < fechaOferta && getProducts[i]["stock"] > 0){
 
-					this.indexes.push(i);
-					this.cargando = false;
+						this.indexes.push(i);
+						this.cargando = false;
+
+					}
 
 				}
-
-
 			}
 
 		})
