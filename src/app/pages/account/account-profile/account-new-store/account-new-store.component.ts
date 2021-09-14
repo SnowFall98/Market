@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 import { Path, Server } from '../../../../config';
 import { StoresService } from '../../../../services/stores.service';
 import  { NgForm } from '@angular/forms';
@@ -81,7 +81,8 @@ export class AccountNewStoreComponent implements OnInit {
 
 
   constructor(private storesService:StoresService, private usersService: UsersService, private productsService: ProductsService,
-              private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService, private http: HttpClient,) {
+              private categoriesService:CategoriesService, private subCategoriesService: SubCategoriesService,
+              private http: HttpClient, private ngZone: NgZone) {
     
     this.store = new StoresModel();
     this.product = new ProductsModel();
@@ -847,446 +848,448 @@ export class AccountNewStoreComponent implements OnInit {
 
   onSubmit(f: NgForm){
 
-    /*=============================================
-    Validar que el producto esté correctamente creado
-    =============================================*/
+    this.ngZone.runOutsideAngular(() => {
 
-    let formProduct = $(".formProduct");
+      /*=============================================
+      Validar que el producto esté correctamente creado
+      =============================================*/
 
-    let error = 0;
+      let formProduct = $(".formProduct");
 
-    for(let i = 0; i < formProduct.length; i++){
+      let error = 0;
 
-      if($(formProduct[i]).val() == "" || $(formProduct[i]).val() == undefined){
+      for(let i = 0; i < formProduct.length; i++){
 
-        error++
+        if($(formProduct[i]).val() == "" || $(formProduct[i]).val() == undefined){
 
-        $(formProduct[i]).parent().addClass("was-validated")
+          error++
 
-      }
-    }
+          $(formProduct[i]).parent().addClass("was-validated")
 
-    /*=============================================
-    Validamos que las palabras claves tenga como mínimo una sola palabra
-    =============================================*/
-
-    if(this.tags.length == 0){
-
-      Sweetalert.fnc("error", "Product Tags is empty", null);  
-
-      return;
-
-    
-    }
-
-    /*=============================================
-    Validamos que la galería tenga como mínimo una sola imagen
-    =============================================*/
-
-    if(this.gallery.length == 0){
-
-      Sweetalert.fnc("error", "Product Gallery is empty", null);  
-
-      return;
-
-    }
-
-    /*=============================================
-    Validación completa del formulario
-    =============================================*/
-
-    if(f.invalid){
-
-      Sweetalert.fnc("error", "Invalid Request", null);
-
-      return;
-    }
-
-    /*=============================================
-    Alerta suave mientras se registra la tienda y el producto
-    =============================================*/
-
-    Sweetalert.fnc("loading", "Loading...", null);
-
-    /*=============================================
-    Subir imagenes al servidor
-    =============================================*/
-    let countAllImages = 0;
-    
-    let allImages = [
-      {
-        type:'logoStore',
-        file: this.logoStore,
-        folder:this.store.url,
-        path:'stores',
-        width:'270',
-        height:'270'
-      },
-      {
-        type:'coverStore',
-        file: this.coverStore,
-        folder:this.store.url,
-        path:'stores',
-        width:'1424',
-        height:'768'
-      },
-      {
-        type:'imageProduct',
-        file: this.imageProduct,
-        folder:this.product.category.split("_")[1],
-        path:'products',
-        width:'300',
-        height:'300'
-      },
-      {
-        type:'topBannerImg',
-        file: this.topBannerImg,
-        folder:`${this.product.category.split("_")[1]}/top`,
-        path:'products',
-        width:'1920',
-        height:'80'
-      },
-      {
-        type:'defaultBannerImg',
-        file: this.defaultBannerImg,
-        folder:`${this.product.category.split("_")[1]}/default`,
-        path:'products',
-        width:'570',
-        height:'210'
-      },
-      {
-        type:'hSliderImg',
-        file: this.hSliderImg,
-        folder:`${this.product.category.split("_")[1]}/horizontal`,
-        path:'products',
-        width:'1920',
-        height:'358'
-      },
-      {
-        type:'vSliderImg',
-        file: this.vSliderImg,
-        folder:`${this.product.category.split("_")[1]}/vertical`,
-        path:'products',
-        width:'263',
-        height:'629'
+        }
       }
 
-    ]
+      /*=============================================
+      Validamos que las palabras claves tenga como mínimo una sola palabra
+      =============================================*/
 
-    for(const i in allImages){
+      if(this.tags.length == 0){
 
-      const formData = new FormData();
+        Sweetalert.fnc("error", "Product Tags is empty", null);  
 
-      formData.append('file', allImages[i].file);
-      formData.append('folder', allImages[i].folder);
-      formData.append('path', allImages[i].path);
-      formData.append('width', allImages[i].width);
-      formData.append('height', allImages[i].height);
+        return;
 
-      this.http.post(this.server, formData)
-      .subscribe( resp=>{   
+      
+      }
 
-        if(resp["status"] == 200) {
+      /*=============================================
+      Validamos que la galería tenga como mínimo una sola imagen
+      =============================================*/
 
-          switch(allImages[i].type){
+      if(this.gallery.length == 0){
 
-            case "logoStore":
-            this.store.logo = resp["result"];
-            break;
+        Sweetalert.fnc("error", "Product Gallery is empty", null);  
 
-            case "coverStore":
-            this.store.cover = resp["result"];
-            break;
+        return;
 
-            case "imageProduct":
-            this.product.image = resp["result"];
-            break;
+      }
 
-            case "topBannerImg":
-            this.topBanner["IMG tag"] = resp["result"];
-            break;
+      /*=============================================
+      Validación completa del formulario
+      =============================================*/
 
-            case "defaultBannerImg":
-            this.product.default_banner = resp["result"];
-            break;
+      if(f.invalid){
 
-            case "hSliderImg":
-            this.hSlider["IMG tag"] = resp["result"];
-            break;
+        Sweetalert.fnc("error", "Invalid Request", null);
 
-            case "vSliderImg":
-            this.product.vertical_slider = resp["result"];
-            break;
+        return;
+      }
 
-          }
+      /*=============================================
+      Alerta suave mientras se registra la tienda y el producto
+      =============================================*/
 
-          countAllImages++
+      Sweetalert.fnc("loading", "Loading...", null);
 
-          /*=============================================
-          Preguntamos cuando termina de subir todas las imágenes
-          =============================================*/
+      /*=============================================
+      Subir imagenes al servidor
+      =============================================*/
+      let countAllImages = 0;
+      
+      let allImages = [
+        {
+          type:'logoStore',
+          file: this.logoStore,
+          folder:this.store.url,
+          path:'stores',
+          width:'270',
+          height:'270'
+        },
+        {
+          type:'coverStore',
+          file: this.coverStore,
+          folder:this.store.url,
+          path:'stores',
+          width:'1424',
+          height:'768'
+        },
+        {
+          type:'imageProduct',
+          file: this.imageProduct,
+          folder:this.product.category.split("_")[1],
+          path:'products',
+          width:'300',
+          height:'300'
+        },
+        {
+          type:'topBannerImg',
+          file: this.topBannerImg,
+          folder:`${this.product.category.split("_")[1]}/top`,
+          path:'products',
+          width:'1920',
+          height:'80'
+        },
+        {
+          type:'defaultBannerImg',
+          file: this.defaultBannerImg,
+          folder:`${this.product.category.split("_")[1]}/default`,
+          path:'products',
+          width:'570',
+          height:'210'
+        },
+        {
+          type:'hSliderImg',
+          file: this.hSliderImg,
+          folder:`${this.product.category.split("_")[1]}/horizontal`,
+          path:'products',
+          width:'1920',
+          height:'358'
+        },
+        {
+          type:'vSliderImg',
+          file: this.vSliderImg,
+          folder:`${this.product.category.split("_")[1]}/vertical`,
+          path:'products',
+          width:'263',
+          height:'629'
+        }
 
-          if(countAllImages == allImages.length){
-            
+      ]
+
+      for(const i in allImages){
+
+        const formData = new FormData();
+
+        formData.append('file', allImages[i].file);
+        formData.append('folder', allImages[i].folder);
+        formData.append('path', allImages[i].path);
+        formData.append('width', allImages[i].width);
+        formData.append('height', allImages[i].height);
+
+        this.http.post(this.server, formData)
+        .subscribe( resp=>{   
+
+          if(resp["status"] == 200) {
+
+            switch(allImages[i].type){
+
+              case "logoStore":
+              this.store.logo = resp["result"];
+              break;
+
+              case "coverStore":
+              this.store.cover = resp["result"];
+              break;
+
+              case "imageProduct":
+              this.product.image = resp["result"];
+              break;
+
+              case "topBannerImg":
+              this.topBanner["IMG tag"] = resp["result"];
+              break;
+
+              case "defaultBannerImg":
+              this.product.default_banner = resp["result"];
+              break;
+
+              case "hSliderImg":
+              this.hSlider["IMG tag"] = resp["result"];
+              break;
+
+              case "vSliderImg":
+              this.product.vertical_slider = resp["result"];
+              break;
+
+            }
+
+            countAllImages++
+
             /*=============================================
-            Subir galería al servidor
+            Preguntamos cuando termina de subir todas las imágenes
             =============================================*/
-            let countGallery = 0;
-            let newGallery = [];
 
-            for(const i in this.gallery){
+            if(countAllImages == allImages.length){
+              
+              /*=============================================
+              Subir galería al servidor
+              =============================================*/
+              let countGallery = 0;
+              let newGallery = [];
 
-              const formData = new FormData();
+              for(const i in this.gallery){
 
-              formData.append('file', this.gallery[i]);
-              formData.append('folder', `${this.product.category.split("_")[1]}/gallery`);
-              formData.append('path', 'products');
-              formData.append('width', '1000');
-              formData.append('height', '1000');
+                const formData = new FormData();
 
-              this.http.post(this.server, formData)
-              .subscribe(resp=>{
+                formData.append('file', this.gallery[i]);
+                formData.append('folder', `${this.product.category.split("_")[1]}/gallery`);
+                formData.append('path', 'products');
+                formData.append('width', '1000');
+                formData.append('height', '1000');
 
-                if(resp["status"] == 200){
-                  
-                newGallery.push(resp["result"]);
+                this.http.post(this.server, formData)
+                .subscribe(resp=>{
 
-                this.product.gallery = JSON.stringify(newGallery);
-
-                countGallery++;
-
-                  /*=============================================
-                  Preguntamos cuando termina de subir toda la galería
-                  =============================================*/
-                  if(countGallery == this.gallery.length){
-
-                    /*=============================================
-                    Consolidar número telefónico de la tienda
-                    =============================================*/
-
-                    this.store.phone = `${this.dialCode}-${this.store.phone}`;
-
-                    /*=============================================
-                    Consolidar cantidad de productos para la tienda
-                    =============================================*/
-
-                    this.store.products = 1;
-
-                    /*=============================================
-                    Consolidar redes sociales para la tienda
-                    =============================================*/
-
-                    for(const i in Object.keys(this.social)){
-
-                      if(this.social[Object.keys(this.social)[i]] != ""){
-
-                        this.social[Object.keys(this.social)[i]] = `https://${Object.keys(this.social)[i]}.com/${this.social[Object.keys(this.social)[i]]}`
-
-                      }
-
-                    }
-
-                    this.store.social = JSON.stringify(this.social);
-
-                    /*=============================================
-                    Consolidar fecha de creación del producto   
-                    =============================================*/
-
-                    this.product.date_created = new Date();
-
-                    /*=============================================
-                    Consolidar el feedback para el producto
-                    =============================================*/
-
-                    this.product.feedback = {
-
-                      type:"review",
-                      comment:"Your product is under review"
-
-                    }
-
-                    this.product.feedback = JSON.stringify(this.product.feedback);
-
-                    /*=============================================
-                    Consolidar categoria para el producto
-                    =============================================*/
-
-                    this.product.category = this.product.category.split("_")[1];
-
-                    /*=============================================
-                    Consolidar lista de títulos para el producto
-                    =============================================*/
-
-                    this.product.title_list = this.product.sub_category.split("_")[1];
-
-                    /*=============================================
-                    Consolidar sub-categoria para el producto
-                    =============================================*/
-
-                    this.product.sub_category = this.product.sub_category.split("_")[0];
+                  if(resp["status"] == 200){
                     
-                    /*=============================================
-                    Consolidar el nombre de la tienda para el producto
-                    =============================================*/
+                  newGallery.push(resp["result"]);
 
-                    this.product.store = this.store.store;
+                  this.product.gallery = JSON.stringify(newGallery);
 
-                    /*=============================================
-                    Consolidar calificaciones para el producto
-                    =============================================*/
-                    
-                    this.product.reviews = "[]";
+                  countGallery++;
 
                     /*=============================================
-                    Consolidar las ventas y las vistas del producto
+                    Preguntamos cuando termina de subir toda la galería
                     =============================================*/
+                    if(countGallery == this.gallery.length){
 
-                    this.product.sales = 0; 
-                    this.product.views = 0; 
+                      /*=============================================
+                      Consolidar número telefónico de la tienda
+                      =============================================*/
 
-                    /*=============================================
-                    Consolidar resumen del producto 
-                    =============================================*/
+                      this.store.phone = `${this.dialCode}-${this.store.phone}`;
 
-                    let newSummary = [];
+                      /*=============================================
+                      Consolidar cantidad de productos para la tienda
+                      =============================================*/
 
-                    for(const i in this.summaryGroup){
+                      this.store.products = 1;
 
-                      newSummary.push(this.summaryGroup[i].input);
-                      this.product.summary = JSON.stringify(newSummary);
-                    
-                    }
+                      /*=============================================
+                      Consolidar redes sociales para la tienda
+                      =============================================*/
 
-                    /*=============================================
-                    Consolidar detalles del producto
-                    =============================================*/
+                      for(const i in Object.keys(this.social)){
 
-                    this.product.details = JSON.stringify(this.detailsGroup);
+                        if(this.social[Object.keys(this.social)[i]] != ""){
 
-                    /*=============================================
-                    Consolidar especificaciones del producto
-                    =============================================*/
-                    
-                    if(Object.keys(this.specificationsGroup).length > 0){
+                          this.social[Object.keys(this.social)[i]] = `https://${Object.keys(this.social)[i]}.com/${this.social[Object.keys(this.social)[i]]}`
 
-                      let newSpecifications = [];
-
-                      for(const i in this.specificationsGroup){
-
-                        let newValue = [];
-
-                        for(const f in this.specificationsGroup[i].values){
-
-                          newValue.push(`'${this.specificationsGroup[i].values[f].value}'`)
                         }
 
-                        newSpecifications.push(`{'${this.specificationsGroup[i].type}':[${newValue}]}`)
+                      }
+
+                      this.store.social = JSON.stringify(this.social);
+
+                      /*=============================================
+                      Consolidar fecha de creación del producto   
+                      =============================================*/
+
+                      this.product.date_created = new Date();
+
+                      /*=============================================
+                      Consolidar el feedback para el producto
+                      =============================================*/
+
+                      this.product.feedback = {
+
+                        type:"review",
+                        comment:"Your product is under review"
 
                       }
 
-                      this.product.specification = JSON.stringify(newSpecifications);
-                      this.product.specification = this.product.specification.replace(/["]/g, '');
-                      this.product.specification = this.product.specification.replace(/[']/g, '"');
+                      this.product.feedback = JSON.stringify(this.product.feedback);
 
-                    }else{
+                      /*=============================================
+                      Consolidar categoria para el producto
+                      =============================================*/
 
-                      this.product.specification = "";
+                      this.product.category = this.product.category.split("_")[1];
+
+                      /*=============================================
+                      Consolidar lista de títulos para el producto
+                      =============================================*/
+
+                      this.product.title_list = this.product.sub_category.split("_")[1];
+
+                      /*=============================================
+                      Consolidar sub-categoria para el producto
+                      =============================================*/
+
+                      this.product.sub_category = this.product.sub_category.split("_")[0];
+                      
+                      /*=============================================
+                      Consolidar el nombre de la tienda para el producto
+                      =============================================*/
+
+                      this.product.store = this.store.store;
+
+                      /*=============================================
+                      Consolidar calificaciones para el producto
+                      =============================================*/
+                      
+                      this.product.reviews = "[]";
+
+                      /*=============================================
+                      Consolidar las ventas y las vistas del producto
+                      =============================================*/
+
+                      this.product.sales = 0; 
+                      this.product.views = 0; 
+
+                      /*=============================================
+                      Consolidar resumen del producto 
+                      =============================================*/
+
+                      let newSummary = [];
+
+                      for(const i in this.summaryGroup){
+
+                        newSummary.push(this.summaryGroup[i].input);
+                        this.product.summary = JSON.stringify(newSummary);
+                      
+                      }
+
+                      /*=============================================
+                      Consolidar detalles del producto
+                      =============================================*/
+
+                      this.product.details = JSON.stringify(this.detailsGroup);
+
+                      /*=============================================
+                      Consolidar especificaciones del producto
+                      =============================================*/
+                      
+                      if(Object.keys(this.specificationsGroup).length > 0){
+
+                        let newSpecifications = [];
+
+                        for(const i in this.specificationsGroup){
+
+                          let newValue = [];
+
+                          for(const f in this.specificationsGroup[i].values){
+
+                            newValue.push(`'${this.specificationsGroup[i].values[f].value}'`)
+                          }
+
+                          newSpecifications.push(`{'${this.specificationsGroup[i].type}':[${newValue}]}`)
+
+                        }
+
+                        this.product.specification = JSON.stringify(newSpecifications);
+                        this.product.specification = this.product.specification.replace(/["]/g, '');
+                        this.product.specification = this.product.specification.replace(/[']/g, '"');
+
+                      }else{
+
+                        this.product.specification = "";
+                      }
+
+                      /*=============================================
+                      Consolidar palabras claves para el producto
+                      =============================================*/
+                      let newTags = [];   
+
+                      for(const i in this.tags){
+
+                        newTags.push(this.tags[i].value);
+                      }
+
+                      this.product.tags = JSON.stringify(newTags).toLowerCase();
+
+                      /*=============================================
+                      Consolidar Top Banner del producto
+                      =============================================*/
+
+                      this.product.top_banner = JSON.stringify(this.topBanner);
+
+                      /*=============================================
+                      Consolidar Horizontal Slider del producto
+                      =============================================*/
+
+                      this.product.horizontal_slider = JSON.stringify(this.hSlider);
+
+                      /*=============================================
+                      Consolidar Video del producto
+                      =============================================*/
+
+                      this.product.video = JSON.stringify(this.video);
+
+                      /*=============================================
+                      Consolidar Oferta
+                      =============================================*/
+
+                      if(this.offer.length > 0){
+
+                        this.product.offer = JSON.stringify(this.offer);
+
+                      }else{
+
+                        this.product.offer = "[]";
+                      }
+                      
+                      /*=============================================
+                      Crear la tienda en la BD
+                      =============================================*/
+
+                      this.storesService.registerDatabase(this.store, localStorage.getItem("idToken"))
+                      .subscribe(resp=>{ 
+
+                        if(resp["name"] != ""){ 
+
+                          /*=============================================
+                          Crear el producto en la BD
+                          =============================================*/
+
+                          this.productsService.registerDatabase(this.product, localStorage.getItem("idToken"))   
+                          .subscribe(resp=>{
+
+                            if(resp["name"] != ""){                                                 
+
+                              Sweetalert.fnc("success", "The store and product was successful", "account/my-store");  
+
+                            }                                                                                                         
+
+                          }, err =>{
+
+                            Sweetalert.fnc("error", err.error.error.message, null)
+
+                          }) 
+                        }                                         
+
+                      }, err =>{
+
+                        Sweetalert.fnc("error", err.error.error.message, null)
+
+                      })
+
                     }
-
-                    /*=============================================
-                    Consolidar palabras claves para el producto
-                    =============================================*/
-                    let newTags = [];   
-
-                    for(const i in this.tags){
-
-                      newTags.push(this.tags[i].value);
-                    }
-
-                    this.product.tags = JSON.stringify(newTags).toLowerCase();
-
-                    /*=============================================
-                    Consolidar Top Banner del producto
-                    =============================================*/
-
-                    this.product.top_banner = JSON.stringify(this.topBanner);
-
-                    /*=============================================
-                    Consolidar Horizontal Slider del producto
-                    =============================================*/
-
-                    this.product.horizontal_slider = JSON.stringify(this.hSlider);
-
-                    /*=============================================
-                    Consolidar Video del producto
-                    =============================================*/
-
-                    this.product.video = JSON.stringify(this.video);
-
-                    /*=============================================
-                    Consolidar Oferta
-                    =============================================*/
-
-                    if(this.offer.length > 0){
-
-                      this.product.offer = JSON.stringify(this.offer);
-
-                    }else{
-
-                      this.product.offer = "[]";
-                    }
-                    
-                    /*=============================================
-                    Crear la tienda en la BD
-                    =============================================*/
-
-                    this.storesService.registerDatabase(this.store, localStorage.getItem("idToken"))
-                    .subscribe(resp=>{ 
-
-                      if(resp["name"] != ""){ 
-
-                        /*=============================================
-                        Crear el producto en la BD
-                        =============================================*/
-
-                        this.productsService.registerDatabase(this.product, localStorage.getItem("idToken"))   
-                        .subscribe(resp=>{
-
-                          if(resp["name"] != ""){                                                 
-
-                            Sweetalert.fnc("success", "The store and product was successful", "account/my-store");  
-
-                          }                                                                                                         
-
-                        }, err =>{
-
-                          Sweetalert.fnc("error", err.error.error.message, null)
-
-                        }) 
-                      }                                         
-
-                    }, err =>{
-
-                      Sweetalert.fnc("error", err.error.error.message, null)
-
-                    })
 
                   }
 
-                }
+                });
 
-              });
+              }
 
             }
 
           }
 
-        }
+        });
 
-      });
-
-    }
-
+      }
+    })
   }
 
 }
