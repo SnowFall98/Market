@@ -117,6 +117,7 @@ class="ps-product--detail ps-product--fullwidth">
                 ====================================== -->
 
                  <iframe 
+                 *ngIf="video != null"
                     class="mb-3"
                     [attr.src]="video | urlsecure"
                     height="360"
