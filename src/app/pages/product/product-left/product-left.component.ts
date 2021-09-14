@@ -136,16 +136,20 @@ export class ProductLeftComponent implements OnInit {
       Video
       =============================================*/
 
-      if(JSON.parse(this.product[index].video)[0] == "youtube"){
+      if(JSON.parse(this.product[index].video).length > 0){
 
-        this.video = `https://www.youtube.com/embed/${JSON.parse(this.product[index].video)[1]}?rel=0&autoplay=0 `
+        if(JSON.parse(this.product[index].video)[0] == "youtube"){
 
-      }
+          this.video = `https://www.youtube.com/embed/${JSON.parse(this.product[index].video)[1]}?rel=0&autoplay=0 `
 
-      if(JSON.parse(this.product[index].video)[0] == "vimeo"){
+        }
 
-        this.video = `https://player.vimeo.com/video/${JSON.parse(this.product[index].video)[1]}`
-        
+        if(JSON.parse(this.product[index].video)[0] == "vimeo"){
+
+          this.video = `https://player.vimeo.com/video/${JSON.parse(this.product[index].video)[1]}`
+          
+        }
+
       }
 
       /*=============================================
@@ -183,7 +187,8 @@ export class ProductLeftComponent implements OnInit {
       Agregamos detalles del producto
       =============================================*/ 
 
-      if($(".ps-product__variations").attr("specification") != ""){
+      if($(".ps-product__variations").attr("specification") != "" && 
+      $(".ps-product__variations").attr("specification") != '[{\"\":[]}]'){
 
         /*=============================================
         Recorremos el array de objetos de detalles

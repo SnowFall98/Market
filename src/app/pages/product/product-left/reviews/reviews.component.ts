@@ -39,7 +39,7 @@ export class ReviewsComponent implements OnInit {
 
         reviews.push(DinamicReviews.fnc(this.rating[0]));
 
-        for(let i = 0; i < 5; i++){
+        for(let i = 0; i < reviews[0].length; i++){
 
         	$(".reviewsOption").append(`
 			
@@ -108,6 +108,12 @@ export class ReviewsComponent implements OnInit {
 
 	    	//Hacemos una regla de 3: la cantidad que suma cada estella multiplicado por 100 dividido la cantidad de calificaciones
 	    	let starPercentage = Math.round((objectStar[i] * 100)/ arrayReview.length)
+
+			if(isNaN(starPercentage)){
+
+	    		starPercentage = 0;
+	    	}
+	    	
 	    	
 	    	$(".ps-block--average-rating").append(`
 				
