@@ -80,6 +80,11 @@ Si se desea ejecutar de forma normal el servidor local (http):
 4. Navegar a `http://localhost:4200/`
 
 
+# INICIAR ANGULAR SIN "HOT RELOAD":
+`ng serve --live-reload false`
+Es necesario usar esta linea en vez de `ng serve --o` ya que, al no hacerlo, presentará fallas porque se esta administrando de manera local. Al subirlo al dominio ya no hay necesidad
+
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
