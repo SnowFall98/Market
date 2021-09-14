@@ -334,15 +334,22 @@ export let DinamicRating = {
         let totalReview = 0;
         let rating = 0;
 
-        for(let i = 0; i < JSON.parse(response.reviews).length; i++){
+        if(JSON.parse(response.reviews).length > 0){
 
-            totalReview += Number(JSON.parse(response.reviews)[i]["review"]);
+            for(let i = 0; i < JSON.parse(response.reviews).length; i++){
+                
+                totalReview += Number(JSON.parse(response.reviews)[i]["review"]);
 
+            }
+
+            rating = Math.round(totalReview/JSON.parse(response.reviews).length);
+
+            return rating;
+
+        }else{
+
+            return 0;
         }
-
-        rating = Math.round(totalReview/JSON.parse(response.reviews).length);
-
-        return rating;
 
     }
 
@@ -354,8 +361,7 @@ DinamicReview
 
 export let DinamicReviews = {
 
-
-     fnc: function(response){
+    fnc: function(response){
 
         /*=============================================
         Clasificamos la cantidad de estrellas según la calificación
@@ -365,14 +371,21 @@ export let DinamicReviews = {
 
         for(let r = 0; r < 5; r++){
 
-            if(response < (r+1)){
+            if(response > 0){
 
-                reviews[r] = 2
-            
+                if(response < (r+1)){
+
+                    reviews[r] = 2
+                
+                }else{
+
+                    reviews[r] = 1
+                }
+
             }else{
 
-                reviews[r] = 1
-            }    
+                reviews=[0,1,1,1,1,1];
+            }   
         }
 
         return reviews;
