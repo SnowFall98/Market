@@ -5,13 +5,20 @@ Nav Account
 <div class="ps-section__content">
 
     <ul class="ps-section__links">
-        <li><a routerLink="/account">My Wishlist</a></li>
-        <li class="active"><a routerLink="/account/my-shopping">My Shopping</a></li>
+        <li><a href="/account">My Wishlist</a></li>
+        <li class="active"><a href="/account/my-shopping">My Shopping</a></li>
+       
         <li
         *ngIf="!is_vendor"
         ><a href="/account/new-store">My Store</a></li>
+
+        <li
+        *ngIf="is_vendor"
+        ><a href="/account/my-store">My Store</a></li>
+
         <li><a href="my-account_my-sales.html">My Sales</a></li>
     </ul>
+
 
 
     <!--=====================================
