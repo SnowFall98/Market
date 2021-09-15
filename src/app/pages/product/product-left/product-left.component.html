@@ -1,5 +1,5 @@
-<div
-*ngIf = "!preload"
+<div 
+*ngIf="!preload"
 class="ps-product--detail ps-product--fullwidth">
 
 	<!--=====================================
@@ -40,7 +40,7 @@ class="ps-product--detail ps-product--fullwidth">
                 <div 
                 *ngFor="let image of gallery[0]; let lastIndex = last; let i = index"
                 class="item">
-                	<img src="{{path}}img/products/{{product[0].category}}/{{image}}" alt="{{product[0].name}}">
+                	<img src="{{path}}img/products/{{product[0].category}}/gallery/{{image}}" alt="{{product[0].name}}">
 
                 {{ lastIndex ? callbackGallery(i) : ""}}
                 </div>          
@@ -126,10 +126,7 @@ class="ps-product--detail ps-product--fullwidth">
 
             </div>
 
-            <div class="ps-product__variations" [attr.specification]="p.specification">
-               
-            </div>
-
+            <div class="ps-product__variations" [attr.specification]="p.specification"></div>
 
             <div 
             *ngIf="p.offer != '' && offer"
@@ -380,4 +377,3 @@ class="d-flex justify-content-center">
     <div class="spinner-border text-muted my-5"></div>
 
 </div>
-
