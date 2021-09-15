@@ -1662,6 +1662,20 @@ body {
 .ps-list--social-color li a.linkedin:hover {
   background-color: #417cb7;
 }
+.ps-list--social-color li a.instagram {
+  background-color: #C32AA3;
+}
+
+.ps-list--social-color li a.instagram:hover {
+  background-color: #C32AA3;
+}
+.ps-list--social-color li a.youtube {
+  background-color: #FF0000;
+}
+
+.ps-list--social-color li a.youtube:hover {
+  background-color: #FF0000;
+}
 
 .ps-list--social-color li a.feed {
   background-color: #f86a02;
