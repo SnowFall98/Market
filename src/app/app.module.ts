@@ -62,6 +62,7 @@ import { AccountMyShoppingComponent } from './pages/account/account-profile/acco
 import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.component';
 import { AccountNewStoreComponent } from './pages/account/account-profile/account-new-store/account-new-store.component';
 import { AccountMyStoreComponent } from './pages/account/account-profile/account-my-store/account-my-store.component';
+import { KeysPipe } from './pipes/keys.pipe';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { AccountMyStoreComponent } from './pages/account/account-profile/account
     AccountMyShoppingComponent,
     BecomeAVendorComponent,
     AccountNewStoreComponent,
-    AccountMyStoreComponent
+    AccountMyStoreComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
