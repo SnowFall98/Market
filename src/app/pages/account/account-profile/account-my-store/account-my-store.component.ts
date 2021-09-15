@@ -286,17 +286,87 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 
   callback(i, totalReviews){
 
-    if(!this.render){
-      
-      this.render = true;
+		if(!this.render){
 
-      setTimeout(function(){
+			this.render = true;
 
-        /*=============================================
+			let globalRating = 0;
+			let globalReviews = 0;
+
+			setTimeout(function(){
+
+				/*=============================================
         Agregamos el tooltip para mostrar comentario de revisión
         =============================================*/ 
 
         Tooltip.fnc();
+
+				/*=============================================
+        Aparecemos la tabla
+        =============================================*/ 
+
+        $("table").animate({"opacity":1});
+
+        $(".preloadTable").animate({"opacity":0});
+
+        /*=============================================
+        Agregamos las calificaciones totales de la tienda
+        =============================================*/ 
+
+        totalReviews.forEach(( review, index)=>{
+
+          globalRating += review.length;
+            
+          for(const i in review){
+
+            globalReviews += review[i].review
+            
+          }
+        })
+
+        /*=============================================
+        Tomamos el promedio y porcentaje de calificaciones
+        =============================================*/ 
+
+        let averageReviews = Math.round(globalReviews/globalRating);
+        let precentage = Math.round(globalReviews*100/(globalRating*5));
+        
+        /*=============================================
+        Pintamos en el HTML el promedio y porcentaje de calificaciones
+        =============================================*/ 
+
+        $(".globalRating").html(globalRating);
+        $(".percentage").html(precentage);
+
+        /*=============================================
+        Tomamos el Arreglo del promedio de calificaciones
+        =============================================*/ 
+
+        let averageRating = DinamicReviews.fnc(averageReviews);
+
+        /*=============================================
+        Pintamos en el HTML el Select para el plugin Rating
+        =============================================*/ 
+
+        $(".br-theme-fontawesome-stars").html(`
+
+        <select class="ps-rating reviewsOption" data-read-only="true"></select>
+
+        `)
+
+        /*=============================================
+        Recorremos el arreglo del promedio de calificaciones para pintar los options
+        =============================================*/ 
+
+        for(let i = 0; i < averageRating.length; i++){
+
+          $(".reviewsOption").append(`
+
+          <option value="${averageRating[i]}">${i+1}</option>
+
+          `)
+
+        }
 
         /*=============================================
         Ejecutamos la función Rating()
@@ -304,7 +374,7 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 
         Rating.fnc(); 
 
-      },i*10)
+			},i*10)
 		}
 	}
 
