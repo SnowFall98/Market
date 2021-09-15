@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Api } from '../config';
 import { ProductsModel } from '../models/products.model';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,31 +17,166 @@ export class ProductsService {
 
 	getData(){
 
-		return this.http.get(`${this.api}products.json`);
+		return this.http.get(`${this.api}products.json`)
+		.pipe(
+			
+			map((resp:any)=>{
+
+				let newResp = [];
+				let count = 0;
+
+				for(const i in resp){
+
+					count ++;
+
+					if(JSON.parse(resp[i].feedback).type == "approved"){
+
+						newResp.push(resp[i]);
+
+					}
+
+				}
+
+				if(count == Object.keys(resp).length){
+
+					return newResp;
+				}
+
+			})
+
+		)
 
 	}
 
 	getLimitData(startAt:string, limitToFirst:number){
 
-		return this.http.get(`${this.api}products.json?orderBy="$key"&startAt="${startAt}"&limitToFirst=${limitToFirst}&print=pretty`);
+		return this.http.get(`${this.api}products.json?orderBy="$key"&startAt="${startAt}"&limitToFirst=${limitToFirst}&print=pretty`)
+		.pipe(
+			
+			map((resp:any)=>{
+
+				let newResp = [];
+				let count = 0;
+
+				for(const i in resp){
+
+					count ++;
+
+					if(JSON.parse(resp[i].feedback).type == "approved"){
+
+						newResp.push(resp[i]);
+
+					}
+
+				}
+
+				if(count == Object.keys(resp).length){
+
+					return newResp;
+				}
+
+			})
+
+		)
 
 	}
 
 	getFilterData(orderBy:string, equalTo:string){
 
-		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`)
+		.pipe(
+			
+			map((resp:any)=>{
+
+				let newResp = [];
+				let count = 0;
+
+				for(const i in resp){
+
+					count ++;
+
+					if(JSON.parse(resp[i].feedback).type == "approved"){
+
+						newResp.push(resp[i]);
+
+					}
+
+				}
+
+				if(count == Object.keys(resp).length){
+
+					return newResp;
+				}
+
+			})
+
+		)
 
 	}
 
 	getFilterDataWithLimit(orderBy:string, equalTo:string, limitToFirst:number){
 
-		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&limitToFirst=${limitToFirst}&print=pretty`);
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&limitToFirst=${limitToFirst}&print=pretty`)
+		.pipe(
+			
+			map((resp:any)=>{
+
+				let newResp = [];
+				let count = 0;
+
+				for(const i in resp){
+
+					count ++;
+
+					if(JSON.parse(resp[i].feedback).type == "approved"){
+
+						newResp.push(resp[i]);
+
+					}
+
+				}
+
+				if(count == Object.keys(resp).length){
+
+					return newResp;
+				}
+
+			})
+
+		)
 
 	}
 
 	getSearchData(orderBy:string, param:string){
 
-		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&startAt="${param}"&endAt="${param}\uf8ff"&print=pretty`);
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&startAt="${param}"&endAt="${param}\uf8ff"&print=pretty`)
+		.pipe(
+			
+			map((resp:any)=>{
+
+				let newResp = [];
+				let count = 0;
+
+				for(const i in resp){
+
+					count ++;
+
+					if(JSON.parse(resp[i].feedback).type == "approved"){
+
+						newResp.push(resp[i]);
+
+					}
+
+				}
+
+				if(count == Object.keys(resp).length){
+
+					return newResp;
+				}
+
+			})
+
+		)
 
 	}
 
