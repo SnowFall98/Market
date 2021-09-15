@@ -221,7 +221,6 @@ class="ps-section__content">
                                         data-toggle="tooltip" title="{{product.feedback.comment}}"
                                         class="badge badge-warning">Review</span>
                                     </h4>
-
                                 </td>
 
                                 <!--=====================================
@@ -554,12 +553,510 @@ class="ps-section__content">
                         </tbody>
 
                     </table>
-                     
+
+                    <!--=====================================
+                    Preload DataTable
+                    ======================================-->
+       
+                    <div class="d-flex justify-content-center preloadTable">
+                        
+                        <div class="spinner-border text-muted my-3"></div>
+
+                    </div>
+                    
+                    
+                       
                 </div>
             </div>
         
         </div>
     
+    </div>
+
+    <!--=====================================
+    Modal para editar la tienda
+    ======================================-->
+    <div class="modal" id="editStore">
+        
+        <div class="modal-dialog modal-lg">
+           
+            <div class="modal-content">
+                
+                <form
+                (ngSubmit)="onSubmitStore(f)"
+                #f="ngForm">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center">Edit Store</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body p-5 text-left">
+
+                        <label class="text-danger"><sup>*</sup>Required</label>
+
+                        <!--=====================================
+                        Nombre de la tienda
+                        ======================================-->
+
+                         <div class="form-group">
+
+                            <label>Store Name</label>
+
+                            <div class="form-group__content">
+                                 
+                                <input type="text"
+                                class="form-control"
+                                name="storeName" 
+                                [(ngModel)]="storeModel.store" 
+                                readonly
+                                required> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeName'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Url de la tienda
+                        ======================================-->
+
+                         <div class="form-group">
+
+                            <label>Store Url</label>
+
+                            <div class="form-group__content">
+                                 
+                                <input type="text"
+                                class="form-control"
+                                name="storeUrl" 
+                                [(ngModel)]="storeModel.url"  
+                                readonly
+                                required> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeUrl'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Información de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                        
+                            <label>Store About<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content">
+
+                                <textarea
+                                class="form-control"
+                                rows="7"
+                                placeholder="Notes about your store in maximum 1000 characters, ex: We are a store specialized in technology..."
+                                name="storeAbout"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}"
+                                [(ngModel)]="storeModel.about" 
+                                (change)="validate(about)"
+                                #about 
+                                required></textarea>
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div
+                                *ngIf="f.submitted && f.controls['storeAbout'].errors"                                
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Email de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                        
+                            <label>Store Email<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content">
+                              
+                                <input type="email"
+                                class="form-control" 
+                                name="storeEmail" 
+                                [(ngModel)]="storeModel.email"  
+                                email
+                                required> 
+    
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeEmail'].errors"
+                                class="text-danger">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        País de la tienda
+                        ======================================-->
+                        <div class="form-group">
+                        
+                            <label>Store Country<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content">
+                                
+                                <select
+                                class="form-control"
+                                name="storeCountry"
+                                [(ngModel)]="storeModel.country"  
+                                required>
+                                    
+                                    <option
+                                    *ngFor="let country of countries"
+                                    [value]="country.name">{{country.name}}</option>
+
+                                </select>
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeCountry'].errors"
+                                class="text-danger">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Ciudad de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                        
+                            <label>Store City<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content">
+                                
+                                <input type="text"
+                                class="form-control"
+                                name="storeCity"
+                                pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}"
+                                [(ngModel)]="storeModel.city"
+                                (change)="validate(city)"
+                                #city   
+                                required>
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeCity'].errors"
+                                class="text-danger">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Teléfono de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                        
+                            <label>Store Phone<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content input-group">
+
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{dialCode}}</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="storePhone"
+                                pattern="[-\\0-9 ]{1,}"
+                                [(ngModel)]="storeModel.phone"
+                                (change)="validate(phone)"
+                                #phone   
+                                required>
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storePhone'].errors"
+                                class="text-danger">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Dirección de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                        
+                            <label>Store Address<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content">
+                                
+                                <input type="text"
+                                class="form-control"
+                                name="storeAddress"
+                                pattern="[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,1000}"
+                                [(ngModel)]="storeModel.address"
+                                (change)="validate(address)"
+                                #address
+                                required>
+                            
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['storeAddress'].errors"
+                                class="text-danger">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Logo de la tienda
+                        ======================================-->
+
+                        <div class="form-group">            
+
+                            <label>Store Logo<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content"> 
+                                
+                                <label class="pb-5" for="storeLogo">
+                                    
+                                    <img src="{{path}}/img/stores/{{storeModel.url}}/{{storeModel.logo}}" class="img-fluid changeLogo" style="width:150px">
+
+                                </label>
+
+                                <div class="custom-file">
+                                    
+                                    <input type="file"
+                                    class="custom-file-input" 
+                                    id="storeLogo"
+                                    accept="image/*"
+                                    maxSize="2000000"
+                                    (change)="validateImage($event, 'changeLogo')"
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    <label class="custom-file-label" for="storeLogo">Choose file</label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Portada de la tienda
+                        ======================================-->
+
+                        <div class="form-group">            
+
+                            <label>Store Cover<sup class="text-danger">*</sup></label>
+
+                            <div class="form-group__content"> 
+                                
+                                <label class="pb-5" for="storeCover">
+                                    
+                                    <img src="{{path}}/img/stores/{{storeModel.url}}/{{storeModel.cover}}" class="img-fluid changeCover">
+
+                                </label>
+
+                                <div class="custom-file">
+                                    
+                                    <input type="file"
+                                    class="custom-file-input" 
+                                    id="storeCover"
+                                    accept="image/*"
+                                    maxSize="2000000"
+                                    (change)="validateImage($event, 'changeCover')"
+                                    required>
+
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field.</div>
+
+                                    <label class="custom-file-label" for="storeCover">Choose file</label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--=====================================
+                        Redes sociales de la tienda
+                        ======================================-->
+
+                        <div class="form-group">
+                            
+                            <label>Social Networks</label>
+
+                            <!--=====================================
+                            Facebook
+                            ======================================-->
+
+                            <div class="form-group__content input-group mb-5">
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text">https://facebook.com</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="facebook"
+                                social="socialNetwork"
+                                pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                [(ngModel)]="social['facebook']"
+                                (change)="validate(facebook)"
+                                #facebook> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['facebook'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                            <!--=====================================
+                            instagram
+                            ======================================-->
+
+                            <div class="form-group__content input-group mb-5">
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text">https://instagram.com</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="instagram"
+                                social="socialNetwork"
+                                pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                [(ngModel)]="social['instagram']"
+                                (change)="validate(instagram)"
+                                #instagram> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['instagram'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                            <!--=====================================
+                            twitter
+                            ======================================-->
+
+                            <div class="form-group__content input-group mb-5">
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text">https://twitter.com</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="twitter"
+                                social="socialNetwork"
+                                pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                [(ngModel)]="social['twitter']"
+                                (change)="validate(twitter)"
+                                #twitter> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['twitter'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                            <!--=====================================
+                            linkedin
+                            ======================================-->
+
+                            <div class="form-group__content input-group mb-5">
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text">https://linkedin.com</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="linkedin"
+                                social="socialNetwork"
+                                pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                [(ngModel)]="social['linkedin']"
+                                (change)="validate(linkedin)"
+                                #linkedin> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['linkedin'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                            <!--=====================================
+                            youtube
+                            ======================================-->
+
+                            <div class="form-group__content input-group mb-5">
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text">https://youtube.com</span>
+                                </div>
+
+                                <input type="text"
+                                class="form-control"
+                                name="youtube"
+                                social="socialNetwork"
+                                pattern="[-\\_\\.\\0-9a-zA-Z]{1,}"
+                                [(ngModel)]="social['youtube']"
+                                (change)="validate(youtube)"
+                                #youtube> 
+
+                                <div class="valid-feedback">Valid.</div>
+                                <div 
+                                *ngIf="f.submitted && f.controls['youtube'].errors"
+                                class="invalid-feedback">Please fill out this field.</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        
+                        <div class="form-group submtit">
+                                
+                            <button 
+                            class="ps-btn ps-btn--fullwidth">Save</button>
+
+                        </div>
+
+                    </div>
+                    
+                </form>
+
+            </div>    
+
+        </div>
+
     </div>
 
 </div>
