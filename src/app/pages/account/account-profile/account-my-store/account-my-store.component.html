@@ -1,4 +1,9 @@
-<div
+<!--=====================================
+Nav Account
+======================================--> 
+
+<div 
+*ngIf="!preload"
 class="ps-section__content">
 
     <ul class="ps-section__links">
@@ -7,5 +12,565 @@ class="ps-section__content">
         <li class="active"><a href="/account/my-store">My Store</a></li>
         <li><a href="my-account_my-sales.html">My Sales</a></li>
     </ul>
+
+    <!--=====================================
+    My Store
+    ======================================--> 
+    <div class="ps-vendor-store">
+
+        <div class="container">
+
+            <div class="ps-section__container">
+
+                <!--=====================================
+                Vendor Profile
+                ======================================--> 
+
+                <div class="ps-section__left">
+
+                    <div class="ps-block--vendor">
+
+                        <div class="ps-block__thumbnail">
+
+                            <img src="{{path}}img/stores/{{store[0].url}}/{{store[0].logo}}">
+
+                        </div>
+
+                        <div class="ps-block__container">
+
+                            <div class="ps-block__header">
+
+                                <h4>{{store[0].store}}</h4>
+
+                                <div class="br-wrapper br-theme-fontawesome-stars">
+
+                                   
+                               </div>
+
+                                <p><strong><span class="percentage">0</span>% Positive</strong> (<span class="globalRating">0</span> rating)</p>
+
+                            </div><span class="ps-block__divider"></span>
+
+                            <div class="ps-block__content">
+
+                                <p>{{store[0].about}}</p>
+
+                                <span class="ps-block__divider"></span>
+
+                                <p><strong>Address</strong> {{store[0].address}}</p>
+                                
+                                <figure>
+
+                                    <figcaption>Follow us on social</figcaption>
+
+                                    <ul class="ps-list--social-color">
+
+                                        <li
+                                        *ngFor="let social of store[0].newSocial"
+                                        >
+                                            <a class="{{social}}" href="{{store[0].social[social]}}">
+                                                <i class="fab fa-{{social}}"></i></a>
+                                        </li>
+
+                                    </ul>
+
+                                </figure>
+
+                            </div>
+
+                            <div class="ps-block__footer">
+
+                                <p>Call us directly<strong><small>{{store[0].phone}}</small></strong></p>
+
+                                <h5>or Or if you have any question <strong><small>{{store[0].email}}</small></strong></h5>
+
+                                <a class="ps-btn ps-btn--fullwidth" href="#editStore" data-toggle="modal">Edit</a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div><!-- End Vendor Profile -->
+
+                <!--=====================================
+                Products
+                ======================================--> 
+
+                <div class="ps-section__right">
+
+                    
+                    <div class="d-flex justify-content-between">
+                    
+                        <div>
+                            <button 
+                            class="btn btn-lg btn-warning my-3"
+                            data-toggle="modal"
+                            href="#formProduct"
+                            >Create new product</button>
+                        </div>
+                        
+                        <div>
+                            <ul class="nav nav-tabs">  
+
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#">Orders</a>
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#">Disputes</a>
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#">Messages</a>
+                                </li>
+                               
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <table class="table dt-responsive" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" width="100%" style="opacity:0">
+                        
+                        <thead>
+
+                            <tr>   
+                                
+                                <th>#</th>   
+
+                                <th>Feedback</th>   
+
+                                <th>Cover Image</th>   
+
+                                <th>Product name</th>
+
+                                <th>Category</th>
+
+                                <th>Subcategory</th>
+
+                                <th>Price</th>
+
+                                <th>Shipping</th>
+
+                                <th>Stock</th>
+
+                                <th>Delivery time</th>
+
+                                <th>Offer</th>
+
+                                <th>End Offer</th> 
+
+                                <th>Summary</th> 
+
+                                <th>Specification</th>
+
+                                <th>Details</th>
+
+                                <th>Description</th>      
+
+                                <th>Gallery</th>
+
+                                <th>Top Banner</th>
+
+                                <th>Default Banner</th>
+
+                                <th>Horizontal Slider</th>
+
+                                <th>Vertical Slider</th>
+
+                                <th>Video</th>
+
+                                <th>Views</th>
+
+                                <th>Sales</th>
+
+                                <th>Reviews</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+                        
+                            <tr
+                            *ngFor="let product of products; let i = index; let lastIndex = last"
+                            >
+                                <!--=====================================
+                                #
+                                ======================================-->
+
+                                <td>{{i+1}}</td>
+
+                                <!--=====================================
+                                Feedback
+                                ======================================-->
+
+                                <td>
+                                    <h4> 
+                                        <span 
+                                        *ngIf="product.feedback.type == 'approved'"
+                                        data-toggle="tooltip" title="{{product.feedback.comment}}"
+                                        class="badge badge-success">
+                                            <a routerLink="/product/{{product.url}}">Approved</a>
+                                        </span>
+
+                                        <span 
+                                        *ngIf="product.feedback.type == 'review'"
+                                        data-toggle="tooltip" title="{{product.feedback.comment}}"
+                                        class="badge badge-warning">Review</span>
+                                    </h4>
+
+                                </td>
+
+                                <!--=====================================
+                                Cover Image
+                                ======================================-->
+
+                                <td>
+                                    <img src="{{path}}img/products/{{product.category}}/{{product.image}}">
+                                </td>
+
+                                 <!--=====================================
+                                Product name
+                                ======================================-->
+
+                                <td>{{product.name}}</td>
+
+                                 <!--=====================================
+                                Category
+                                ======================================-->
+
+                                <td>{{product.category}}</td>
+
+                                 <!--=====================================
+                                Sub-Category
+                                ======================================-->
+
+                                <td>{{product.sub_category}}</td>
+
+                                <!--=====================================
+                                Price
+                                ======================================-->
+
+                                <td>${{product.price}}</td>
+                                
+                                <!--=====================================
+                                Shipping
+                                ======================================-->
+
+                                <td>${{product.shipping}}</td>
+
+                                <!--=====================================
+                                Stock
+                                ======================================-->
+
+                                <td>
+                                    <span 
+                                    *ngIf="product.stock >= 50"
+                                    class="badge badge-success p-2">{{product.stock}}</span>
+                                    <span 
+                                    *ngIf="product.stock < 50"
+                                    class="badge badge-danger p-2">{{product.stock}}</span>
+                                </td>
+
+                                <!--=====================================
+                                Tiempo de entrega
+                                ======================================-->
+
+                                <td>{{product.delivery_time}} days</td>  
+
+                                <!--=====================================
+                                Ofertas
+                                ======================================-->
+
+                                <td>
+                                    <div 
+                                    *ngIf="product.offer.length > 0"
+                                    >
+                                        {{product.offer[0]}}: 
+                                        <span *ngIf="product.offer[0] == 'Disccount'">{{product.offer[1]}}%</span>
+                                        <span *ngIf="product.offer[0] == 'Fixed'">${{product.offer[1]}}</span>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div 
+                                    *ngIf="product.offer.length > 0"
+                                    >
+                                        {{product.offer[2] | date}}
+                                    </div>
+                                </td>
+
+                                 <!--=====================================
+                                Resumen
+                                ======================================-->
+
+                                <td>
+                                    
+                                    <div>
+
+                                        <ul class="list-group p-3">
+                                            
+                                            <li *ngFor="let sum of product.summary">
+                                                {{sum}}
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+
+                                </td>
+
+                                <!--=====================================
+                                Especificaciones técnicas
+                                ======================================-->
+
+                                <td>
+                                    <div 
+                                    *ngIf="product.specification.length > 0"
+                                    class="my-3">
+
+                                         <div 
+                                        *ngFor="let spec of product.specification"
+                                        class="ps-product__variations">
+                                        
+                                            <figure class="my-3">
+
+                                                <figcaption>{{ spec | keys}}: <strong>Choose an option</strong></figcaption>
+                                                
+                                                <div 
+                                                *ngIf="(spec | keys) == 'Color'"
+                                                class="d-flex">
+
+                                                    <div
+                                                    *ngFor="let value of spec[spec|keys]"
+                                                    class="rounded-circle mr-3 details"
+                                                    data-toggle="tooltip" title="{{value}}"
+                                                    style="background-color:{{value}};
+                                                    width:30px; height:30px; cursor:pointer; border:1px solid #bbb"></div>
+                                            
+                                                </div>
+
+                                                <div 
+                                                *ngIf="(spec | keys) != 'Color'"
+                                                class="d-flex">
+
+                                                    <div
+                                                    *ngFor="let value of spec[spec|keys]"
+                                                    class="py-2 px-3 mr-3 details"
+                                                    data-toggle="tooltip" title="{{value}}"
+                                                    style="cursor:pointer; border:1px solid #bbb">
+                                                        
+                                                        {{value}}
+
+                                                    </div>
+                                    
+                                                </div>
+
+                                            </figure>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </td>
+
+                                <!--=====================================
+                                Tabla de detalles
+                                ======================================-->
+
+                                 <td>
+
+                                    <table class="table table-bordered ps-table ps-table--specification">
+
+                                        <tbody>
+
+                                            <tr *ngFor="let detail of product.details">
+                                              <td>{{detail.title}}</td>
+                                              <td>{{detail.value}}</td>
+                                            </tr> 
+
+                                        </tbody>
+
+                                    </table>
+
+                                </td>
+
+
+                                <!--=====================================
+                                Descripción del producto
+                                ======================================-->
+
+                                <td>
+                                   
+                                   <div [innerHTML]="product.description"></div>
+
+                                </td>
+
+                                <!--=====================================
+                                Galería del producto
+                                ======================================-->
+
+                                <td>
+                                    <div class="row">
+
+                                        <figure 
+                                        *ngFor="let pic of product.gallery"
+                                        class="col-3">
+                                            <img src="{{path}}img/products/{{product.category}}/gallery/{{pic}}">
+                                        </figure>
+                                      
+                                    </div>
+                                </td>
+
+                                <!--=====================================
+                                Top Banner
+                                ======================================-->
+
+                                <td>
+
+                                    <div class="py-3">
+                                        <p><strong>H3 tag:</strong> {{product.top_banner["H3 tag"]}}</p>
+                                        <p><strong>P1 tag:</strong> {{product.top_banner["P1 tag"]}}</p>
+                                        <p><strong>H4 tag:</strong> {{product.top_banner["H4 tag"]}}</p>
+                                        <p><strong>P2 tag:</strong> {{product.top_banner["P2 tag"]}}</p>
+                                        <p><strong>Span tag:</strong> {{product.top_banner["Span tag"]}}/p>
+                                        <p><strong>Button tag:</strong> {{product.top_banner["Button tag"]}}</p>
+                                        <p><strong>IMG tag:</strong></p>
+                                        <img src="{{path}}img/products/{{product.category}}/top/{{product.top_banner['IMG tag']}}"  class="img-fluid">
+
+                                    </div>
+
+                                </td>
+
+                                <!--=====================================
+                                Banner por defecto
+                                ======================================-->
+
+                                <td>
+                                    <img src="{{path}}img/products/{{product.category}}/default/{{product.default_banner}}" alt="" class="img-fluid py-3">
+                                </td>
+
+                                <!--=====================================
+                                Slide Horizontal
+                                ======================================-->
+
+                                <td>
+                                    <div class="py-3">
+
+                                        <p><strong>H4 tag:</strong> {{product.horizontal_slider["H4 tag"]}}</p>
+                                        <p><strong>H3-1 tag:</strong> {{product.horizontal_slider["H3-1 tag"]}}</p>
+                                        <p><strong>H3-2 tag:</strong> {{product.horizontal_slider["H3-2 tag"]}}</p>
+                                        <p><strong>H3-3 tag:</strong> {{product.horizontal_slider["H3-3 tag"]}}</p>
+                                        <p><strong>H3-4s tag:</strong> {{product.horizontal_slider["H3-4s tag"]}}</p>
+                                       
+                                        <p><strong>Button tag:</strong> {{product.horizontal_slider["Button tag"]}}</p>
+                                        <p><strong>IMG tag:</strong></p>
+
+                                        <img src="{{path}}img/products/{{product.category}}/horizontal/{{product.horizontal_slider['IMG tag']}}"  class="img-fluid">
+
+                                    </div>
+                                </td>
+
+                                <!--=====================================
+                                Slide Vertical
+                                ======================================-->
+
+                                <td>
+                                    <img src="{{path}}img/products/{{product.category}}/vertical/{{product.vertical_slider}}" alt="" class="img-fluid py-3">
+                                </td>
+
+                                <!--=====================================
+                                Video
+                                ======================================-->
+
+                                 <td>
+
+                                    <div 
+                                    *ngIf="product.video.length > 0">
+                                        
+                                        <iframe  
+                                        class="mb-3"
+                                        [attr.src]='product.video | urlsecure'
+                                        height="360"
+                                        frameborder="0" 
+                                        allowfullscreen></iframe> 
+
+                                    </div>
+                                  
+                                </td>
+
+                                <!--=====================================
+                                Vistas
+                                ======================================-->
+
+                                 <td>
+                                    {{product.views}}
+                                </td>
+
+                                <!--=====================================
+                                Ventas
+                                ======================================-->
+
+                                 <td>
+                                    {{product.sales}}
+                                </td>
+
+                                <!--=====================================
+                                Reseñas
+                                ======================================-->
+
+                                <td>
+                              
+                                    <div class="br-wrapper br-theme-fontawesome-stars">
+
+                                        <select class="ps-rating" data-read-only="true">
+
+                                            <option 
+                                            *ngFor="let review of product.reviews; let i = index; let lastIndex = last"
+                                            [value]="review">
+
+                                            {{i+1}}
+
+                                            {{lastIndex ? callbackReview() : ""}}
+
+                                            </option>
+
+                                        </select>
+                    
+
+                                    </div>
+
+                                </td>
+ 
+                            {{ lastIndex ? callback(i, totalReviews) : ""}}
+
+                            </tr> 
+
+
+                        </tbody>
+
+                    </table>
+                     
+                </div>
+            </div>
+        
+        </div>
+    
+    </div>
+
+</div>
+
+<!--=====================================
+Preload
+======================================-->
+<div 
+*ngIf="preload"
+class="d-flex justify-content-center">
+                        
+    <div class="spinner-border text-muted my-3"></div>
 
 </div>
