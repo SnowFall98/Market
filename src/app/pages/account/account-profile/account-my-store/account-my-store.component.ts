@@ -4,6 +4,11 @@ import { StoresService } from '../../../../services/stores.service';
 import { ProductsService } from '../../../../services/products.service';
 import { DinamicRating, DinamicReviews, Tooltip, Rating} from '../../../../functions';
 import { Subject } from 'rxjs';
+import  { NgForm } from '@angular/forms';
+import { Sweetalert }  from '../../../../functions';
+import {HttpClient} from "@angular/common/http";
+import { StoresModel } from '../../../../models/stores.model';
+import { UsersService } from 'src/app/services/users.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -18,6 +23,7 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 	@Input() childItem:any;
 
 	path:string = Path.url;
+  server:string = Server.url;
 	preload:boolean = false;
 
 	store:any[]=[]; // Variable para almacenar la data de la tienda
@@ -28,8 +34,27 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 	render:boolean = false; // Variable render de DataTable
 	renderReview:boolean = false; // Variables para el render de las Reseñas
 	loadReview:number = 0; // Variables para el render de las Reseñas
+	totalReviews:any[]=[]; // Variable para capturar el total de calficiaciones que tiene la tienda
+  storeModel: StoresModel; // Variable para el modelo de tienda
+  dialCode:string = null; // Variable para el número indicativo del país
+  social:object = { // Variable de tipo objeto para redes sociales
 
-  constructor(private storesService:StoresService, private productsService: ProductsService ) { }
+    facebook:"",
+    instagram:"",
+    twitter:"",
+    linkedin:"",
+    youtube:""
+
+  }
+  countries:any = null; // Variable para capturar el listado de paises
+
+
+  constructor(private storesService:StoresService, private productsService: ProductsService, private http: HttpClient,
+              private usersService:UsersService, ) {
+    
+    this.storeModel = new StoresModel();
+
+  }
 
   ngOnInit(): void {
 
@@ -55,7 +80,44 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
         for(const i in resp){
 
           this.store.push(resp[i]);
-          
+
+          /*=============================================
+          Almacenamos información de la tienda en el modelo
+          =============================================*/
+
+          this.storeModel.store = resp[i].store;
+          this.storeModel.url = resp[i].url;
+          this.storeModel.about = resp[i].about;
+          this.storeModel.abstract = resp[i].abstract;
+          this.storeModel.email = resp[i].email;
+          this.storeModel.country = resp[i].country;
+          this.storeModel.city = resp[i].city;
+          this.storeModel.address = resp[i].address;
+          this.storeModel.logo = resp[i].logo;
+          this.storeModel.cover = resp[i].cover;
+          this.storeModel.username = resp[i].username;
+
+          /*=============================================
+          Dar formato al número teléfonico
+          =============================================*/
+
+          if(resp[i].phone != undefined){
+
+            this.storeModel.phone = resp[i].phone.split("-")[1];
+            this.dialCode = resp[i].phone.split("-")[0];
+          }
+
+          /*=============================================
+          Traer listado de países
+          =============================================*/
+
+          this.usersService.getCountries()
+          .subscribe(resp=>{
+
+            this.countries = resp;
+
+          })
+        
         }
 
         /*=============================================
@@ -65,6 +127,44 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
         this.store.map((item, index)=>{
 
           item.social = JSON.parse(item.social);
+          item.newSocial = [];
+
+          for(const i in item.social){
+
+            if(item.social[i] != ""){
+
+              item.newSocial.push(i)
+            }
+
+            /*=============================================
+            Capturamos el destino final de cada red social
+            =============================================*/
+
+            switch(i){
+
+              case "facebook":
+              this.social["facebook"] = item.social[i].split("/").pop();
+              break;
+
+              case "instagram":
+              this.social["instagram"] = item.social[i].split("/").pop();
+              break;
+
+              case "twitter":
+              this.social["twitter"] = item.social[i].split("/").pop();
+              break;
+
+              case "linkedin":
+              this.social["linkedin"] = item.social[i].split("/").pop();
+              break;
+
+              case "youtube":
+              this.social["youtube"] = item.social[i].split("/").pop();
+              break;
+
+            }
+
+          }
 
           return item;
 
@@ -154,6 +254,8 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
             /*=============================================
             Damos formato a las reseñas
             =============================================*/
+            
+	      		this.totalReviews.push(JSON.parse(product.reviews));
 
             let rating = DinamicRating.fnc(product);
             product.reviews = DinamicReviews.fnc(rating);
@@ -182,7 +284,7 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 
   }
 
-  callback(i){
+  callback(i, totalReviews){
 
     if(!this.render){
       
