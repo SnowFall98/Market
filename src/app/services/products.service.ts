@@ -179,9 +179,16 @@ export class ProductsService {
 		)
 
 	}
+
 	getFilterDataMyStore(orderBy:string, equalTo:string){
 
 		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
+
+	}
+	
+	getFilterDataStore(orderBy:string, equalTo:string){
+
+		return this.http.get(`${this.api}products.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`)
 
 	}
 
@@ -206,6 +213,12 @@ export class ProductsService {
 	registerDatabase(body: ProductsModel, idToken:string){
 
 		return this.http.post(`${this.api}/products.json?auth=${idToken}`, body);
+
+	}
+
+	deleteDataAuth(id:string, idToken:string){
+
+		return this.http.delete(`${this.api}products/${id}.json?auth=${idToken}`);
 
 	}
 }
