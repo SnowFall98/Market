@@ -110,6 +110,18 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3
 
 		return;
 
+	}else{
+
+		$json = array(
+
+		 	'status' => null
+		
+		);
+
+		echo json_encode($json, true);
+
+		return;
+
 	}
 
 }
