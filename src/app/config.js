@@ -113,7 +113,8 @@ Exportamos el endPoint del servidor para administrar archivos
 
 export let Server = {
 
-	url:'http://localhost/Market/src/assets/img/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+	url:'http://localhost/Market/src/assets/img/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw',
+	delete: 'http://localhost/Market/src/assets/img/delete.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 }
 
 export let Payu = {
