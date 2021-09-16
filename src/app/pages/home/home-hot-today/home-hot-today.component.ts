@@ -71,9 +71,9 @@ export class HomeHotTodayComponent implements OnInit {
 				if(getProducts[i]["offer"] != ""){
 					fechaOferta = new Date(
 
-						parseInt(getProducts[i]["offer"][2].split("-")[0]),
-						parseInt(getProducts[i]["offer"][2].split("-")[1])-1,
-						parseInt(getProducts[i]["offer"][2].split("-")[2])
+						parseInt(JSON.parse(getProducts[i]["offer"])[2].split("-")[0]),
+						parseInt(JSON.parse(getProducts[i]["offer"])[2].split("-")[1])-1,
+						parseInt(JSON.parse(getProducts[i]["offer"])[2].split("-")[2])
 
 					)
 
