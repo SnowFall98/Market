@@ -30,5 +30,11 @@ export class StoresService {
 
 	}
   
+	patchDataAuth(id:string, value:StoresModel, idToken:string){
+
+		return this.http.patch(`${this.api}stores/${id}.json?auth=${idToken}`,value);
+
+	}
+  
 }
 
