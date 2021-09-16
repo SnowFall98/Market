@@ -734,7 +734,7 @@ export let Sweetalert = {
 
               Swal.fire({
                 allowOutsideClick: false,
-                type: 'info',
+                icon: 'info',
                 text:text
               })
               Swal.showLoading()
