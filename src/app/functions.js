@@ -28,6 +28,7 @@ export let OwlCarouselConfig = {
                     dataNavRight = (el.data('owl-nav-right')) ? el.data('owl-nav-right') : "<i class='icon-chevron-right'></i>",
                     duration = el.data('owl-duration'),
                     datamouseDrag = (el.data('owl-mousedrag') == 'on') ? true : false;
+                    //FUNCION CARRUCEL mínimo 2 productos con ofertas con fechas de vencimiento cambiar longitud si se gusta
                 if (target.children('div, span, a, img, h1, h2, h3, h4, h5, h5').length >= 2) {
                     el.owlCarousel({
                         animateIn: dataAnimateIn,
