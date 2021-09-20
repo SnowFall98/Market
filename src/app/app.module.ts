@@ -64,6 +64,7 @@ import { AccountNewStoreComponent } from './pages/account/account-profile/accoun
 import { AccountMyStoreComponent } from './pages/account/account-profile/account-my-store/account-my-store.component';
 import { KeysPipe } from './pipes/keys.pipe';
 import { AccountMySalesComponent } from './pages/account/account-profile/account-my-sales/account-my-sales.component';
+import { AccountMyOrdersComponent } from './pages/account/account-profile/account-my-orders/account-my-orders.component';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { AccountMySalesComponent } from './pages/account/account-profile/account
     AccountNewStoreComponent,
     AccountMyStoreComponent,
     KeysPipe,
-    AccountMySalesComponent
+    AccountMySalesComponent,
+    AccountMyOrdersComponent
   ],
   imports: [
     BrowserModule,
