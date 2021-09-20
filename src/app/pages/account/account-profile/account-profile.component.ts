@@ -71,6 +71,12 @@ export class AccountProfileComponent implements OnInit {
 
                 this.vendor = true;
 
+                for(const i in resp){
+
+                  this.store.push(resp[i]);
+                  
+                }
+
               }
             })
 

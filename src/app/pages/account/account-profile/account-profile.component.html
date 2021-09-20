@@ -132,6 +132,51 @@ My Store
 </app-account-my-store>
 
 <!--=====================================
+My Sales
+======================================-->
+<div
+*ngIf="store.length > 0">
+<app-account-my-sales
+*ngIf="!preload && accountUrl == 'my-sales'"
+[childItem]="store[0].store"
+></app-account-my-sales>
+</div>
+
+<!--=====================================
+Orders
+======================================-->
+
+<div
+*ngIf="store.length > 0">
+<app-account-my-orders
+*ngIf="!preload && accountUrl == 'orders'"
+[childItem]="store[0].store"
+></app-account-my-orders>
+</div>
+
+<!--=====================================
+Disputes
+======================================-->
+<div
+*ngIf="store.length > 0">
+<app-account-disputes
+*ngIf="!preload && accountUrl == 'disputes'"
+[childItem]="store[0].store"
+></app-account-disputes>
+</div>
+
+<!--=====================================
+Messages
+======================================-->
+<div
+*ngIf="store.length > 0">
+<app-account-messages
+*ngIf="!preload && accountUrl == 'messages'"
+[childItem]="store[0].store"
+></app-account-messages>
+</div>
+
+<!--=====================================
 Ventana modal para escribir nueva contraseña
 ======================================-->
 
