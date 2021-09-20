@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-if(isset($_GET["key"]) && $_GET["key"] == "[YOUR_API_KEY]"){
+if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw"){
 
 	header('Access-Control-Allow-Origin: *');
 	header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
