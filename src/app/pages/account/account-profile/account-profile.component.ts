@@ -4,6 +4,7 @@ import { Path, Server } from '../../../config';
 import { Sweetalert, Tooltip } from '../../../functions';
 import { UsersService } from '../../../services/users.service';
 import { ActivatedRoute } from '@angular/router';
+import { StoresService } from '../../../services/stores.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -27,8 +28,13 @@ export class AccountProfileComponent implements OnInit {
 	server:string = Server.url;
 	image:File = null;
 	accountUrl:string = null;
+	store:any[] = [];
+	ordersPending:number = 0;
+	disputes:any[] = [];
+	messages:any[] = [];
 
-  constructor(private usersService: UsersService, private http: HttpClient, private activatedRoute:ActivatedRoute) { }
+  constructor(private usersService: UsersService, private http: HttpClient,
+    private activatedRoute:ActivatedRoute, private storesService: StoresService,) { }
 
   ngOnInit(): void {
 
@@ -58,10 +64,15 @@ export class AccountProfileComponent implements OnInit {
 						Preguntamos si es vendedor
 						=============================================*/
 
-						if(resp[i].vendor != undefined){
+						this.storesService.getFilterData("username", resp[i].username)
+            .subscribe(resp=>{
 
-							this.vendor = true;
-						}
+              if(Object.keys(resp).length > 0) {
+
+                this.vendor = true;
+
+              }
+            })
 
 						/*=============================================
 						Asignamos nombre completo del usuario
