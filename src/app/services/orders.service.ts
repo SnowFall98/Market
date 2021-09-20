@@ -31,6 +31,16 @@ export class OrdersService {
 		return this.http.get(`${this.api}orders.json?orderBy="${orderBy}"&equalTo="${equalTo}"&print=pretty`);
 
 	}
+	
+	/*=============================================
+	Actualizar en Firebase Database
+	=============================================*/
+
+	patchDataAuth(id:string, value:object, idToken:string){
+
+		return this.http.patch(`${this.api}orders/${id}.json?auth=${idToken}`,value);
+
+	}
 
 
 
