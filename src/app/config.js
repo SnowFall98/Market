@@ -117,6 +117,16 @@ export let Server = {
 	delete: 'http://localhost/Market/src/assets/img/delete.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 }
 
+/*=============================================
+Exportamos el endPoint del servidor para enviar correos electrónicos
+=============================================*/
+
+export let Email = {
+
+	url:'http://localhost/marketplace-sales/src/assets/email/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+
+}
+
 export let Payu = {
 
 	//Para más detalles de como cambiar los valores ID revisar http://developers.payulatam.com/es/web_checkout/sandbox.html
