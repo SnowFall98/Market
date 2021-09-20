@@ -16,9 +16,10 @@ Nav Account
         *ngIf="is_vendor"
         ><a href="/account/my-store">My Store</a></li>
 
-        <li><a href="my-account_my-sales.html">My Sales</a></li>
+        <li
+        *ngIf="is_vendor"
+        ><a href="account/my-sales">My Sales</a></li>
     </ul>
-
 
 
     <!--=====================================
