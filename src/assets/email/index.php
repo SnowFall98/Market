@@ -26,7 +26,7 @@ if(isset($_GET["key"]) && $_GET["key"] == "AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3
 
 		$mail->isMail();
 
-		$mail->setFrom("noreply@mp-prueba-8326a.firebaseapp.com", "Marketplace");
+		$mail->setFrom("noreply@market-place-363dc.firebaseapp.com", "Marketplace");
 
 		$mail->Subject  = $_POST["comment"];
 
