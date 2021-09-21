@@ -123,7 +123,7 @@ Exportamos el endPoint del servidor para enviar correos electrónicos
 
 export let Email = {
 
-	url:'http://localhost/marketplace-sales/src/assets/email/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
+	url:'http://localhost/Market/src/assets/email/index.php?key=AIzaSyBR9IUBZFVT4l1shmmdo1FDELSCOlER3zw'
 
 }
 
