@@ -26,18 +26,24 @@
 		*ngFor="let item of itemReviews[0]; let lastIndex = last"
     	class="media border p-3">
     		
-    		<img 
-			*ngIf="item.image != undefined"
-    		src="{{path}}img/users/{{item.image}}"  
+			<img 
+			*ngIf="item.image != undefined && item.method == 'direct'"
+			src="{{path}}img/users/{{item.name}}/{{item.image}}"  
 				class="mr-5 mt-1 rounded-circle" 
-    			style="width:60px;">
+				style="width:60px;">
 
-    		<img 
+			<img 
+			*ngIf="item.image != undefined && item.method != 'direct'"
+			src="{{item.image}}"  
+			class="mr-5 mt-1 rounded-circle" 
+			style="width:60px;">
+
+
+			<img 
 			*ngIf="item.image == undefined"
-    		src="{{path}}img/users/default/default.png"  
-				class="mr-5 mt-1 rounded-circle" 
-    			style="width:60px;">
-
+			src="{{path}}img/users/default/default.png"  
+			class="mr-5 mt-1 rounded-circle" 
+			style="width:60px;">
 
     		<div class="media-body">
 
