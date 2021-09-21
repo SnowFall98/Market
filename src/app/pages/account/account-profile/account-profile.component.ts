@@ -5,6 +5,9 @@ import { Sweetalert, Tooltip } from '../../../functions';
 import { UsersService } from '../../../services/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { StoresService } from '../../../services/stores.service';
+import { OrdersService } from '../../../services/orders.service';
+import { DisputesService } from '../../../services/disputes.service';
+// import { MessagesService } from '../../../services/messages.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -34,147 +37,221 @@ export class AccountProfileComponent implements OnInit {
 	messages:any[] = [];
 
   constructor(private usersService: UsersService, private http: HttpClient,
-    private activatedRoute:ActivatedRoute, private storesService: StoresService,) { }
+    private activatedRoute:ActivatedRoute, private storesService: StoresService,
+    private ordersService: OrdersService, private disputesService: DisputesService,) { }
 
   ngOnInit(): void {
 
-		this.preload = true;
+    this.preload = true;
 
     /*=============================================
-		Capturamos la Url de la página de cuentas
-		=============================================*/
+    Capturamos la Url de la página de cuentas
+    =============================================*/
 
-		this.accountUrl = this.activatedRoute.snapshot.params["param"];
+    if(this.activatedRoute.snapshot.params["param"] != undefined){
 
+      this.accountUrl = this.activatedRoute.snapshot.params["param"].split("&")[0];
+
+    }
+    
     /*=============================================
-		Validar si existe usuario autenticado
-		=============================================*/
-		this.usersService.authActivate().then(resp =>{
+    Validar si existe usuario autenticado
+    =============================================*/
+    this.usersService.authActivate().then(resp =>{
 
-			if(resp){
+      if(resp){
 
-				this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
-				.subscribe(resp=>{
+        this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
+        .subscribe(resp=>{
 
-					this.id = Object.keys(resp).toString();
+          this.id = Object.keys(resp).toString();
 
-					for(const i in resp){
+          for(const i in resp){
 
-						/*=============================================
-						Preguntamos si es vendedor
-						=============================================*/
+            /*=============================================
+            Preguntamos si es vendedor para traernos la información de la tienda
+            =============================================*/
 
-						this.storesService.getFilterData("username", resp[i].username)
+            this.storesService.getFilterData("username", resp[i].username)
             .subscribe(resp=>{
-
-              if(Object.keys(resp).length > 0) {
+              
+              if(Object.keys(resp).length > 0){
 
                 this.vendor = true;
 
                 for(const i in resp){
 
                   this.store.push(resp[i]);
+
+                  /*=============================================
+                  Preguntamos si esta tienda tiene órdenes
+                  =============================================*/
+                  
+                  this.ordersService.getFilterData("store", resp[i].store)
+                  .subscribe(resp=>{
+                    
+                    if(Object.keys(resp).length > 0){
+
+                      for(const i in resp){
+
+                        if(resp[i].status == "pending"){
+
+                          this.ordersPending++;
+                        }
+                      
+                      }
+
+                    }
+
+                  })
+
+                  /*=============================================
+                  Preguntamos si esta tienda tiene disputas
+                  =============================================*/
+
+                  this.disputesService.getFilterData("receiver", resp[i].store)
+                  .subscribe(resp=>{
+                    
+                    if(Object.keys(resp).length > 0){
+
+                      for(const i in resp){
+
+                        if(resp[i].answer == undefined){								
+
+                          this.disputes.push(resp[i]);
+
+                        }				
+                      
+                      }
+
+                    }
+
+                  })
+
+                  /*=============================================
+                  Preguntamos si esta tienda tiene mensajes
+                  =============================================
+
+                  this.messagesService.getFilterData("receiver", resp[i].store)
+                  .subscribe(resp=>{
+                    
+                    if(Object.keys(resp).length > 0){
+
+                      for(const i in resp){
+
+                        if(resp[i].answer == undefined){								
+
+                          this.messages.push(resp[i]);	
+
+                        }			
+                      
+                      }
+
+                    }
+
+                  }) */
                   
                 }
 
               }
+
             })
 
-						/*=============================================
-						Asignamos nombre completo del usuario
-						=============================================*/
+            /*=============================================
+            Asignamos nombre completo del usuario
+            =============================================*/
 
-						this.displayName = resp[i].displayName;
+            this.displayName = resp[i].displayName;
 
-						/*=============================================
-						Asignamos username
-						=============================================*/
+            /*=============================================
+            Asignamos username
+            =============================================*/
 
-						this.username = resp[i].username;
+            this.username = resp[i].username;
 
-						/*=============================================
-						Asignamos email
-						=============================================*/
+            /*=============================================
+            Asignamos email
+            =============================================*/
 
-						this.email = resp[i].email;
+            this.email = resp[i].email;
 
-						/*=============================================
-						Asignamos foto del usuario
-						=============================================*/
+            /*=============================================
+            Asignamos foto del usuario
+            =============================================*/
 
-						if(resp[i].picture != undefined){
+            if(resp[i].picture != undefined){
 
-							if(resp[i].method != "direct"){
+              if(resp[i].method != "direct"){
 
-								this.picture = resp[i].picture;
-							
-							}else{
+                this.picture = resp[i].picture;
+              
+              }else{
 
-								this.picture = `assets/img/users/${resp[i].username.toLowerCase()}/${resp[i].picture}`;
-							}
+                this.picture = `assets/img/users/${resp[i].username.toLowerCase()}/${resp[i].picture}`;
+              }
 
-						}else{
+            }else{
 
-							this.picture = `assets/img/users/default/default.png`;
-						}
-
-						/*=============================================
-						Método de registro
-						=============================================*/
-
-						if(resp[i].method != "direct"){
-
-							this.method = true;
-						}
-
-						this.preload = false;
-
-					}
-
-				})
-
-			}
-
-		})
-
-    /*=============================================
-		Función para ejecutar el Tooltip de Bootstrap 4
-		=============================================*/
-
-		Tooltip.fnc();
-
-    /*=============================================
-		Validar formulario de Bootstrap 4
-		=============================================*/
-
-		// Disable form submissions if there are invalid fields
-		(function() {
-			'use strict';
-			window.addEventListener('load', function() {
-        // Get the forms we want to add validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
+              this.picture = `assets/img/users/default/default.png`;
             }
-            form.classList.add('was-validated');
-          }, false);
-        });
+
+            /*=============================================
+            Método de registro
+            =============================================*/
+
+            if(resp[i].method != "direct"){
+
+              this.method = true;
+            }
+
+            this.preload = false; 
+          }
+
+        })
+
+      }
+
+    })
+
+    /*=============================================
+    Función para ejecutar el Tooltip de Bootstrap 4
+    =============================================*/
+
+    Tooltip.fnc();
+
+    /*=============================================
+    Validar formulario de Bootstrap 4
+    =============================================*/
+
+    // Disable form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
       }, false);
-		})();
+    });
+    }, false);
+    })();
 
-		/*=============================================
-		Script para subir imagen con el input de boostrap
-		=============================================*/
+    /*=============================================
+    Script para subir imagen con el input de boostrap
+    =============================================*/
 
-		// Add the following code if you want the name of the file appear on select
-		$(".custom-file-input").on("change", function() {
-		  var fileName = $(this).val().split("\\").pop();
-		  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-		});
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
   }
 
   /*=============================================
