@@ -53,7 +53,7 @@ Nav Account
             	<tr
                 *ngIf="myShopping.length == 0">
 
-					<td colspan="5" class="text-center">Esto se ve algo vacío ¡Vamos a comprar algo!</td>    
+					<td colspan="5" class="text-center">You haven't products in your shopping's yet!</td>    
 
             	</tr>
 
@@ -168,14 +168,55 @@ Nav Account
 
                         <a 
                         *ngIf="process[i][2].stage == 'delivered' && process[i][2].status != 'ok'" 
-                        class="btn btn-danger btn-lg" href="#">Abrir Disputa</a>
+                        class="btn btn-danger btn-lg text-white" (click)="newDispute(id_order[i], product.store, product.user)">Open Dispute</a>
+
+                        <!--=====================================
+                        Visualizar las disputas
+                        ======================================-->
+
+                        <div
+                        *ngFor="let dispute of disputes" 
+                        class="my-3">
+
+                            <div
+                            *ngIf="dispute.order == id_order[i]">
+                               
+                                <div class="media border p-3">
+                                    <div class="media-body">
+                                        <h4><small><i>Dispute on {{dispute.date_dispute | date }}</i></small></h4>
+                                        <p>{{dispute.message }}</p>
+                                    </div>
+
+                                    <img 
+                                    *ngIf="dispute.user.method != 'direct'"
+                                    src="{{dispute.user.picture}}" alt="John Doe" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+
+                                    <img 
+                                    *ngIf="dispute.user.method == 'direct'"
+                                    src="{{path}}img/users/{{dispute.user.username}}/{{dispute.user.picture}}" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+                                </div>
+
+                                <div 
+                                *ngIf="dispute.answer != null"
+                                class="media border p-3">
+
+                                    <img src="{{path}}img/stores/{{dispute.store.url}}/{{dispute.store.logo}}" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+                                    <div class="media-body text-right">
+                                        <h4><small><i>Answer on {{dispute.date_answer | date }}</i></small></h4>
+                                        <p>{{dispute.answer }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
 						
 						<!--=====================================
                     	Permitimos la recompra si el producto ha sido entregado
                     	======================================-->
                         <a 
 						*ngIf="process[i][2].stage == 'delivered' && process[i][2].status == 'ok'" 
-                        class="btn btn-warning btn-lg" href="product/{{product.url}}">Volver a Comprar</a>
+                        class="btn btn-warning btn-lg" href="product/{{product.url}}">Repurchase</a>
 
                     </td> 
 
@@ -193,7 +234,7 @@ Nav Account
                     >
 	                    <div class="text-center  mt-2">
   
-                            <a class="btn btn-warning btn-lg disabled" href="#">Agregar comentario</a>
+                            <a class="btn btn-warning btn-lg disabled">Add comment</a>
 
                         </div>
 
@@ -207,23 +248,25 @@ Nav Account
 					*ngIf="process[i][2].stage == 'delivered' && process[i][2].status == 'ok'" 
                     >
 
-                        <div class="text-center  mt-2">
+                        <div 
+                        *ngFor="let item of reviews[i]; let iReview = index; let lastIndexReview = last"
+                        class="text-center  mt-2">
 
-                            <div class="br-theme-fontawesome-stars">
+                            <div 
+                            *ngIf="item.name != undefined && item.name == product.user"
+                            class="br-theme-fontawesome-stars">
 
-                                <select class="ps-rating" data-read-only="true" style="display: none;">
-                                    <option value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                    <option value="1">4</option>
-                                    <option value="2">5</option>
+                                <select class="ps-rating" data-read-only="true" [attr.reviews]="item.review">
+                                  
                                 </select>
 
-                            </div>
+                            </div>             
 
-                            <a class="btn btn-warning btn-lg" href="#">Agregar comentario</a>
+                        {{ lastIndexReview ? callback(iReview) : ""}}
 
                         </div>
+
+                        <a class="btn btn-warning btn-lg" (click)="newReview(product.user,product.url)">Add comment</a>
 
                     </td>
 
@@ -237,4 +280,133 @@ Nav Account
 
     </div><!-- End My Shopping -->
 
+    <!--=====================================
+    Modal para las disputas
+    ======================================--> 
+
+    <!-- The Modal -->
+    <div class="modal" id="newDispute">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <form
+                (ngSubmit)="onSubmit(f)"
+                #f="ngForm">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Dispute</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                        <div class="form-group">
+
+                            <label>Type your message</label>
+
+                            <div class="form-group__content">
+                                
+                                <textarea 
+                                class="form-control" 
+                                type="text"
+                                name="message"
+                                [(ngModel)]="dispute.message"
+                                required></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+
+                        <div class="float-right">
+                            <button type="submit" class="btn btn-warning btn-lg">Send</button>
+                        </div>
+                       
+                    </div>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--=====================================
+    Modal adicionar reseña
+    ======================================--> 
+
+    <!-- The Modal -->
+    <div class="modal" id="newReview">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">New Review</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+
+                    <div class="br-theme-fontawesome-stars">
+
+                        <select name="review" #review class="ps-rating" data-read-only="false" style="display: none;">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Type your comment</label>
+
+                        <div class="form-group__content">
+
+                            <textarea 
+                            class="form-control" 
+                            type="text"
+                            name="comment"
+                            #comment
+                            required></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <div class="float-right">
+                        <button type="button" class="btn btn-warning btn-lg" (click)="submitReview(comment, review)">Send</button>
+                    </div>
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+
