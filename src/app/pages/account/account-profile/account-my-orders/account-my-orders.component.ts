@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { OrdersService } from '../../../../services/orders.service';
 import { SalesService } from '../../../../services/sales.service';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ declare var $:any;
   templateUrl: './account-my-orders.component.html',
   styleUrls: ['./account-my-orders.component.css']
 })
-export class AccountMyOrdersComponent implements OnInit {
+export class AccountMyOrdersComponent implements OnInit, OnDestroy {
 
   @Input() childItem:any;
 
@@ -240,7 +240,7 @@ export class AccountMyOrdersComponent implements OnInit {
         }else{
 
           Sweetalert.fnc("error", "Failed to send email notification", null);  
-          
+
         }
 
       })   	
@@ -253,14 +253,14 @@ export class AccountMyOrdersComponent implements OnInit {
 
   }
 
-/*=============================================
-Destruímos el trigger de angular
-=============================================*/
+  /*=============================================
+  Destruímos el trigger de angular
+  =============================================*/
 
-ngOnDestroy():void{
+  ngOnDestroy():void{
 
-  this.dtTrigger.unsubscribe();
+    this.dtTrigger.unsubscribe();
 
-}
+  }
 
 }
