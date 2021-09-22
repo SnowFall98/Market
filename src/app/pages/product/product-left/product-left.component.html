@@ -348,10 +348,63 @@ class="ps-product--detail ps-product--fullwidth">
 
                     <h3>Questions and Answers</h3>
 
-                    <div class="form-group">
+                    <div class="input-group mb-3 input-group-lg">
 
-                        <input class="form-control" type="text" placeholder="Have a question? Search for answer?">
+                        <input class="form-control" type="text" placeholder="Have a question?" name="question" #question>
+
+                        <div class="input-group-prepend">
+                            <span class="btn btn-warning input-group-text" (click)="newQuestion(question, p.url, p.store)">Send</span>
+                        </div>
                     
+                    </div>
+
+                    <!--=====================================
+                    Visualizar las preguntas y respuestas
+                    ======================================-->
+
+                    <div
+                    *ngIf="questions.length > 0">
+
+                        <div
+                        class="my-3"
+                        *ngFor="let qa of questions">
+
+                            <div class="media border p-3">
+                                 
+                                <div class="media-body">
+                                    
+                                    <h4><small><i>Question on {{qa.date_message | date }}</i></small></h4>
+                                    <p>{{qa.message}}</p>
+
+                                </div>
+
+                                <img 
+                                *ngIf="qa.user.method != 'direct'"
+                                src="{{qa.user.picture}}"  class="ml-3 mt-3 rounded-circle" style="width:60px;">
+
+                                <img 
+                                *ngIf="qa.user.method == 'direct'"
+                                src="{{path}}img/users/{{qa.user.username}}/{{qa.user.picture}}" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+
+                            </div>
+
+                            <div
+                            *ngIf="qa.answer != null" 
+                            class="media border p-3">
+
+                               <img src="{{path}}img/stores/{{qa.store.url}}/{{qa.store.logo}}" class="ml-3 mt-3 rounded-circle" style="width:60px;">
+                                 
+                                <div class="media-body text-right">
+                                    
+                                    <h4><small><i>Answer on {{qa.date_answer | date }}</i></small></h4>
+                                    <p>{{qa.answer}}</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>                        
+
                     </div>
 
                 </div>
@@ -366,14 +419,13 @@ class="ps-product--detail ps-product--fullwidth">
 
 </div>
 
-<!--=============================
+<!--=====================================
 Preload
-===============================-->
-
+======================================-->
 <div
-*ngIf ="preload"
+*ngIf="preload"
 class="d-flex justify-content-center">
-
+    
     <div class="spinner-border text-muted my-5"></div>
 
 </div>

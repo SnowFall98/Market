@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Path } from '../../../config';
+import { Path, Email } from '../../../config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
-import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity, Tooltip } from '../../../functions';
+import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity, Tooltip, Sweetalert } from '../../../functions';
 import { UsersService } from '../../../services/users.service';
+import { MessagesModel } from 'src/app/models/messages.model';
+import { HttpClient } from '@angular/common/http';
+import { MessagesService } from 'src/app/services/messages.service';
+import { StoresService } from 'src/app/services/stores.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -32,11 +36,16 @@ export class ProductLeftComponent implements OnInit {
     quantity:number = 1;
     summary:any[]=[];
     details:any[]=[];
+    //Funciones para mensajes
+    messages: MessagesModel;
+    email:string = Email.url;
+    questions:any[] = [];
     
-  constructor(private activateRoute: ActivatedRoute,
-    private productsService: ProductsService,
-    private usersService: UsersService,
-    private router:Router) { }
+  constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService,
+    private router:Router, private http: HttpClient, private messagesService: MessagesService, private storesService: StoresService,) {
+
+      this.messages = new MessagesModel();
+     }
 
   ngOnInit(): void {
     this.preload = true;
@@ -44,6 +53,55 @@ export class ProductLeftComponent implements OnInit {
     .subscribe( resp => {
       
       this.productsFnc(resp);		
+
+    })
+
+    /*=============================================
+    Traer preguntas y respuestas del producto
+    =============================================*/
+    this.messagesService.getFilterData("url_product",this.activateRoute.snapshot.params["param"])
+    .subscribe( resp => {
+
+      if(Object.keys(resp).length > 0){ 
+
+        let count = 0;    
+
+        for(const i in resp){
+
+          count++;
+
+          this.storesService.getFilterData("store", resp[i].receiver)
+          .subscribe(resp1=>{
+
+            for(const f in resp1){
+
+              resp[i].store = resp1[f];
+            }
+
+          })
+
+          this.usersService.getFilterData("username", resp[i].transmitter)
+          .subscribe(resp1=>{
+
+            for(const f in resp1){
+
+              resp[i].user = resp1[f];
+            }
+
+
+          })
+
+          let localQuestions = this.questions;
+
+          setTimeout(function(){
+
+            localQuestions.push(resp[i]);
+
+          },count*1000)
+
+        }
+
+      }
 
     })
 
@@ -438,6 +496,107 @@ export class ProductLeftComponent implements OnInit {
 
     this.usersService.addShoppingCart(item);
 
+  }
+
+  /*=============================================
+  Función para crear nueva pregunta
+  =============================================*/
+
+  newQuestion(question, url, store){
+
+    this.messages.message = question.value;
+    this.messages.url_product = url;
+    this.messages.receiver = store;
+    this.messages.date_message = new Date();
+
+    /*=============================================
+    Validar si este usuario está autenticado
+    =============================================*/
+
+    this.usersService.authActivate().then(resp=>{
+
+      if(!resp){
+
+        Sweetalert.fnc("error", "Please login to send your question", null);
+
+        return;
+
+      }else{
+
+        /*=============================================
+        Traer el correo de la tienda
+        =============================================*/
+
+        let emailStore = null;
+
+        this.storesService.getFilterData("store", store)
+        .subscribe(resp =>{
+
+            for(const i in resp){
+
+                emailStore = resp[i].email;
+            }
+
+        })
+
+        /*=============================================
+        Traer la información del usuario
+        =============================================*/
+
+        this.usersService.getFilterData("idToken", localStorage.getItem("idToken"))
+        .subscribe(resp=>{
+
+          for(const i in resp){
+
+            this.messages.transmitter = resp[i].username; 
+
+            /*=============================================
+            Crear el mensaje en la base de datos
+            =============================================*/
+
+            this.messagesService.registerDatabase(this.messages, localStorage.getItem("idToken"))
+            .subscribe(resp=>{
+
+              if(resp["name"] != ""){
+
+                /*=============================================
+                Enviar notificación por correo electrónico
+                =============================================*/
+
+                const formData = new FormData();
+
+                formData.append('email', 'yes');
+                formData.append('comment', 'You have received a new message');
+                formData.append('url', 'account/messages');
+                formData.append('address', emailStore);
+                formData.append('name', store);
+
+                this.http.post(this.email, formData)
+                .subscribe(resp =>{
+
+                  if(resp["status"] == 200){
+
+                    Sweetalert.fnc("success", "The message has been sent", "product/"+url);
+
+                  }
+
+                }) 
+
+              }
+
+            }, err =>{
+
+              Sweetalert.fnc("error", err.error.error.message, null)
+
+            })
+          }
+
+        })
+
+      }
+
+    })
+      
   }
 
 }
