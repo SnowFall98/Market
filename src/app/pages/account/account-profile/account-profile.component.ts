@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StoresService } from '../../../services/stores.service';
 import { OrdersService } from '../../../services/orders.service';
 import { DisputesService } from '../../../services/disputes.service';
-// import { MessagesService } from '../../../services/messages.service';
+import { MessagesService } from '../../../services/messages.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -36,9 +36,9 @@ export class AccountProfileComponent implements OnInit {
 	disputes:any[] = [];
 	messages:any[] = [];
 
-  constructor(private usersService: UsersService, private http: HttpClient,
-    private activatedRoute:ActivatedRoute, private storesService: StoresService,
-    private ordersService: OrdersService, private disputesService: DisputesService,) { }
+  constructor(private usersService: UsersService, private http: HttpClient, private activatedRoute:ActivatedRoute,
+    private storesService: StoresService, private ordersService: OrdersService, private disputesService: DisputesService,
+    private messagesService: MessagesService) { }
 
   ngOnInit(): void {
 
@@ -130,7 +130,7 @@ export class AccountProfileComponent implements OnInit {
 
                   /*=============================================
                   Preguntamos si esta tienda tiene mensajes
-                  =============================================
+                  =============================================*/
 
                   this.messagesService.getFilterData("receiver", resp[i].store)
                   .subscribe(resp=>{
@@ -149,7 +149,7 @@ export class AccountProfileComponent implements OnInit {
 
                     }
 
-                  }) */
+                  })
                   
                 }
 
