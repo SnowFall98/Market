@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Path } from '../../../../config';
-import { Subject  } from 'rxjs';
+import { Subject } from 'rxjs';
 import { OrdersService } from '../../../../services/orders.service';
 import { StoresService } from '../../../../services/stores.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -8,187 +8,187 @@ import { DisputesService } from 'src/app/services/disputes.service';
 import { ProductsService } from 'src/app/services/products.service';
 import { DisputesModel } from 'src/app/models/disputes.model';
 import { NgForm } from '@angular/forms';
-import  {Sweetalert, Rating} from '../../../../functions';
+import { Sweetalert, Rating } from '../../../../functions';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
-  selector: 'app-account-my-shopping',
-  templateUrl: './account-my-shopping.component.html',
-  styleUrls: ['./account-my-shopping.component.css']
+	selector: 'app-account-my-shopping',
+	templateUrl: './account-my-shopping.component.html',
+	styleUrls: ['./account-my-shopping.component.css']
 })
 export class AccountMyShoppingComponent implements OnInit, OnDestroy {
-  
-	@Input() childItem:any;
 
-	path:string = Path.url;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
-  myShopping: any [] = [];
-  process: any [] = [];
-	is_vendor:boolean = false;
-  dispute: DisputesModel;
-	id_order:any[] = [];
-	disputes:any[]=[];
-	username:string;
-	picture:string;
-	method:string;
-	idProduct:string;
-	reviews:any[] = [];
-	render:boolean = false;
+	@Input() childItem: any;
 
-  constructor(private ordersService: OrdersService, private storesService:StoresService, private disputesService:DisputesService,
-    private usersService:UsersService, private productsService:ProductsService) { 
+	path: string = Path.url;
+	dtOptions: DataTables.Settings = {};
+	dtTrigger: Subject<any> = new Subject();
+	myShopping: any[] = [];
+	process: any[] = [];
+	is_vendor: boolean = false;
+	dispute: DisputesModel;
+	id_order: any[] = [];
+	disputes: any[] = [];
+	username: string;
+	picture: string;
+	method: string;
+	idProduct: string;
+	reviews: any[] = [];
+	render: boolean = false;
 
-      this.dispute = new DisputesModel();
-      
-    }
+	constructor(private ordersService: OrdersService, private storesService: StoresService, private disputesService: DisputesService,
+		private usersService: UsersService, private productsService: ProductsService) {
 
-  ngOnInit(): void {
+		this.dispute = new DisputesModel();
+
+	}
+
+	ngOnInit(): void {
 
 		/*=============================================
-    Agregamos opciones a DataTable
-    =============================================*/
+		Agregamos opciones a DataTable
+		=============================================*/
 
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      processing: true
-    }
+		this.dtOptions = {
+			pagingType: 'full_numbers',
+			processing: true
+		}
 
-    /*=============================================
-    Validamos si el usuario ya tiene una tienda habilitada
-    =============================================*/
+		/*=============================================
+		Validamos si el usuario ya tiene una tienda habilitada
+		=============================================*/
 
-      this.storesService.getFilterData("username", this.childItem)
-      .subscribe(resp=>{
+		this.storesService.getFilterData("username", this.childItem)
+			.subscribe(resp => {
 
-      if(Object.keys(resp).length > 0){
+				if (Object.keys(resp).length > 0) {
 
-        this.is_vendor = true;
+					this.is_vendor = true;
 
-      }
+				}
 
-    })
+			})
 
-    /*=============================================
-    Traemos las órdenes de compras de este usuario
-    =============================================*/
-    this.ordersService.getFilterData("user", this.childItem)
-    .subscribe(resp=>{
+		/*=============================================
+		Traemos las órdenes de compras de este usuario
+		=============================================*/
+		this.ordersService.getFilterData("user", this.childItem)
+			.subscribe(resp => {
 
-      let load = 0;
-      
-      for(const i in resp){
+				let load = 0;
 
-        load++
+				for (const i in resp) {
 
-        this.myShopping.push(resp[i]);
-        this.process.push(JSON.parse(resp[i]["process"]));
-        this.id_order.push(i);
+					load++
 
-        /*=============================================
-        Traemos las disputas
-        =============================================*/
+					this.myShopping.push(resp[i]);
+					this.process.push(JSON.parse(resp[i]["process"]));
+					this.id_order.push(i);
 
-        this.id_order.forEach(order=>{
+					/*=============================================
+					Traemos las disputas
+					=============================================*/
 
-          this.disputesService.getFilterData("order", order)
-          .subscribe(resp=>{
+					this.id_order.forEach(order => {
 
-            if(Object.keys(resp).length > 0){	
+						this.disputesService.getFilterData("order", order)
+							.subscribe(resp => {
 
-              let count = 0;	
+								if (Object.keys(resp).length > 0) {
 
-              for(const i in resp){
+									let count = 0;
 
-                count++;
+									for (const i in resp) {
 
-                this.storesService.getFilterData("store", resp[i].receiver)
-                .subscribe(resp1=>{
+										count++;
 
-                  for(const f in resp1){
+										this.storesService.getFilterData("store", resp[i].receiver)
+											.subscribe(resp1 => {
 
-                    resp[i].store = resp1[f];
-                  }
+												for (const f in resp1) {
 
-
-                })
-
-                this.usersService.getFilterData("username", resp[i].transmitter)
-                .subscribe(resp1=>{
-
-                  for(const f in resp1){
-
-                    resp[i].user = resp1[f];
-                  }
+													resp[i].store = resp1[f];
+												}
 
 
-                })
+											})
 
-                let localDisputes = this.disputes;
+										this.usersService.getFilterData("username", resp[i].transmitter)
+											.subscribe(resp1 => {
 
-                setTimeout(function(){
+												for (const f in resp1) {
 
-                  localDisputes.push(resp[i]);
+													resp[i].user = resp1[f];
+												}
 
-                },count*1000)
 
-              }
+											})
 
-            }
+										let localDisputes = this.disputes;
 
-          })
+										setTimeout(function () {
 
-        })
+											localDisputes.push(resp[i]);
 
-        /*=============================================
-        Traemos las reseñas del producto
-        =============================================*/
+										}, count * 1000)
 
-        this.productsService.getFilterDataMyStore("url", resp[i].url)
-        .subscribe(resp=>{
+									}
 
-          for(const i in resp){
-          
-            this.reviews.push(JSON.parse(resp[i].reviews));
+								}
 
-          }
-        
+							})
 
-        })
-        
-      }
+					})
 
-      /*=============================================
-      Pintar el render en DataTable
-      =============================================*/	
+					/*=============================================
+					Traemos las reseñas del producto
+					=============================================*/
 
-      if(load == this.myShopping.length){
+					this.productsService.getFilterDataMyStore("url", resp[i].url)
+						.subscribe(resp => {
 
-        this.dtTrigger.next();
+							for (const i in resp) {
 
-      }
+								this.reviews.push(JSON.parse(resp[i].reviews));
 
-      Rating.fnc();
+							}
 
-    })
+
+						})
+
+				}
+
+				/*=============================================
+				Pintar el render en DataTable
+				=============================================*/
+
+				if (load == this.myShopping.length) {
+
+					this.dtTrigger.next();
+
+				}
+
+				Rating.fnc();
+
+			})
 	}
 
 	/*=============================================
 	Función nueva disputa
 	=============================================*/
-	newDispute(id_order, store, user){
-		
+	newDispute(id_order, store, user) {
+
 		this.dispute.order = id_order;
 		this.dispute.receiver = store;
 		this.dispute.transmitter = user;
 		this.dispute.date_dispute = new Date();
 
 		/*=============================================
-    Abrir la ventana modal
-    =============================================*/  
-    $("#newDispute").modal() 
+		Abrir la ventana modal
+		=============================================*/
+		$("#newDispute").modal()
 
 	}
 
@@ -196,37 +196,37 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 	Formulario disputas
 	=============================================*/
 
-	onSubmit(f: NgForm){
+	onSubmit(f: NgForm) {
 
 		/*=============================================
-    Validamos formulario para evitar campos vacíos
-    =============================================*/
+		Validamos formulario para evitar campos vacíos
+		=============================================*/
 
-		if(f.invalid ){
+		if (f.invalid) {
 
 			Sweetalert.fnc("error", "Invalid Request", null);
 
 			return;
 
 		}
-		
+
 		/*=============================================
-    Crear una disputa en la BD
-    =============================================*/
+		Crear una disputa en la BD
+		=============================================*/
 
-    this.disputesService.registerDatabase(this.dispute, localStorage.getItem("idToken"))
-    .subscribe(resp=>{
+		this.disputesService.registerDatabase(this.dispute, localStorage.getItem("idToken"))
+			.subscribe(resp => {
 
-			if(resp["name"] != ""){
+				if (resp["name"] != "") {
 
-        Sweetalert.fnc("success", "The dispute was created successfully", "account/my-shopping");  
-			}
+					Sweetalert.fnc("success", "The dispute was created successfully", "account/my-shopping");
+				}
 
-		}, err =>{
+			}, err => {
 
-      Sweetalert.fnc("error", err.error.error.message, null)
+				Sweetalert.fnc("error", err.error.error.message, null)
 
-    })
+			})
 
 	}
 
@@ -234,7 +234,7 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 	Función nueva reseña
 	=============================================*/
 
-	newReview(user, url){
+	newReview(user, url) {
 
 		/*=============================================
 		Almaceno el usuario
@@ -247,32 +247,32 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 		=============================================*/
 
 		this.usersService.getFilterData("username", user)
-		.subscribe(resp=>{ 
-			
-			for(const i in resp){
+			.subscribe(resp => {
 
-				this.picture = resp[i].picture;
-				this.method = resp[i].method;	
-			}
+				for (const i in resp) {
 
-		});
+					this.picture = resp[i].picture;
+					this.method = resp[i].method;
+				}
+
+			});
 
 		/*=============================================
 		Traemos el producto para capturar su ID
 		=============================================*/
 
 		this.productsService.getFilterDataMyStore("url", url)
-		.subscribe(resp=>{ 
-			
-			this.idProduct = Object.keys(resp)[0];
+			.subscribe(resp => {
 
-		});
+				this.idProduct = Object.keys(resp)[0];
+
+			});
 
 		/*=============================================
-    Abrir la ventana modal
-    =============================================*/  
+		Abrir la ventana modal
+		=============================================*/
 
-    $("#newReview").modal() 
+		$("#newReview").modal()
 
 
 	}
@@ -281,13 +281,13 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 	Enviar nueva reseña
 	=============================================*/
 
-	submitReview(comment, review){
+	submitReview(comment, review) {
 
 		/*=============================================
 		Validar que la reseña no venga vacía
 		=============================================*/
 
-		if(review.value == "" || comment.value == ""){
+		if (review.value == "" || comment.value == "") {
 
 			Sweetalert.fnc("error", "Invalid Request", null);
 
@@ -299,13 +299,13 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 		Crear el cuerpo de la reseña
 		=============================================*/
 
-		let body = [{	
+		let body = [{
 
-			"review":review.value,
-			"comment":comment.value,
-			"name":this.username,
-			"image":this.picture,
-			"method":this.method
+			"review": review.value,
+			"comment": comment.value,
+			"name": this.username,
+			"image": this.picture,
+			"method": this.method
 
 		}];
 
@@ -314,92 +314,92 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 		=============================================*/
 
 		this.productsService.getUniqueData(this.idProduct)
-		.subscribe(resp=>{
-			
-			let reviews = JSON.parse(resp["reviews"]);
+			.subscribe(resp => {
 
-			/*=============================================
-			Eliminar la reseña creada por el usuario anteriormente
-			=============================================*/
+				let reviews = JSON.parse(resp["reviews"]);
 
-			reviews.forEach((review,index)=>{	
+				/*=============================================
+				Eliminar la reseña creada por el usuario anteriormente
+				=============================================*/
 
-				if(review.name == this.username){
+				reviews.forEach((review, index) => {
 
-					reviews.splice(index, 1);
+					if (review.name == this.username) {
 
+						reviews.splice(index, 1);
+
+					}
+
+				})
+
+				/*=============================================
+				Actualizar la información de las reseñas
+				=============================================*/
+
+				reviews.forEach(review => {
+
+					body.push(review);
+
+				})
+
+				/*=============================================
+				Actualizar las reseñas del producto
+				=============================================*/
+
+				let value = {
+
+					"reviews": JSON.stringify(body)
 				}
 
+				this.productsService.patchData(this.idProduct, value)
+					.subscribe(resp => {
+
+						if (resp["reviews"] != "") {
+
+							Sweetalert.fnc("success", "The review was created successfully", "account/my-shopping");
+						}
+
+					}, err => {
+
+						Sweetalert.fnc("error", err.error.error.message, null)
+
+					})
+
 			})
-
-			/*=============================================
-			Actualizar la información de las reseñas
-			=============================================*/
-
-			reviews.forEach(review=>{	
-
-				body.push(review);				
-
-			})
-
-			/*=============================================
-			Actualizar las reseñas del producto
-			=============================================*/
-
-			let value = {
-
-				"reviews":JSON.stringify(body)
-			}
-
-			this.productsService.patchData(this.idProduct, value)
-			.subscribe(resp=>{
-
-				if(resp["reviews"] != ""){
-
-				 	Sweetalert.fnc("success", "The review was created successfully", "account/my-shopping");  
-				}
-
-			}, err =>{
-
-        Sweetalert.fnc("error", err.error.error.message, null)
-
-      })
-
-		})
 
 	}
 
-	callback(iReview){
+	callback(iReview) {
 
-		if(!this.render){
+		if (!this.render) {
 
 			this.render = true;
 
-			setTimeout(function(){
+			setTimeout(function () {
 
 				let reviews = $("[reviews]");
 
-				for(let i = 0; i < reviews.length; i++){
+				for (let i = 0; i < reviews.length; i++) {
 
-          for(let r = 0; r < 5; r++){
+					for (let r = 0; r < 5; r++) {
 
-            $(reviews[i]).append(`
+						$(reviews[i]).append(`
           
-              <option value="2">${r+1}</option>
+              <option value="2">${r + 1}</option>
 
             `)
 
-            if($(reviews[i]).attr("reviews") == (r+1)){
+						if ($(reviews[i]).attr("reviews") == (r + 1)) {
 
-              $(reviews[i]).children("option").val(1)
-            }
-          }
+							$(reviews[i]).children("option").val(1)
+						}
+					}
 
-        }
+				}
 
-        Rating.fnc();
+				Rating.fnc();
 
-			},100*(iReview+1))
+			}, 100 * (iReview + 1))
 
 		}
 
@@ -409,7 +409,7 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 	Destruímos el trigger de angular
 	=============================================*/
 
-	ngOnDestroy():void{
+	ngOnDestroy(): void {
 
 		this.dtTrigger.unsubscribe();
 	}
