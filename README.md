@@ -7,7 +7,7 @@ Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su últi
 1. Lo primero es crear un proyecto Node.js en cualquier ubicación.
 2. Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
 3. Conectar DB y otras API's key que se requieran
-4. Ejecutar ng serve -o para levantar el servidor
+4. Ejecutar `ng serve --live-reload false` para levantar el servidor
 
 # Instalación de Dependencias para el correcto funcionamiento
 
@@ -35,6 +35,15 @@ CREACIÓN DE COOKIES EN ANGULAR:
 
 EDITOR DE TEXTO ENRIQUECIDO: SUMMERNOTE
 `npm install --save summernote ngx-summernote`
+
+CREACIÓN DE ALGORITMO MD5:
+`npm i md5-typescript`
+
+INPUT TAG:
+`npm i ngx-chips`
+
+DROPZONE:
+`npm install --save ngx-dropzone`
 
 # Errores de ejecución
 Se pueden presentar errores como: 
