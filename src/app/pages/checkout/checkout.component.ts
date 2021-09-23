@@ -452,17 +452,17 @@ export class CheckoutComponent implements OnInit {
 								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
 								=============================================*/	
 
-								let commision = 0;
+								let commission = 0;
 								let unitPrice = 0;
 
 								if(localValidateCoupon){
 
-									commision = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									commission = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
 									unitPrice = Number(localSubTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
 
 								}else{
 
-									commision = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									commission = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
 									unitPrice = Number(localSubTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
 
 								}				
@@ -479,7 +479,7 @@ export class CheckoutComponent implements OnInit {
 									url:product.url,									
 									quantity:product.quantity,
 									unit_price: unitPrice.toFixed(2),
-									commision: commision.toFixed(2), 
+									commission: commission.toFixed(2), 
 									total: localSubTotalPrice[index],
 									payment_method: "Payu",
 									id_payment: localActivatedRoute.snapshot.queryParams["transactionId"],
@@ -677,17 +677,17 @@ export class CheckoutComponent implements OnInit {
 								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
 								=============================================*/	
 
-								let commision = 0;
+								let commission = 0;
 								let unitPrice = 0;
 
 								if(this.validateCoupon){
 
-									commision = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									commission = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
 									unitPrice = Number(this.subTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
 
 								}else{
 
-									commision = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									commission = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
 									unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
 
 								}				
@@ -706,7 +706,7 @@ export class CheckoutComponent implements OnInit {
 									url:product.url,
 									quantity:product.quantity,
 									unit_price: unitPrice.toFixed(2),
-									commision: commision.toFixed(2), 
+									commission: commission.toFixed(2), 
 									total: this.subTotalPrice[index],
 									payment_method: f.value.paymentMethod,
 									id_payment: id_payment,
@@ -1014,17 +1014,17 @@ export class CheckoutComponent implements OnInit {
 								Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
 								=============================================*/	
 
-								let commision = 0;
+								let commission = 0;
 								let unitPrice = 0;
 
 								if(localValidateCoupon){
 
-									commision = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
+									commission = Number(localSubTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 5%
 									unitPrice = Number(localSubTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
 
 								}else{
 
-									commision = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
+									commission = Number(localSubTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL MARKETPLACE - ACTUAL 25%
 									unitPrice = Number(localSubTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
 
 								}				
@@ -1043,7 +1043,7 @@ export class CheckoutComponent implements OnInit {
 									url:product.url,
 									quantity:product.quantity,
 									unit_price: unitPrice.toFixed(2),
-									commision: commision.toFixed(2), 
+									commission: commission.toFixed(2), 
 									total: localSubTotalPrice[index],
 									payment_method: "Mercado Pago",
 									id_payment: id_payment,
