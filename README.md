@@ -4,6 +4,15 @@ Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su últi
 
 # Proceso para clonación
 
+## XAMPP SERVER
+
+Es importante montar un servidor XAMPP con la siguiente ruta
+
+D:\xampp\htdocs\Market
+Ya que, la carpeta, donde se ubica la información local de ciertos datos se almancea ahí entonces, para no tener errores de ubicación de carpetas, crear la carpeta y realizar la clonación en dicho punto
+
+![img](https://i.imgur.com/9562nhA.png)
+
 1. Lo primero es crear un proyecto Node.js en cualquier ubicación.
 2. Una vez instalado, hacer la clonación del Git y reemplazar los archivos existentes por la rama master.
 3. Conectar DB y otras API's key que se requieran
