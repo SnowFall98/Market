@@ -143,8 +143,6 @@ export class LoginComponent implements OnInit {
         }
       })
     }
-
-
   }
 
   /*=============================================
@@ -154,6 +152,12 @@ export class LoginComponent implements OnInit {
   validate(input){
 
     let pattern;
+
+    if($(input).attr("name") == "email"){
+
+      pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+      
+    }
 
     if($(input).attr("name") == "password"){
 
@@ -295,24 +299,35 @@ export class LoginComponent implements OnInit {
 
   resetPassword(value){
 
-    Sweetalert.fnc("loading", "Loading...", null)
+    Sweetalert.fnc("loading", "Loading...", null);
 
-    let body = {
+    this.usersService.getFilterData("email", value)
+		.subscribe(resp=>{
 
-      requestType: "PASSWORD_RESET",
-      email: value
+      if(Object.keys(resp).length > 0) {
 
-    }
+        let body = {
 
-    this.usersService.sendPasswordResetEmailFnc(body)
-    .subscribe(resp=>{
+          requestType: "PASSWORD_RESET",
+          email: value
 
-      if(resp["email"] == value){
+        }
 
-        Sweetalert.fnc("success", "Revise su correo electrónico para cambiar la contraseña", "login")
+        this.usersService.sendPasswordResetEmailFnc(body)
+        .subscribe(resp=>{
 
-      }
+          if(resp["email"] == value){
 
+            Sweetalert.fnc("success", "Revise su correo electrónico para cambiar la contraseña", "login")
+
+          }
+
+        })
+      }else{
+
+				Sweetalert.fnc("error", "El correo electrónico no existe en nuestra base de datos", null)
+
+			}
     })
 
   }
