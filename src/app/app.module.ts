@@ -67,6 +67,7 @@ import { AccountMySalesComponent } from './pages/account/account-profile/account
 import { AccountMyOrdersComponent } from './pages/account/account-profile/account-my-orders/account-my-orders.component';
 import { AccountDisputesComponent } from './pages/account/account-profile/account-disputes/account-disputes.component';
 import { AccountMessagesComponent } from './pages/account/account-profile/account-messages/account-messages.component';
+import { StoreListComponent } from './pages/store-list/store-list.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { AccountMessagesComponent } from './pages/account/account-profile/accoun
     AccountMySalesComponent,
     AccountMyOrdersComponent,
     AccountDisputesComponent,
-    AccountMessagesComponent
+    AccountMessagesComponent,
+    StoreListComponent
   ],
   imports: [
     BrowserModule,

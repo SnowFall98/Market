@@ -13,6 +13,7 @@ import { AuthGuard } from './guards/aut.guard';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.component';
+import { StoreListComponent } from './pages/store-list/store-list.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
 	{path: 'shopping-cart', component: ShoppingCartComponent  },
 	{path: 'checkout', component: CheckoutComponent,  canActivate: [ AuthGuard ]  },
 	{path: 'become-a-vendor', component: BecomeAVendorComponent},
+	{path: 'store-list', component: StoreListComponent},
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
