@@ -189,10 +189,19 @@ export class HomeHotTodayComponent implements OnInit {
 			Enviamos el máximo de bloques para mostrar 4 productos por bloque
 			=============================================*/	
 
+			let count = 0;
+
 			for(let i = 0; i < Math.ceil(block/4); i++){
+
+				count++;
 
 				this.topSalesBlock.push(i);
 				
+			}
+			
+			if(count == this.topSalesBlock.length){
+
+				this.topSalesBlock.pop();
 			}
 	
 		})
@@ -411,7 +420,7 @@ export class HomeHotTodayComponent implements OnInit {
 				ProgressBar.fnc()
 
 			},count*100)	
-			
+
 		}
 
 	}
