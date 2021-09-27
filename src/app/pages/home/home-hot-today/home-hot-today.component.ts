@@ -66,7 +66,11 @@ export class HomeHotTodayComponent implements OnInit {
 			Recorremos cada oferta y stock para clasificar las ofertas actuales y los productos que si tengan stock
 			=============================================*/
 
+			let count = 0;
+
 			for(i in getProducts){
+
+				count ++;
 
 				if(getProducts[i]["offer"] != ""){
 					fechaOferta = new Date(
@@ -80,11 +84,16 @@ export class HomeHotTodayComponent implements OnInit {
 					if(hoy < fechaOferta && getProducts[i]["stock"] > 0){
 
 						this.indexes.push(i);
-						this.cargando = false;
 
 					}
 
 				}
+			}
+
+			if(count == getProducts.length){
+
+				this.cargando = false;
+			
 			}
 
 		})
@@ -383,25 +392,26 @@ export class HomeHotTodayComponent implements OnInit {
 				SlickConfig.fnc();
 				ProductLightbox.fnc();	
 
+				/*=============================================
+				Ejecutar funciones globales con respecto a las ofertas
+				=============================================*/			
+
+				CountDown.fnc();
+
+				/*=============================================
+				Ejecutar funciones globales con respecto a las reseñas
+				=============================================*/			
+
+				Rating.fnc();
+
+				/*=============================================
+				Ejecutar funciones globales con respecto al Stock
+				=============================================*/			
+
+				ProgressBar.fnc()
+
 			},count*100)	
-			/*=============================================
-			Ejecutar funciones globales con respecto a las ofertas
-			=============================================*/			
-
-			CountDown.fnc();
-
-			/*=============================================
-			Ejecutar funciones globales con respecto a las reseñas
-			=============================================*/			
-
-			Rating.fnc();
-
-			/*=============================================
-			Ejecutar funciones globales con respecto al Stock
-			=============================================*/			
-
-			ProgressBar.fnc()
-
+			
 		}
 
 	}
