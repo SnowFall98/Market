@@ -30,6 +30,7 @@ const routes: Routes = [
 	{path: 'checkout', component: CheckoutComponent,  canActivate: [ AuthGuard ]  },
 	{path: 'become-a-vendor', component: BecomeAVendorComponent},
 	{path: 'store-list', component: StoreListComponent},
+	{path: 'store-list/:param', component: StoreListComponent},
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
