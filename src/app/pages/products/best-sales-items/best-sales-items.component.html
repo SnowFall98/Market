@@ -122,7 +122,43 @@ Preload
 
 <div 
 *ngIf="cargando"
-class="d-flex justify-content-center">
+class="d-lg-flex justify-content-center d-none">
+    <!-- <div class="spinner-border text-muted my-5"></div> -->
+
+    <div class="container">
+
+        <div class="ph-item border-0">
+
+            <div 
+            *ngFor="let place of placeholder"
+            class="ph-col-2">
+
+                <div class="ph-picture"></div>
+
+                <div class="ph-row">
+
+                    <div class="ph-col-12 big"></div>
+
+                    <div class="ph-col-10"></div>
+
+                    <div class="ph-col-2 empty"></div>
+
+                    <div class="ph-col-12"></div>
+
+                </div>
+
+            </div>
+  
+
+        </div>
+
+    </div>
+</div>
+
+<div 
+*ngIf="cargando"
+class="d-flex justify-content-center d-lg-none">
+    
     <div class="spinner-border text-muted my-5"></div>
 </div>
 

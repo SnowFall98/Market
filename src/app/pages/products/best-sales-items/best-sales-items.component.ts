@@ -23,6 +23,7 @@ export class BestSalesItemsComponent implements OnInit {
 	reviews:any[] = [];
 	price:any[] = [];
 	cargando:boolean = false;
+	placeholder:any[] = [0,1,2,3,4,5];
 
   constructor(private productsService: ProductsService,
     private activateRoute: ActivatedRoute,
