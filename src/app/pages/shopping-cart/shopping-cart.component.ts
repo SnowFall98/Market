@@ -161,7 +161,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 	Función cambio de cantidad
 	=============================================*/ 
 
-	changeQuantity(quantity, unit, move, product, details){
+	changeQuantity(quantity, unit, move, product, details, index){
 
 		let number = 1;
 
@@ -216,6 +216,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
 		})
 
+		this.shoppingCart[index].quantity = number;
+
 		localStorage.setItem("list", JSON.stringify(shoppingCart));
 
 		this.totalPrice(shoppingCart.length)
@@ -230,48 +232,88 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
 	totalPrice(totalShoppingCart){
 
+		let localShoppingCart = this.shoppingCart;
+
 		setTimeout(function(){
 
-		let price = $(".pShoppingCart .end-price");
-		let quantity = $(".qShoppingCart");
-		let shipping = $(".sShoppingCart");
-		let subTotalPrice = $(".subTotalPrice");
+			function price(){
 
-		let total = 0;
+				let price = $(".pShoppingCart .end-price");
+				let quantity = $(".qShoppingCart");
+				let shipping = $(".sShoppingCart");
+				let subTotalPrice = $(".subTotalPrice");
 
-		for(let i = 0; i < price.length; i++){			
-			
-		/*=============================================
-		Sumar precio con envío
-		=============================================*/
-		let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
+				let total = 0;
+
+				for(let i = 0; i < price.length; i++){			
+					
+					/*=============================================
+					Sumar precio con envío
+					=============================================*/
+					let shipping_price = Number($(price[i]).html()) + Number($(shipping[i]).html());
+					
+					/*=============================================
+					Multiplicar cantidad por precio con envío
+					=============================================*/
+
+					let subTotal = Number($(quantity[i]).val())*shipping_price;
+
+					/*=============================================
+					Mostramos subtotales de cada producto
+					=============================================*/
+
+					$(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
+
+				}
+
+				/*=============================================
+				Definimos el total de los precios
+				=============================================*/
 		
-		/*=============================================
-		Multiplicar cantidad por precio con envío
-		=============================================*/
+				localShoppingCart.forEach(value=>{
 
-		let subTotal = Number($(quantity[i]).val())*shipping_price;
+					let start = '';
+					let end = '';
+					
+					if ( value.price.substr(28,4) == 'sale') {
+											
+						start = value.price.substr(59);
+											
+						end = start.slice(0,-30);
+						
+					} else {
+						
+						start = value.price.substr(54);
+						
+						end = start.slice(0,-11);
+									
+					} 
+					
+					total += (Number(end) + Number(value.shipping)) * Number(value.quantity);
 
-		/*=============================================
-		Mostramos subtotales de cada producto
-		=============================================*/
+				})
 
-		$(subTotalPrice[i]).html(`$${subTotal.toFixed(2)}`)
+				$(".totalP").html(`$${total.toFixed(2)}`)
 
-		/*=============================================
-		Definimos el total de los precios
-		=============================================*/
+			}
 
-		total += subTotal;
-
-		}
-
-		$(".totalP").html(`$${total.toFixed(2)}`)
+			price();
 
 
-		},totalShoppingCart*500)
+			/*=============================================
+			Función para saber cuando pasamos de página en DataTable
+			=============================================*/
 
-	}
+			$(".table").on("draw.dt", function(){
+
+				price();
+
+			})
+
+
+		},totalShoppingCart*100)
+
+    }
 
 	/*=============================================
 	Función para remover productos de la lista de carrito de compras

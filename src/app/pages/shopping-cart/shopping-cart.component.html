@@ -56,15 +56,15 @@ Shopping Car
 
                     <tbody>
 
-                    	<tr 
-                    	*ngIf="shoppingCart.length == 0">
-                    		
-                    		<td colspan="6" class="text-center">You haven't products in the shopping cart yet!</td>	
+                        <tr 
+                        *ngIf="shoppingCart.length == 0">
+                            
+                            <td colspan="6" class="text-center">You haven't products in the shopping cart yet!</td>	
 
-                    	</tr>
+                        </tr>
 
                         <tr
-						*ngFor="let product of shoppingCart; let lastIndex = last"
+                        *ngFor="let product of shoppingCart; let i = index; let lastIndex = last"
                         >
                             <td>
 
@@ -73,7 +73,7 @@ Shopping Car
                                     <div class="ps-product__thumbnail">
 
                                         <a href="product/{{product.url}}">
-                                        	<img src="{{path}}img/products/{{product.category}}/{{product.image}}">
+                                            <img src="{{path}}img/products/{{product.category}}/{{product.image}}">
                                         </a>
 
                                     </div>
@@ -99,13 +99,13 @@ Shopping Car
 
                                 <div class="form-group--number quantity">
 
-                                    <button class="up" (click)="changeQuantity(quantity.value, 1, 'up', product.url, product.listDetails)">
+                                    <button class="up" (click)="changeQuantity(quantity.value, 1, 'up', product.url, product.listDetails, i)">
                                     +</button>
 
-                                    <button class="down" (click)="changeQuantity(quantity.value, 1, 'down', product.url, product.listDetails)">
+                                    <button class="down" (click)="changeQuantity(quantity.value, 1, 'down', product.url, product.listDetails, i)">
                                     -</button>
 
-                                    <input class="form-control qShoppingCart" type="number" value="{{product.quantity}}" min="1" max="10" step="1" #quantity (change)="changeQuantity(quantity.value, 0, null, product.url, product.listDetails)">
+                                    <input class="form-control qShoppingCart" type="text" value="{{product.quantity}}" #quantity (change)="changeQuantity(quantity.value, 0, null, product.url, product.listDetails, i)" readonly>
 
                                 </div>
 
@@ -116,17 +116,16 @@ Shopping Car
                             <td>
 
                                 <a 
-                                mwlConfirmationPopover
-                                [popoverMessage]="popoverMessage"
-                                placement="left"
-                                style="cursor:pointer" 
-                                (confirm)="removeProduct(product.url, product.listDetails)">
-                                   <i class="icon-cross"></i>
-                               </a>
+                                    mwlConfirmationPopover
+                                    [popoverMessage]="popoverMessage"
+                                    placement="left"
+                                    style="cursor:pointer" 
+                                    (confirm)="removeProduct(product.url, product.listDetails)">
+                                    <i class="icon-cross"></i>
+                                </a>
 
                             </td>
 
-                            
                         {{ lastIndex ? callback() : ""}}
 
                         </tr>                  
@@ -136,7 +135,7 @@ Shopping Car
                 </table>
 
                 <h4 class="d-block d-lg-none text-right text-muted py-3">
-                    Deslizar <i class="fas fa-long-arrow-alt-right"></i>
+                    Move to <i class="fas fa-long-arrow-alt-right"></i>
                 </h4>
 
             </div>
@@ -144,9 +143,9 @@ Shopping Car
             <hr>
 
             <div 
-            *ngIf="shoppingCart.length > 0"
+                *ngIf="shoppingCart.length > 0"
             class="d-flex flex-row-reverse">
-            <div [innerHTML]="totalP"></div>             
+                <div [innerHTML]="totalP"></div>             
             </div>
 
             <div class="ps-section__cart-actions">
