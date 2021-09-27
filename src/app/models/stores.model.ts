@@ -14,5 +14,6 @@ export class StoresModel{
 	store:string;
 	url:string;
 	username:string;
+	date:any;
 
 }

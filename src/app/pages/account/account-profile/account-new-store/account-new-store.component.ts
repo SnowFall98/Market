@@ -1090,6 +1090,7 @@ export class AccountNewStoreComponent implements OnInit {
                       }
 
                       this.store.social = JSON.stringify(this.social);
+                      this.store.date = new Date();
 
                       /*=============================================
                       Consolidar fecha de creación del producto   
