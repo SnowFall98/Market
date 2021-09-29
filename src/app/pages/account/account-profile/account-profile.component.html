@@ -62,7 +62,8 @@ class="ps-block--store-banner">
                     </a>
                 </div>
             </div><!-- box /-->
-
+            
+            <!-- COMPONENTE DISPUTAS BORRAR CUANDO SE ARREGLE EL BUG
             <div class="col-lg-3 col-6">
                 <div class="text-center">
                     <a href="account/disputes">
@@ -70,7 +71,7 @@ class="ps-block--store-banner">
                         <h4 class="text-white">Disputes <span class="badge badge-secondary rounded-circle">{{disputes.length}}</span></h4>
                     </a>
                 </div>
-            </div><!-- box /-->
+            </div> box /-->
 
             <div class="col-lg-3 col-6">
                 <div class="text-center">
@@ -155,15 +156,15 @@ Orders
 </div>
 
 <!--=====================================
-Disputes
-======================================-->
+Disputes - Cerrar el comentario cuando se solucione el error de repeticion
+======================================
 <div
 *ngIf="store.length > 0">
 <app-account-disputes
 *ngIf="!preload && accountUrl == 'disputes'"
 [childItem]="store[0].store"
 ></app-account-disputes>
-</div>
+</div>-->
 
 <!--=====================================
 Messages
