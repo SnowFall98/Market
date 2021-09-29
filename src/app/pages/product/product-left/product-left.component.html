@@ -198,9 +198,21 @@ class="ps-product--detail ps-product--fullwidth">
 
                 </figure>
 
-                <a class="ps-btn ps-btn--black" style="cursor:pointer" (click)="addShoppingCart(p.url, 1, [])">Add to cart</a>
+                <a
+                *ngIf="p.stock > 0"
+                class="ps-btn ps-btn--black" style="cursor:pointer" (click)="addShoppingCart(p.url, 1, [])">Add to cart</a>
 
-                <a class="ps-btn" style="cursor:pointer" (click)="buyNow(p.url, 1, [])">Buy Now</a>
+                <a
+                *ngIf="p.stock > 0"
+                class="ps-btn" style="cursor:pointer" (click)="buyNow(p.url, 1, [])">Buy Now</a>
+
+                <a
+                *ngIf="p.stock == 0"
+                >
+                    <h3>Temporarily out of stock. </h3>
+                    <p>We are working our best to bring you the product again. <br>
+
+                </a>
 
                 <div class="ps-product__actions">
 
