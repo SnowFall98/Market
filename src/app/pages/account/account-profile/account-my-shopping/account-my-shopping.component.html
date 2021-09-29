@@ -160,19 +160,20 @@ Nav Account
                                 </button>
                             </li>
                            
-                        </ul>  
-						
-					 	<!--=====================================
+                        </ul>
+
+						<!-- SECCION DE LAS DISPUTAS REVISAR CODIGO PARA ARREGLAR EL BUG DEL ERROR
+					 	=====================================
                     	Apertura de una disputa si el producto aún no ha sido entregado
-                    	======================================-->
+                    	======================================
 
                         <a 
                         *ngIf="process[i][2].stage == 'delivered' && process[i][2].status != 'ok'" 
                         class="btn btn-danger btn-lg text-white" (click)="newDispute(id_order[i], product.store, product.user)">Open Dispute</a>
 
-                        <!--=====================================
+                        =====================================
                         Visualizar las disputas
-                        ======================================-->
+                        ======================================
 
                         <div
                         *ngFor="let dispute of disputes" 
@@ -209,7 +210,7 @@ Nav Account
                                 </div>
                             </div>
 
-                        </div>
+                        </div>-->
 						
 						<!--=====================================
                     	Permitimos la recompra si el producto ha sido entregado
@@ -255,10 +256,13 @@ Nav Account
                             <div 
                             *ngIf="item.name != undefined && item.name == product.user"
                             class="br-theme-fontawesome-stars">
+                            <!--=====================================
+                            Existe un bug con el visualizador de estrellas que entrega datos erroneos SOLO A NIVEL VISUAL
+                            Nivel de funcionalidad esta perfecto, cada producto tiene su calificación sin problemas
+                            solo a nivel visual hay fallas. Se comenta para revisar posible fallos y futura solucion
+                            ======================================-->
 
-                                <select class="ps-rating" data-read-only="true" [attr.reviews]="item.review">
-                                  
-                                </select>
+                                 <!--<select class="ps-rating" data-read-only="true" [attr.reviews]="item.review"> </select>-->
 
                             </div>             
 
