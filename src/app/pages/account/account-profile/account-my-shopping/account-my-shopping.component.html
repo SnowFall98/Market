@@ -34,6 +34,8 @@ Nav Account
 
                 <tr>      
 
+                    <th>Date</th>
+
                     <th>Product name</th>
 
                     <th>Process</th>
@@ -61,6 +63,8 @@ Nav Account
 
                 <tr
                 *ngFor="let product of myShopping; let i = index">
+
+                <td>{{product.date | date:"MM/dd/yy"}}</td>
 
                     <td>
 
