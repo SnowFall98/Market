@@ -452,10 +452,15 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 
           for (const i in review) {
 
-            globalReviews += review[i].review
+            globalReviews += review[i].review; // globalReviews += review[i].review; ORIGINAL Video 320
 
+            console.log("globalReviews", globalReviews);
+            //console.log("I", review[i]);
           }
         })
+
+        console.log("Raiting", globalRating);
+        //console.log("globalReviews", globalReviews);
 
         /*=============================================
         Tomamos el promedio y porcentaje de calificaciones
@@ -464,6 +469,8 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
         let averageReviews = Math.round(globalReviews / globalRating);
         let precentage = Math.round(globalReviews * 100 / (globalRating * 5));
 
+        console.log("Average", averageReviews);
+        console.log("precentage", precentage);
         /*=============================================
         Pintamos en el HTML el promedio y porcentaje de calificaciones
         =============================================*/
