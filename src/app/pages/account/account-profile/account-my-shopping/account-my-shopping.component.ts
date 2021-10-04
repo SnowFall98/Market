@@ -53,7 +53,8 @@ export class AccountMyShoppingComponent implements OnInit, OnDestroy {
 
 		this.dtOptions = {
 			pagingType: 'full_numbers',
-			processing: true
+			processing: true,
+			order: [[0,'desc']]
 		}
 
 		/*=============================================
