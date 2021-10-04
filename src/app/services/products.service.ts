@@ -31,7 +31,7 @@ export class ProductsService {
 
 					if(JSON.parse(resp[i].feedback).type == "approved"){
 
-						newResp.push(resp[i]);
+						newResp[i]=resp[i];
 
 					}
 
@@ -64,7 +64,7 @@ export class ProductsService {
 
 					if(JSON.parse(resp[i].feedback).type == "approved"){
 
-						newResp.push(resp[i]);
+						newResp[i]=resp[i];
 
 					}
 
@@ -97,7 +97,7 @@ export class ProductsService {
 
 					if(JSON.parse(resp[i].feedback).type == "approved"){
 
-						newResp.push(resp[i]);
+						newResp[i]=resp[i];
 
 					}
 
@@ -130,7 +130,7 @@ export class ProductsService {
 
 					if(JSON.parse(resp[i].feedback).type == "approved"){
 
-						newResp.push(resp[i]);
+						newResp[i]=resp[i];
 
 					}
 
@@ -163,7 +163,7 @@ export class ProductsService {
 
 					if(JSON.parse(resp[i].feedback).type == "approved"){
 
-						newResp.push(resp[i]);
+						newResp[i]=resp[i];
 
 					}
 
