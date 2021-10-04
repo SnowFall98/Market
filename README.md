@@ -2,6 +2,13 @@
 
 Recuerda siempre instalar [Node.js](https://nodejs.org/es/download/) en su última versión para una mejor ejecución de procesos.
 
+# Hosting
+
+ng build --prod
+Buscar el archivo
+D:\xampp\apache\conf\extra\httpd-vhosts.conf
+
+
 # Proceso para clonación
 
 ## XAMPP SERVER
