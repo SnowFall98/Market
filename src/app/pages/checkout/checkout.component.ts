@@ -439,6 +439,7 @@ export class CheckoutComponent implements OnInit {
 							address:localUser.address,
 							info:localAddInfo,
 							process:JSON.stringify(proccess),
+							date: new Date(),
 							status:"pending"
 
 						}
@@ -664,6 +665,7 @@ export class CheckoutComponent implements OnInit {
 							address:f.value.address,
 							info:f.value.addInfo,
 							process:JSON.stringify(proccess),
+							date: new Date(),
 							status:"pending"
 
 						}
@@ -1001,6 +1003,7 @@ export class CheckoutComponent implements OnInit {
 							address:localUser.address,
 							info:localAddInfo,
 							process:JSON.stringify(proccess),
+							date: new Date(),
 							status:"pending"
 
 						}
