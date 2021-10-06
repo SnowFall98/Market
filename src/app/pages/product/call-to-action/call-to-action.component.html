@@ -24,9 +24,15 @@
 
                     <div class="ps-product__shopping">
 
+                        <!-- Esta madre muestra el precio PERO POR LOS HUEVOS DE MARIA JOSE NO QUIERE 
+                            TRABAJAR CON LOS DESCUENTOS
+                            ASÍ QUE LO DEJO COMENTADO MIENTRAS SE ARREGLA
 	                    <div class="p-0 mr-5" [innerHTML]="price[i]"></div>
+                        -->
 
-                        <a class="ps-btn" style="cursor:pointer" (click)="addShoppingCart(product.url, 1, [])"> Add to Cart</a>
+                        <a 
+                        *ngIf="product.stock > 0"
+                        class="ps-btn" style="cursor:pointer" (click)="addShoppingCart(product.url, 1, [])"> Add to Cart</a>
 
                     </div>
 
