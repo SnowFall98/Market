@@ -452,15 +452,22 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
 
           for (const i in review) {
 
-            globalReviews += review[i].review; // globalReviews += review[i].review; ORIGINAL Video 320
+            globalReviews += +review[i].review || 0;
+            /*IMPORTANTE LEER LA DOCUMENTACIÓN
+            Para poder tener en cuenta el funcionamiento de este servicio del símbolo + al llamar el parametro review
+            y así poder hacer que tome el array String y convertir la data en number, permientiendo así el correcto
+            funcionamiento
+            https://stackoverflow.com/questions/69458001/how-to-change-json-string-data-to-json-number-data
+            https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus 
+             */
 
-            console.log("globalReviews", globalReviews);
+            //console.log("globalReviews", globalReviews);
             //console.log("I", review[i]);
           }
         })
 
-        console.log("Raiting", globalRating);
-        //console.log("globalReviews", globalReviews);
+        //console.log("Raiting", globalRating);
+        //console.log("Reviews", globalReviews);
 
         /*=============================================
         Tomamos el promedio y porcentaje de calificaciones
@@ -469,8 +476,8 @@ export class AccountMyStoreComponent implements OnInit, OnDestroy {
         let averageReviews = Math.round(globalReviews / globalRating);
         let precentage = Math.round(globalReviews * 100 / (globalRating * 5));
 
-        console.log("Average", averageReviews);
-        console.log("precentage", precentage);
+        //console.log("Average", averageReviews);
+        //console.log("precentage", precentage);
         /*=============================================
         Pintamos en el HTML el promedio y porcentaje de calificaciones
         =============================================*/
