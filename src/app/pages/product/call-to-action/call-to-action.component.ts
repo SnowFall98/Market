@@ -30,47 +30,46 @@ export class CallToActionComponent implements OnInit {
 
         this.call_to_action.push(resp[i])
 
-
         this.call_to_action.forEach(response=>{
         
-            let type;
-            let value;
-            let offer;
-           
-            if(response.offer != ""){
+          let type;
+          let value;
+          let offer;
+          
+          if(response.offer != ""){
 
-                type = JSON.parse(response.offer)[0];
-                value = JSON.parse(response.offer)[1];
+            type = JSON.parse(response.offer)[0];
+            value = JSON.parse(response.offer)[1];
 
-                if(type == "Disccount"){
+            if(type == "Disccount"){
 
-                    offer = (response.price-(response.price * value/100)).toFixed(2)    
-                }    
+              offer = (response.price-(response.price * value/100)).toFixed(2)    
+            }    
 
-                if(type == "Fixed"){
+            if(type == "Fixed"){
 
-                    offer = value;
-                 
-                }
-
-                this.price.push(`<span class="ps-product__price">
-
-                                <span>$${offer}</span>
-
-                                <del>$${response.price}</del>
-
-                            </span>`);
-
-            }else{
-
-                this.price.push(`<span class="ps-product__price">
-
-                                <span>$${response.price}</span>
-
-                            </span>`);
+              offer = value;
+              
             }
 
-          })
+            this.price.push(`<span class="ps-product__price">
+
+              <span>$${offer}</span>
+
+              <del>$${response.price}</del>
+
+              </span>`);
+
+          }else{
+
+            this.price.push(`<span class="ps-product__price">
+
+              <span>$${response.price}</span>
+
+              </span>`);
+          }
+
+        })
       
       }
 
