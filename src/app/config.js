@@ -13,7 +13,7 @@ Entorno Producción
 
 if(environment.production){
 
-	domain = "http://dev-market-keyin.com"; // YOUR DOMAIN
+	domain = "http://market-keyin.com/";
 	domain2 = domain;
 
 /*=============================================

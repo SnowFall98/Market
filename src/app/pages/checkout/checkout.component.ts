@@ -862,6 +862,7 @@ export class CheckoutComponent implements OnInit {
 			=============================================*/
 
 			let email = this.user.email;
+			let path = this.path;
 
 			$(document).on("click", ".popupMP", function(){
 
@@ -870,7 +871,7 @@ export class CheckoutComponent implements OnInit {
 				Cookies.set("_e", email, {expires: 1}); 
 
 				window.open(
-					`http://localhost/market/src/mercadopago/index.php?_x=${Md5.init(localTotalPrice)}`,
+					`${path}mercadopago/index.php?_x=${Md5.init(localTotalPrice)}`,
 					"_blank","width=950,height=650,scrollbars=NO")
 			})
 
