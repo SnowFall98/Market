@@ -28,6 +28,7 @@ export class HeaderMobileComponent implements OnInit {
 	totalShoppingCart:number = 0;
 	renderShopping:boolean = true;
 	subTotal:string = `<h3>Sub Total:<strong class="subTotalHeader"><div class="spinner-border"></div></strong></h3>`;
+	lang:boolean = false;
 
 	constructor(private categoriesService: CategoriesService, 
 		private subCategoriesService: SubCategoriesService,
@@ -36,6 +37,16 @@ export class HeaderMobileComponent implements OnInit {
 		private router:Router) { }
 
 	ngOnInit(): void {
+
+		/*=============================================
+		Preguntar si hay idioma para el sitio
+		=============================================*/
+
+		if(localStorage.getItem("yt-widget") == '{"lang":"es","active":true}'){
+
+			this.lang = true;
+
+		}	
 
 		/*=============================================
 		Validar si existe usuario autenticado
@@ -358,6 +369,27 @@ export class HeaderMobileComponent implements OnInit {
     		Sweetalert.fnc("success", "Producto Eliminado", this.router.url)
 
 		}
+
+	}
+
+	/*=============================================
+	Función para cambiar de idioma
+	=============================================*/
+
+	changeLang(lang){
+
+		if(lang == "es"){
+
+			this.lang = true;
+
+		}else{
+
+			this.lang = false;
+		}
+
+		localStorage.setItem("yt-widget",`{"lang":"${lang}","active":true}`);
+
+		window.open(window.location.href, '_top');
 
 	}
 

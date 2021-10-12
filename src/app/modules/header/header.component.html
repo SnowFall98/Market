@@ -34,10 +34,39 @@
                         <li><a routerLink="become-a-vendor">Sell on MarketPlace</a></li>
                         <li><a routerLink="store-list">Store List</a></li>
                     	<li><i class="icon-telephone"></i> Hotline:<strong> 1-800-234-5678</strong></li>                     
-                        <li>
-                            <div class="ps-dropdown language"><a href="#"><img src="{{path}}img/template/en.png" alt="">English</a>
+                        <li
+                        *ngIf="!lang"
+                        >
+                            <div class="ps-dropdown language">
+                                <a style="cursor:pointer" (click)="changeLang('en')">
+                                    <img src="{{path}}img/template/en.png" alt="">
+                                    English
+                                </a>
                                 <ul class="ps-dropdown-menu">
-                                    <li><a href="#"><img src="{{path}}img/template/es.png" alt=""> Spanish</a></li>
+                                    <li>
+                                        <a style="cursor:pointer" (click)="changeLang('es')">
+                                            <img src="{{path}}img/template/es.png" alt=""> 
+                                            Spanish
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li
+                        *ngIf="lang"
+                        >
+                            <div class="ps-dropdown language">
+                                <a style="cursor:pointer" (click)="changeLang('es')">
+                                    <img src="{{path}}img/template/es.png" alt=""> 
+                                    Spanish
+                                </a>
+                                <ul class="ps-dropdown-menu">
+                                    <li>
+                                        <a style="cursor:pointer" (click)="changeLang('en')">
+                                           <img src="{{path}}img/template/en.png" alt="">
+                                            English
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
