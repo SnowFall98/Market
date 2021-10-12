@@ -790,36 +790,224 @@ export class CheckoutComponent implements OnInit {
 			let signature = Md5.init(`${apiKey}~${merchantId}~${referenceCode}~${this.totalPrice[0]}~USD`);
 
 			/*=============================================
-			Formulario web checkout de Payu
-			=============================================*/
-
-			let formPayu = `
-
-			<img src="assets/img/payment-method/payu_logo.png" style="width:100px" />
-
-			<form method="post" action="${action}">
-				<input name="merchantId"    type="hidden"  value="${merchantId}"   >
-				<input name="accountId"     type="hidden"  value="${accountId}" >
-				<input name="description"   type="hidden"  value="${description}"  >
-				<input name="referenceCode" type="hidden"  value="${referenceCode}" >
-				<input name="amount"        type="hidden"  value="${this.totalPrice[0]}"   >
-				<input name="tax"           type="hidden"  value="0"  >
-				<input name="taxReturnBase" type="hidden"  value="0" >
-				<input name="currency"      type="hidden"  value="USD" >
-				<input name="signature"     type="hidden"  value="${signature}"  >
-				<input name="test"          type="hidden"  value="${test}" >
-				<input name="buyerEmail"    type="hidden"  value="${this.user.email}" >
-				<input name="responseUrl"    type="hidden"  value="${responseUrl}" >
-				<input name="confirmationUrl"    type="hidden"  value="${confirmationUrl}" >
-				<input name="Submit" type="submit" class="ps-btn p-0 px-5" value="Next" >
-			</form>`;
-
-			/*=============================================
-			Sacar el botón de Payu en una alerta suave
+			Subimos compra de Payu a Base de datos
 			=============================================*/	
 
-			Sweetalert.fnc("html", formPayu, null);
+			let totalRender = 0;
+			let idOrders = [];
+			let idSales = [];
+			let idProducts = [];
 
+			/*=============================================
+			Tomamos la información de la venta
+			=============================================*/
+
+			this.shoppingCart.forEach((product, index)=>{
+
+				totalRender ++
+
+				/*=============================================
+				Enviar actualización de cantidad de producto vendido a la base de datos
+				=============================================*/	
+
+				this.productsService.getFilterData("url", product.url)
+				.subscribe(resp=>{
+
+					for(const i in resp){
+
+						let id = Object.keys(resp).toString();
+
+						idProducts.push(`${id},${product.quantity}`);
+
+					}
+
+				})
+
+				/*=============================================
+				Crear el proceso de entrega de la venta
+				=============================================*/
+
+				let moment = Math.floor(Number(product.delivery_time)/2);
+
+				let sentDate = new Date();
+				sentDate.setDate(sentDate.getDate()+moment);
+
+				let deliveredDate = new Date();
+				deliveredDate.setDate(deliveredDate.getDate()+Number(product.delivery_time))
+
+				let proccess = [
+
+					{
+						stage:"reviewed",
+						status:"ok",
+						comment:"We have received your order, we start delivery process",
+						date:new Date()
+					},
+
+					{
+						stage:"sent",
+						status:"pending",
+						comment:"",
+						date:sentDate
+					},
+					{
+						stage:"delivered",
+						status:"pending",
+						comment:"",
+						date:deliveredDate
+					}
+
+				]
+
+				/*=============================================
+				Crear orden de venta en la base de datos
+				=============================================*/
+
+				let body = {
+
+					store:product.store,
+					user: this.user.username,
+					product: product.name,
+					url:product.url,
+					image:product.image,
+					category: product.category,
+					details:product.details,
+					quantity:product.quantity,
+					price: this.subTotalPrice[index],
+					email:f.value.email,
+					country:f.value.country,
+					city:f.value.city,
+					phone:`${this.dialCode}-${f.value.phone}`,
+					address:f.value.address,
+					info:f.value.addInfo,
+					process:JSON.stringify(proccess),
+					status:"test",
+					date: new Date()
+
+				}
+
+				this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
+				.subscribe(resp=>{
+					
+					if(resp["name"] != ""){						
+
+						idOrders.push(resp["name"]);
+					
+						/*=============================================
+						Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
+						=============================================*/	
+
+						let commission = 0;
+						let unitPrice = 0;
+
+						if(this.validateCoupon){
+
+							commission = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 5%
+							unitPrice = Number(this.subTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
+
+						}else{
+
+							commission = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 25%
+							unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+
+						}				
+
+						/*=============================================
+						Enviar información de la venta a la base de datos
+						=============================================*/	
+
+						let id_payment = localStorage.getItem("id_payment");
+
+						let body = {
+
+							id_order: resp["name"],
+							client: this.user.username,
+							product: product.name,
+							url:product.url,
+							quantity:product.quantity,
+							unit_price: unitPrice.toFixed(2),
+							commission: commission.toFixed(2), 
+							total: this.subTotalPrice[index],
+							payment_method: f.value.paymentMethod,
+							id_payment: "",
+							date: new Date(),
+							status: "test"
+
+						}
+
+						this.salesService.registerDatabase(body, localStorage.getItem("idToken"))
+						.subscribe(resp=>{
+
+							if(resp["name"] != ""){		
+
+								idSales.push(resp["name"]);
+
+							}
+
+
+						})
+					
+					}
+
+				})
+
+
+			})
+
+			/*=============================================
+			Preguntamos cuando haya finalizado el proceso de guardar todo en la base de datos
+			=============================================*/	
+
+			if(totalRender == this.shoppingCart.length){
+
+				let localTotalPrice = this.totalPrice[0];
+				let localEmail = this.user.email;
+
+				setTimeout(function(){
+
+					/*=============================================
+					Formulario web checkout de Payu
+					=============================================*/
+
+					let formPayu = `
+
+						<img src="assets/img/payment-method/payu_logo.png" style="width:100px" />
+
+						 <form method="post" action="${action}">
+						  <input name="merchantId"    type="hidden"  value="${merchantId}"   >
+						  <input name="accountId"     type="hidden"  value="${accountId}" >
+						  <input name="description"   type="hidden"  value="${description}"  >
+						  <input name="referenceCode" type="hidden"  value="${referenceCode}" >
+						  <input name="amount"        type="hidden"  value="${localTotalPrice}"   >
+						  <input name="tax"           type="hidden"  value="0"  >
+						  <input name="taxReturnBase" type="hidden"  value="0" >
+						  <input name="currency"      type="hidden"  value="USD" >
+						  <input name="signature"     type="hidden"  value="${signature}"  >
+						  <input name="test"          type="hidden"  value="${test}" >
+						  <input name="buyerEmail"    type="hidden"  value="${localEmail}" >
+						  <input name="responseUrl"    type="hidden"  value="${responseUrl}" >
+						  <input name="confirmationUrl"    type="hidden"  value="${confirmationUrl}" >
+						  <input name="extra1" type="hidden" value='${JSON.stringify(idProducts)}'>
+						  <input name="extra2" type="hidden" value='${JSON.stringify(idOrders)}'>
+						  <input name="extra3" type="hidden" value='${JSON.stringify(idSales)}'>				 
+						  <input name="Submit" type="submit" class="ps-btn p-0 px-5"  value="Next" >
+						</form>`;
+
+					/*=============================================
+					Listado de tarjetas de crédito
+					=============================================*/	
+
+					//https://www.mercadopago.com.co/developers/es/guides/payments/web-tokenize-checkout/testing/
+
+					/*=============================================
+					Sacar el botón de Payu en una alerta suave
+					=============================================*/	
+
+					Sweetalert.fnc("html", formPayu, null);
+
+				},totalRender*1000)
+			
+			}						
 
 		}else if (f.value.paymentMethod ="mercado-pago"){
 
@@ -904,11 +1092,11 @@ export class CheckoutComponent implements OnInit {
 				Validar la compra de Mercado Pago
 				=============================================*/	
 
-				if( Cookies.get('_i') != undefined && 
-					Cookies.get('_k') != undefined  && 
-					Cookies.get('_a') != undefined && 
-					Cookies.get('_k') == MercadoPago.public_key && 
-					Cookies.get('_a') == MercadoPago.access_token){
+				if( localStorage.getItem('_i') != undefined && 
+					localStorage.getItem('_k') != undefined  && 
+					localStorage.getItem('_a') != undefined && 
+					localStorage.getItem('_k') == MercadoPago.public_key && 
+					localStorage.getItem('_a') == MercadoPago.access_token){
 
 
 					let totalRender = 0;
@@ -1037,8 +1225,6 @@ export class CheckoutComponent implements OnInit {
 								Enviar información de la venta a la base de datos
 								=============================================*/
 
-								let id_payment = Cookies.get('_i');
-
 								let body = {
 
 									id_order: resp["name"],
@@ -1050,7 +1236,7 @@ export class CheckoutComponent implements OnInit {
 									commission: commission.toFixed(2), 
 									total: localSubTotalPrice[index],
 									payment_method: "Mercado Pago",
-									id_payment: id_payment,
+									id_payment: localStorage.getItem('_i'),
 									date: new Date(),
 									status: "pending"
 
@@ -1073,10 +1259,10 @@ export class CheckoutComponent implements OnInit {
 					if(totalRender == localShoppingCart.length){
 
 						clearInterval(interval);
-						Cookies.remove('_a')
-						Cookies.remove('_k')
 
 						localStorage.removeItem("list");
+						localStorage.removeItem("_a");
+						localStorage.removeItem("_k");
 						Cookies.remove('coupon');
 
 						Sweetalert.fnc("success", "La compra fue exitosa", "account/my-shopping");
@@ -1085,17 +1271,18 @@ export class CheckoutComponent implements OnInit {
 
 				}
 
+				/*=============================================
+				Detenemos el intervalo
+				=============================================*/			
+	
+				if(count > 300){
+	
+					clearInterval(interval);
+					window.open("account", "_parent");
+				}
+	
+
 			},1000)
-
-			/*=============================================
-			Detenemos el intervalo
-			=============================================*/			
-
-			if(count > 300){
-
-				clearInterval(interval);
-				window.open("account", "_parent");
-			}
 
 		}else {
 

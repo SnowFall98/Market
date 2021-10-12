@@ -6,7 +6,7 @@ require __DIR__  . '/vendor/autoload.php';
 Dominio
 =============================================*/
 
-$domain = "localhost";
+$domain = "http://market-keyin.com";
 
 /*=============================================
 Credenciales
@@ -21,8 +21,8 @@ if($sandbox){
 
 }else{
 
-	$public_key = "";
-	$access_token = "";
+	$public_key = "APP_USR-eee70f7d-c35e-45f2-bac2-75dd8030f58e";
+	$access_token = "APP_USR-1529378998632258-072301-da44b06ac9ce24453a0007d5069e9e0b-242250285";
 
 }
 
@@ -119,13 +119,13 @@ if(isset($_REQUEST["token"])){
     // Imprime el estado del pago
     if($payment->status == "approved"){
 
-    	setcookie('_i', $payment->id, time() + 3600, "/", $domain);
-    	setcookie('_k', $public_key, time() + 3600, "/", $domain);
-    	setcookie('_a', $access_token, time() + 3600, "/", $domain);
-
     	echo '<script>
 
-			window.close();
+		localStorage.setItem("_i", "'.$payment->id.'");
+		localStorage.setItem("_k", "'.$public_key.'");
+		localStorage.setItem("_a", "'.$access_token.'");
+
+		window.close();
 
     	</script>';
 
