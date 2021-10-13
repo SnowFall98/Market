@@ -6,7 +6,7 @@ require __DIR__  . '/vendor/autoload.php';
 Dominio
 =============================================*/
 
-$domain = "http://market-keyin.com";
+$domain = "http://market.keyinsolutions.com/";
 
 /*=============================================
 Credenciales
