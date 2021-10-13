@@ -21,6 +21,7 @@ export class ProductsRecommendedComponent implements OnInit {
 	reviews:any[] = [];
 	price:any[] = [];
 	cargando:boolean = false;
+	notFound:boolean = false;
 
   	constructor(private productsService: ProductsService, 
 		private activateRoute: ActivatedRoute, 
@@ -57,7 +58,16 @@ export class ProductsRecommendedComponent implements OnInit {
 				this.productsService.getFilterData("sub_category", params)
 				.subscribe(resp2=>{		
 					
-					this.productsFnc(resp2);			
+					if(Object.keys(resp2).length > 0){
+		
+						this.productsFnc(resp2);
+
+					}else{
+
+						this.cargando = false;
+						this.notFound = true;
+					
+					}	
 					
 				})
 

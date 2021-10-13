@@ -24,6 +24,7 @@ export class BestSalesItemsComponent implements OnInit {
 	price:any[] = [];
 	cargando:boolean = false;
 	placeholder:any[] = [0,1,2,3,4,5];
+	notFound:boolean = false;
 
   constructor(private productsService: ProductsService,
     private activateRoute: ActivatedRoute,
@@ -59,7 +60,16 @@ export class BestSalesItemsComponent implements OnInit {
         this.productsService.getFilterData("sub_category", params)
         .subscribe(resp2=>{
     
-          this.productsFnc(resp2);			
+          if(Object.keys(resp2).length > 0){
+		
+						this.productsFnc(resp2);
+
+					}else{
+
+						this.cargando = false;
+						this.notFound = true;
+					
+					}		
           
         })
 
