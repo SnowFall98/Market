@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Path, Email } from '../../../config';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../../../services/products.service';
-import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity, Tooltip, Sweetalert } from '../../../functions';
+import { Rating, DinamicRating, DinamicReviews, DinamicPrice, CountDown, ProgressBar, Tabs, SlickConfig, ProductLightbox, Quantity, Tooltip, Sweetalert, Share } from '../../../functions';
 import { UsersService } from '../../../services/users.service';
 import { MessagesModel } from 'src/app/models/messages.model';
 import { HttpClient } from '@angular/common/http';
@@ -40,6 +40,7 @@ export class ProductLeftComponent implements OnInit {
     messages: MessagesModel;
     email:string = Email.url;
     questions:any[] = [];
+    linkedin:string;
     
   constructor(private activateRoute: ActivatedRoute, private productsService: ProductsService, private usersService: UsersService,
     private router:Router, private http: HttpClient, private messagesService: MessagesService, private storesService: StoresService,) {
@@ -49,6 +50,7 @@ export class ProductLeftComponent implements OnInit {
 
   ngOnInit(): void {
     this.preload = true;
+    this.linkedin = window.location.href;
     this.productsService.getFilterData("url", this.activateRoute.snapshot.params["param"])  
     .subscribe( resp => {
       
@@ -240,6 +242,7 @@ export class ProductLeftComponent implements OnInit {
       Tabs.fnc();
       Quantity.fnc();
       Tooltip.fnc();
+      Share.fnc();
 
       /*=============================================
       Agregamos detalles del producto
