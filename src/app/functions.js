@@ -928,4 +928,16 @@ export let ChartJs = {
 
 }
 
+/*=============================================
+Share
+=============================================*/
+
+export let Share = {
+
+    fnc: function(){
+
+        $('.social-share').shapeShare();
+
+    }
+}
 
