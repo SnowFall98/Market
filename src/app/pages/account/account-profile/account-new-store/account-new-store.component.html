@@ -179,13 +179,16 @@ Nav Account
                                 <div class="form-group__content">
                                     
                                     <input type="text"
+                                    placeholder="Nombre de la tienda"
                                     class="form-control formStore"
                                     name="storeName"
                                     pattern="[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]{1,}"
                                     [(ngModel)]="store.store"
                                     (change)="validate(storeName)"
                                     #storeName
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese el nombre de su negocio">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -204,13 +207,20 @@ Nav Account
 
                                 <div class="form-group__content">
                                     
+                                    <div class="input-group-append">
+
+                                        <span class="input-group-text">http://market.keyinsolutions.com/search/</span>
+                                    
                                     <input type="text"
+                                    placeholder="Dirección Web para encontrar sus productos"
                                     class="form-control formStore"
                                     name="storeUrl"
                                     [(ngModel)]="store.url"
                                     readonly
-                                    required>
-
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Dirección Web de su tienda">
+                                    </div>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
 
@@ -261,7 +271,9 @@ Nav Account
                                     name="storeEmail"
                                     [(ngModel)]="store.email"
                                     email
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese el correo electronico de su negocio">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -286,7 +298,9 @@ Nav Account
                                     [(ngModel)]="store.country"
                                     (change)="changeCountry(inputCountry)"  
                                     #inputCountry   
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese el país donde se encuentra su negocio">
                                         
                                         <option 
                                         *ngFor="let country of countries"
@@ -318,7 +332,9 @@ Nav Account
                                     [(ngModel)]="store.city"
                                     (change)="validate(city)"
                                     #city
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese la ciudad donde se encuentra su negocio">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -348,7 +364,9 @@ Nav Account
                                     [(ngModel)]="store.phone"
                                     (change)="validate(phone)"
                                     #phone
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese el teléfono de su negocio">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -374,7 +392,9 @@ Nav Account
                                     [(ngModel)]="store.address"
                                     (change)="validate(address)"
                                     #address
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Ingrese la dirección física de su negocio">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -399,13 +419,15 @@ Nav Account
  
                                     <div class="custom-file">
                                         
-                                         <input type="file"
-                                         class="custom-file-input formStore"
-                                         id="storeLogo"
-                                         accept="image/*"
-                                         maxSize="2000000"
-                                         (change)="validateImage($event, 'changeLogo')"
-                                         required>
+                                        <input type="file"
+                                        class="custom-file-input formStore"
+                                        id="storeLogo"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        (change)="validateImage($event, 'changeLogo')"
+                                        required
+                                        data-toggle="tooltip"
+                                        title="Inserte el logotipo de su negocio">
  
                                          <div class="valid-feedback">Valid.</div>
                                          <div class="invalid-feedback">Please fill out this field.</div>
@@ -434,13 +456,15 @@ Nav Account
  
                                     <div class="custom-file">
                                         
-                                         <input type="file"
-                                         class="custom-file-input formStore"
-                                         id="storeCover"
-                                         accept="image/*"
-                                         maxSize="2000000"
-                                         (change)="validateImage($event, 'changeCover')"
-                                         required>
+                                        <input type="file"
+                                        class="custom-file-input formStore"
+                                        id="storeCover"
+                                        accept="image/*"
+                                        maxSize="2000000"
+                                        (change)="validateImage($event, 'changeCover')"
+                                        required
+                                        data-toggle="tooltip"
+                                        title="Ingrese la portada de ofertas o de su negocio">
  
                                          <div class="valid-feedback">Valid.</div>
                                          <div class="invalid-feedback">Please fill out this field.</div>
@@ -479,6 +503,8 @@ Nav Account
                                     [(ngModel)]="social['facebook']"
                                     (change)="validate(facebook)"
                                     #facebook
+                                    data-toggle="tooltip"
+                                    title="Ingrese ÚNICAMENTE la sección después del slash / de su negocio "
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -504,6 +530,8 @@ Nav Account
                                     [(ngModel)]="social['instagram']"
                                     (change)="validate(instagram)"
                                     #instagram
+                                    data-toggle="tooltip"
+                                    title="Ingrese ÚNICAMENTE la sección después del slash / de su negocio "
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -529,6 +557,8 @@ Nav Account
                                     [(ngModel)]="social['twitter']"
                                     (change)="validate(twitter)"
                                     #twitter
+                                    data-toggle="tooltip"
+                                    title="Ingrese ÚNICAMENTE la sección después del slash / de su negocio "
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -554,6 +584,8 @@ Nav Account
                                     [(ngModel)]="social['linkedin']"
                                     (change)="validate(linkedin)"
                                     #linkedin
+                                    data-toggle="tooltip"
+                                    title="Ingrese ÚNICAMENTE la sección después del slash / de su negocio "
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -579,6 +611,8 @@ Nav Account
                                     [(ngModel)]="social['youtube']"
                                     (change)="validate(youtube)"
                                     #youtube
+                                    data-toggle="tooltip"
+                                    title="Ingrese ÚNICAMENTE la sección después del slash / de su negocio "
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -630,13 +664,16 @@ Nav Account
                                 <div class="form-group__content">
                                     
                                     <input type="text"
+                                    placeholder="Ingrese el nombre de su primer producto"
                                     class="form-control formProduct"
                                     name="productName"
                                     pattern="[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]{1,}"
                                     [(ngModel)]="product.name"
                                     (change)="validate(productName)"
                                     #productName
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Recuerde que, NO PUEDE EXISITR UN PRODUCTO CON EL MISMO NOMBRE">
 
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
@@ -654,14 +691,18 @@ Nav Account
                                 <label>Product Url<sup class="text-danger">*</sup></label>
 
                                 <div class="form-group__content">
-                                    
+                                    <div class="input-group-append">
+
+                                        <span class="input-group-text">http://market.keyinsolutions.com/product/</span>
                                     <input type="text"
                                     class="form-control formProduct"
                                     name="productUrl"
                                     [(ngModel)]="product.url"
                                     readonly
-                                    required>
-
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Este será la dirección WEB de su producto">
+                                    </div>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field.</div>
 
@@ -685,7 +726,9 @@ Nav Account
                                     [(ngModel)]="product.category"
                                     (change)="changeCategory(inputCategory)"  
                                     #inputCategory   
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Selecciona la categoría que mejor se adapte a tu producto">
                                         
                                         <option 
                                         *ngFor="let category of categories"
@@ -716,7 +759,9 @@ Nav Account
                                     class="form-control formProduct"
                                     name="productSubCategory"
                                     [(ngModel)]="product.sub_category"   
-                                    required>
+                                    required
+                                    data-toggle="tooltip"
+                                    title="Selecciona la sub-categoría que mejor se adapte a tu producto">
                                         
                                         <option 
                                         *ngFor="let subcategory of subcategories"
@@ -780,6 +825,8 @@ Nav Account
                                     name="input_{{i}}"
                                     [(ngModel)]="inputSummary.input"
                                     required
+                                    data-toggle="tooltip"
+                                    title="Realice un pequeño resumen de su producto"
                                     >
 
                                     <div class="valid-feedback">Valid.</div>
@@ -827,6 +874,8 @@ Nav Account
                                         name="title_{{i}}"
                                         [(ngModel)]="inputDetail.title"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Realice los detalles de su producto"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -900,6 +949,8 @@ Nav Account
                                         type="text"
                                         name="type_{{i}}"
                                         [(ngModel)]="inputSpecification.type"
+                                        data-toggle="tooltip"
+                                        title="Realice las especificaciones producto"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -925,6 +976,8 @@ Nav Account
                                         name="values_{{i}}"
                                         [(ngModel)]="inputSpecification.values"
                                         [maxItems]='5'
+                                        data-toggle="tooltip"
+                                        title="Presiona ENTER para guardar el nuevo TAG"
                                         ></tag-input>
 
                                         <div class="valid-feedback">Valid.</div>
@@ -955,6 +1008,8 @@ Nav Account
                                     [(ngModel)]="tags"
                                     [maxItems]='5'
                                     required
+                                    data-toggle="tooltip"
+                                    title="Presiona ENTER para guardar el nuevo TAG"
                                     ></tag-input>
 
                                     <div class="valid-feedback">Valid.</div>
@@ -986,7 +1041,9 @@ Nav Account
                                          accept="image/*"
                                          maxSize="2000000"
                                          (change)="validateImage($event, 'changeImage')"
-                                         required>
+                                         required
+                                         data-toggle="tooltip"
+                                         title="Seleccione la imagen de su producto">
  
                                          <div class="valid-feedback">Valid.</div>
                                          <div class="invalid-feedback">Please fill out this field.</div>
@@ -1078,6 +1135,8 @@ Nav Account
                                         #topBannerH3Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el BANNER al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1108,6 +1167,8 @@ Nav Account
                                         #topBannerP1Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el BANNER al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1138,6 +1199,8 @@ Nav Account
                                         #topBannerH4Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el BANNER al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1168,6 +1231,8 @@ Nav Account
                                         #topBannerP2Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el BANNER al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1198,6 +1263,8 @@ Nav Account
                                         #topBannerSpanTag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el BANNER al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1228,6 +1295,8 @@ Nav Account
                                         #topBannerButtonTag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="En esta etiqueta puedes ingresar la palabra Comprar Ahora, Shop Now o Buy Now, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1241,7 +1310,7 @@ Nav Account
 
                                     <div class="form-group">
 
-                                        <label>IMG Tag:</label>
+                                        <label>Product Top Banner IMG:</label>
 
                                         <div class="form-group__content">
 
@@ -1353,6 +1422,8 @@ Nav Account
                                         #hSliderH4Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el Slider Horizontal al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1383,6 +1454,8 @@ Nav Account
                                         #hSliderH3_1Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el Slider Horizontal al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1413,6 +1486,8 @@ Nav Account
                                         #hSliderH3_2Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el Slider Horizontal al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1443,6 +1518,8 @@ Nav Account
                                         #hSliderH3_3Tag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el Slider Horizontal al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1473,6 +1550,8 @@ Nav Account
                                         #hSliderH3_4sTag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="Ingrese los valores que se mostrarán en el Slider Horizontal al momento de cargar la página, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1504,6 +1583,8 @@ Nav Account
                                         #hSliderButtonTag
                                         tags="tags"
                                         required
+                                        data-toggle="tooltip"
+                                        title="En esta etiqueta puedes ingresar la palabra Comprar Ahora, Shop Now o Buy Now, recuerda seguir la imagen y etiquetas de ejemplo"
                                         >
 
                                         <div class="valid-feedback">Valid.</div>
@@ -1517,7 +1598,7 @@ Nav Account
 
                                     <div class="form-group">
 
-                                        <label>IMG Tag:</label>
+                                        <label>Horizontal Slider IMG:</label>
 
                                         <div class="form-group__content">
 
@@ -1612,6 +1693,8 @@ Nav Account
                                          class="form-control"                               
                                          name="type_video"
                                          [(ngModel)]="video[0]"
+                                         data-toggle="tooltip"
+                                         title="Seleccione la plataforma donde tiene un vídeo de su producto"
                                          >
                                              
                                              <option value="youtube">YouTube</option>
@@ -1642,6 +1725,8 @@ Nav Account
                                          tags="tags"
                                          (change)="validate(id_video)"
                                          #id_video
+                                         data-toggle="tooltip"
+                                         title="Ingrese ÚNICAMENTE el valor después del símbolo de SLASH / "
                                          >
          
                                          <div class="valid-feedback">Valid.</div>
@@ -1688,7 +1773,9 @@ Nav Account
                                             (change)="validate(price)"
                                             #price
                                             tags="prices"
-                                            required>
+                                            required
+                                            data-toggle="tooltip"
+                                            title="Ingrese el precio de su producto">
                                         
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>
@@ -1723,7 +1810,9 @@ Nav Account
                                             (change)="validate(shipping)"
                                             #shipping
                                             tags="prices"
-                                            required>
+                                            required
+                                            data-toggle="tooltip"
+                                            title="Ingrese el valor de envío de su producto, recuerda consultar con su compañía favorita el precio">
                                         
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div> 
@@ -1757,7 +1846,9 @@ Nav Account
                                             (change)="validate(delivery_time)"
                                             #delivery_time
                                             tags="intNumber"
-                                            required>
+                                            required
+                                            data-toggle="tooltip"
+                                            title="Ingrese los días aproximados que tardará su producto en llegar">
                                         
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>  
@@ -1792,7 +1883,9 @@ Nav Account
                                             (change)="validate(stock)"
                                             #stock
                                             tags="intNumber"
-                                            required>
+                                            required
+                                            data-toggle="tooltip"
+                                            title="Ingrese la cantidad de productos que posee, máximo 100">
                                         
                                             <div class="valid-feedback">Valid.</div>
                                             <div class="invalid-feedback">Please fill out this field.</div>  
@@ -1830,7 +1923,9 @@ Nav Account
                                         <select name="text"
                                         class="form-control"
                                         name="type_offer"
-                                        [(ngModel)]="offer[0]">
+                                        [(ngModel)]="offer[0]"
+                                        data-toggle="tooltip"
+                                        title="Si su producto posee Oferta seleccione Descuento, si no, seleccionar precio fijo">
                                             
                                             <option value="Disccount">Disccount</option>
                                             <option value="Fixed">Fixed</option>
@@ -1871,7 +1966,9 @@ Nav Account
                                         pattern="[.\\,\\0-9]{1,}"
                                         (change)="validate(value_offer)"
                                         #value_offer
-                                        tags="prices">
+                                        tags="prices"
+                                        data-toggle="tooltip"
+                                        title="Ingrese el precio de su producto con Oferta">
 
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>     
@@ -1893,7 +1990,9 @@ Nav Account
                                         <input type="date"
                                         class="form-control"
                                         name="date_offer"
-                                        [(ngModel)]="offer[2]">
+                                        [(ngModel)]="offer[2]"
+                                        data-toggle="tooltip"
+                                        title="Seleccione la fecha que termina su oferta">
 
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>     
