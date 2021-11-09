@@ -155,7 +155,8 @@ export class LoginComponent implements OnInit {
 
     if($(input).attr("name") == "email"){
 
-      pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+      //pattern = /^\w+@[a-zA-Z_-]+?\.[a-zA-Z]{2,3}$/;
+      pattern = /^[a-z0-9._+-]+@[a-zA-Z0-9.-]+?\.[a-zA-Z]{2,3}$/;
       
     }
 
