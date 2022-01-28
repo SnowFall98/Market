@@ -26,7 +26,7 @@ export class HomeTopCategoriesComponent implements OnInit {
 
 		let getCategories = [];
 
-		this.categoriesService.getData()		
+		this.categoriesService.getFilterData("state","show")		
 		.subscribe( resp => {
 			
 			let i;
