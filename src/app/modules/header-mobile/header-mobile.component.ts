@@ -89,7 +89,7 @@ export class HeaderMobileComponent implements OnInit {
 		Tomamos la data de las categorías
 		=============================================*/
 
-		this.categoriesService.getData()
+		this.categoriesService.getFilterData("state", "show")
 		.subscribe(resp => {
 
 			/*=============================================

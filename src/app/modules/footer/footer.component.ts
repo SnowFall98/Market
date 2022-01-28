@@ -27,7 +27,7 @@ export class FooterComponent implements OnInit {
 		Tomamos la data de las categorías
 		=============================================*/
 
-		this.categoriesService.getData()
+		this.categoriesService.getFilterData("state", "show")
 		.subscribe(resp => {
 			
 			let i;
