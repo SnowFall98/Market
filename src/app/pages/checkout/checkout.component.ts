@@ -732,7 +732,7 @@ export class CheckoutComponent implements OnInit {
 					if(totalRender == this.shoppingCart.length){
 
 						localStorage.removeItem("list");
-						localStorage.removeItem("id_payment");
+						//localStorage.removeItem("id_payment"); se comenta para poder obtener el id_payment de Paypal, si por protocolos de seguridad, se requiere eliminar, se debe deshabilitar en el admin la visibilidad del id_payment
 						Cookies.remove('coupon');
 
 						Sweetalert.fnc("success", "La compra fue exitosa", "account/my-shopping");
