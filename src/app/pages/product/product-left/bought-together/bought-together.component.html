@@ -45,8 +45,14 @@ class="ps-block--bought-toggether">
                 <p>Total Price:<strong></strong></p>
 
                 <a class="ps-btn" 
-                style="cursor:pointer" 
-                (click)="addShoppingCart(products[0].url, 1, [], products[1].url, 1, [])">Añadir todo al carrito</a>
+                    style="cursor:pointer" 
+                    (click)="addShoppingCart(products[0].url, 1, [], products[1].url, 1, [])"
+                    *ngIf="products[0].stock > 0 && products[1].stock > 0">
+                    <!-- Se crea la condicional ngIf para poder validar si, el Stock
+                    de cada producto es mayor a 0 y poder realizar la compra de ambos productos -->
+                    Añadir todo al carrito
+                </a>
+
                 <a class="ps-btn ps-btn--gray ps-btn--outline" style="cursor: pointer" 
                 (click)="addWishlist(products[0].url, products[1].url)">Agregar todo a la lista de deseos</a>
 
