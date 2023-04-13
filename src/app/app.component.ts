@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
 
  		(function($) {
 		    "use strict";
-		    var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+		    //var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+			var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !/Windows/.test(navigator.userAgent);
 
 		    var isMobile = {
 		        Android: function() {

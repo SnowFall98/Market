@@ -68,6 +68,11 @@ import { AccountMyOrdersComponent } from './pages/account/account-profile/accoun
 import { AccountDisputesComponent } from './pages/account/account-profile/account-disputes/account-disputes.component';
 import { AccountMessagesComponent } from './pages/account/account-profile/account-messages/account-messages.component';
 import { StoreListComponent } from './pages/store-list/store-list.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { PolicyComponent } from './pages/policy/policy.component';
+import { TermConditionComponent } from './pages/term-condition/term-condition.component';
+
 
 
 @NgModule({
@@ -122,7 +127,11 @@ import { StoreListComponent } from './pages/store-list/store-list.component';
     AccountMyOrdersComponent,
     AccountDisputesComponent,
     AccountMessagesComponent,
-    StoreListComponent
+    StoreListComponent,
+    FaqComponent,
+    AboutUsComponent,
+    PolicyComponent,
+    TermConditionComponent
   ],
   imports: [
     BrowserModule,

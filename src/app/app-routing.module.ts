@@ -14,6 +14,10 @@ import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.compo
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { BecomeAVendorComponent } from './pages/become-a-vendor/become-a-vendor.component';
 import { StoreListComponent } from './pages/store-list/store-list.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { PolicyComponent } from './pages/policy/policy.component';
+import { TermConditionComponent } from './pages/term-condition/term-condition.component';
 
 
 const routes: Routes = [
@@ -31,6 +35,10 @@ const routes: Routes = [
 	{path: 'become-a-vendor', component: BecomeAVendorComponent},
 	{path: 'store-list', component: StoreListComponent},
 	{path: 'store-list/:param', component: StoreListComponent},
+	{path: 'faq', component: FaqComponent},
+	{path: 'about-us', component: AboutUsComponent},
+	{path: 'policy', component: PolicyComponent},
+	{path: 'term-condition', component: TermConditionComponent},
 	{path: '**', pathMatch:'full', component: Error404Component }
 
 ];
