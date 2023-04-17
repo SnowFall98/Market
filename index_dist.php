@@ -167,7 +167,7 @@ if(!empty($routes[2])){
 	
 	<?php if (empty($jsonResponse)): ?>
 
-		<title>Marketplace | Home</title>
+		<title>Marketplace Vamos Belen | Home</title>
 
 		<meta name="description" content="Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum.">
 		<meta name="keywords" content="Marketplace, Consumer Electric, Clothing and Apparel, Home, Garden and Kitchen, Health and Beauty, Jewelry and Watches, Computer and Technology">	
