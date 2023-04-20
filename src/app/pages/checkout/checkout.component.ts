@@ -787,7 +787,7 @@ export class CheckoutComponent implements OnInit {
 			Creamos la firma de Payu
 			=============================================*/
 
-			let signature = Md5.init(`${apiKey}~${merchantId}~${referenceCode}~${this.totalPrice[0]}~USD`);
+			let signature = Md5.init(`${apiKey}~${merchantId}~${referenceCode}~${this.totalPrice[0]}~COP`);
 
 			/*=============================================
 			Subimos compra de Payu a Base de datos
@@ -886,70 +886,78 @@ export class CheckoutComponent implements OnInit {
 
 				}
 
-				this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
-				.subscribe(resp=>{
+				/*=============================================
+				Se crea la validación para determinar si, el pago fue efectuado correctamente
+				En caso de ser positivo, se procede a generar la orden y la venta en DB
+				=============================================*/
+
+				if(this.activatedRoute.snapshot.queryParams["transactionState"] == 4){ 
 					
-					if(resp["name"] != ""){						
-
-						idOrders.push(resp["name"]);
-					
-						/*=============================================
-						Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
-						=============================================*/	
-
-						let commission = 0;
-						let unitPrice = 0;
-
-						if(this.validateCoupon){
-
-							commission = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 5%
-							unitPrice = Number(this.subTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
-
-						}else{
-
-							commission = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 25%
-							unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
-
-						}				
-
-						/*=============================================
-						Enviar información de la venta a la base de datos
-						=============================================*/	
-
-						let id_payment = localStorage.getItem("id_payment");
-
-						let body = {
-
-							id_order: resp["name"],
-							client: this.user.username,
-							product: product.name,
-							url:product.url,
-							quantity:product.quantity,
-							unit_price: unitPrice.toFixed(2),
-							commission: commission.toFixed(2), 
-							total: this.subTotalPrice[index],
-							payment_method: f.value.paymentMethod,
-							id_payment: "",
-							date: new Date(),
-							status: "test"
-
-						}
-
-						this.salesService.registerDatabase(body, localStorage.getItem("idToken"))
-						.subscribe(resp=>{
-
-							if(resp["name"] != ""){		
-
-								idSales.push(resp["name"]);
-
+					this.ordersService.registerDatabase(body, localStorage.getItem("idToken"))
+					.subscribe(resp=>{
+						
+						if(resp["name"] != ""){						
+	
+							idOrders.push(resp["name"]);
+						
+							/*=============================================
+							Separamos la comisión del Marketplace y el pago a la tienda del precio total de cada producto
+							=============================================*/	
+	
+							let commission = 0;
+							let unitPrice = 0;
+	
+							if(this.validateCoupon){
+	
+								commission = Number(this.subTotalPrice[index])*0.05; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 5%
+								unitPrice = Number(this.subTotalPrice[index])*0.95; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 95%
+	
+							}else{
+	
+								commission = Number(this.subTotalPrice[index])*0.25; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 25%
+								unitPrice = Number(this.subTotalPrice[index])*0.75; // PORCENTAJE DE GANANCIA DEL PRODUCTO - ACTUAL 75%
+	
+							}				
+	
+							/*=============================================
+							Enviar información de la venta a la base de datos
+							=============================================*/	
+	
+							let id_payment = localStorage.getItem("id_payment");
+	
+							let body = {
+	
+								id_order: resp["name"],
+								client: this.user.username,
+								product: product.name,
+								url:product.url,
+								quantity:product.quantity,
+								unit_price: unitPrice.toFixed(2),
+								commission: commission.toFixed(2), 
+								total: this.subTotalPrice[index],
+								payment_method: f.value.paymentMethod,
+								id_payment: "",
+								date: new Date(),
+								status: "test"
+	
 							}
-
-
-						})
-					
-					}
-
-				})
+	
+							this.salesService.registerDatabase(body, localStorage.getItem("idToken"))
+							.subscribe(resp=>{
+	
+								if(resp["name"] != ""){		
+	
+									idSales.push(resp["name"]);
+	
+								}
+	
+	
+							})
+						
+						}
+	
+					})
+				}
 
 
 			})
@@ -981,7 +989,7 @@ export class CheckoutComponent implements OnInit {
 						  <input name="amount"        type="hidden"  value="${localTotalPrice}"   >
 						  <input name="tax"           type="hidden"  value="0"  >
 						  <input name="taxReturnBase" type="hidden"  value="0" >
-						  <input name="currency"      type="hidden"  value="USD" >
+						  <input name="currency"      type="hidden"  value="COP" >
 						  <input name="signature"     type="hidden"  value="${signature}"  >
 						  <input name="test"          type="hidden"  value="${test}" >
 						  <input name="buyerEmail"    type="hidden"  value="${localEmail}" >
