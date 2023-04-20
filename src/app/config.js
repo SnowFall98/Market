@@ -165,7 +165,7 @@ export let Payu = {
 	action: 'https://sandbox.checkout.payulatam.com/ppp-web-gateway-payu/',
 	merchantId: '508029',
 	accountId: '512321', //Solo para Colombia
-	responseUrl: domain+'account/my-shopping',
+	responseUrl: domain+'checkout',
 	confirmationUrl: domain+'assets/payu/index.php',
 	apiKey: '4Vj8eK4rloUd272L48hsrarnUA',
 	test: 1
