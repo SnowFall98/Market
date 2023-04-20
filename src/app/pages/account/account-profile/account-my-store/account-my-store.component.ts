@@ -9,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
 import { StoresModel } from '../../../../models/stores.model';
 import { UsersService } from 'src/app/services/users.service';
 import { ProductsModel } from '../../../../models/products.model';
-import { CategoriesService } from '../../../../services/Categories.service';
+import { CategoriesService } from '../../../../services/categories.service';
 import { SubCategoriesService } from '../../../../services/sub-categories.service';
 
 declare var jQuery: any;
