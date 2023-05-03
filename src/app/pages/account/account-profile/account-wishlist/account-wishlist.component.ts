@@ -51,90 +51,90 @@ export class AccountWishlistComponent implements OnInit, OnDestroy {
   	Seleccionamos el id del usuario
   	=============================================*/
 
-	this.usersService.getUniqueData(this.childItem)
-	.subscribe(resp=>{
-
-    /*=============================================
-    Validamos si el usuario ya tiene una tienda habilitada
-    =============================================*/
-
-    this.storesService.getFilterData("username", resp["username"])
+    this.usersService.getUniqueData(this.childItem)
     .subscribe(resp=>{
 
-      if(Object.keys(resp).length > 0){
+      /*=============================================
+      Validamos si el usuario ya tiene una tienda habilitada
+      =============================================*/
 
-        this.is_vendor = true;
+      this.storesService.getFilterData("username", resp["username"])
+      .subscribe(resp=>{
+
+        if(Object.keys(resp).length > 0){
+
+          this.is_vendor = true;
+
+        }
+
+      })
+      
+      if(resp["wishlist"] != undefined){
+
+      /*=============================================
+      Tomamos de la data la lista de deseos
+      =============================================*/
+
+      this.wishlist = JSON.parse(resp["wishlist"]);
+
+      let load = 0;
+      
+      /*=============================================
+      Realizamos un foreach en la lista de deseos
+      =============================================*/
+
+        if(this.wishlist.length > 0){
+
+          this.wishlist.forEach(list =>{	
+            
+            /*=============================================
+            Filtramos la data de productos 
+            =============================================*/
+
+            this.productsService.getFilterData("url", list)
+            .subscribe(resp=>{
+
+              /*=============================================
+              recorremos la data de productos
+              =============================================*/
+
+              for(const i in resp){
+
+                load++;
+
+              /*=============================================
+              agregamos los productos 
+              =============================================*/
+                
+              this.products.push(resp[i]);
+
+              /*=============================================
+              validamos los precios en oferta
+              =============================================*/
+
+              this.price.push(DinamicPrice.fnc(resp[i]))	
+
+              /*=============================================
+              preguntamos cuando termina de cargar toda la data en el DOM
+              =============================================*/
+
+                if(load == this.wishlist.length){
+
+                  this.dtTrigger.next();
+                
+                }  
+
+              }  
+            
+            })
+
+          })		
+
+        }
 
       }
 
     })
-		
-		if(resp["wishlist"] != undefined){
-
-		/*=============================================
-		Tomamos de la data la lista de deseos
-		=============================================*/
-
-		this.wishlist = JSON.parse(resp["wishlist"]);
-
-		let load = 0;
-		
-		/*=============================================
-		Realizamos un foreach en la lista de deseos
-		=============================================*/
-
-			if(this.wishlist.length > 0){
-
-				this.wishlist.forEach(list =>{	
-					
-					/*=============================================
-					Filtramos la data de productos 
-					=============================================*/
-
-					this.productsService.getFilterData("url", list)
-					.subscribe(resp=>{
-
-						/*=============================================
-						recorremos la data de productos
-						=============================================*/
-
-						for(const i in resp){
-
-							load++;
-
-						/*=============================================
-						agregamos los productos 
-						=============================================*/
-							
-						this.products.push(resp[i]);
-
-						/*=============================================
-						validamos los precios en oferta
-						=============================================*/
-
-						this.price.push(DinamicPrice.fnc(resp[i]))	
-
-						/*=============================================
-						preguntamos cuando termina de cargar toda la data en el DOM
-						=============================================*/
-
-							if(load == this.wishlist.length){
-
-								this.dtTrigger.next();
-							
-							}  
-
-						}  
-					
-					})
-
-				})		
-
-			}
-
-		}
-
-	})
 
   }
 
