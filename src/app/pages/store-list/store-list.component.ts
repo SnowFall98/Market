@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { Path } from '../../config';
-import { Select2Cofig, Pagination } from '../../functions';
+import { Select2Cofig, Pagination, Rating, Tooltip, DinamicReviews } from '../../functions';
 import { StoresService } from '../../services/stores.service';
 import { ActivatedRoute } from '@angular/router';
 
-declare var jQuery:any;
-declare var $:any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
-  selector: 'app-store-list',
-  templateUrl: './store-list.component.html',
-  styleUrls: ['./store-list.component.css']
+	selector: 'app-store-list',
+	templateUrl: './store-list.component.html',
+	styleUrls: ['./store-list.component.css']
 })
 export class StoreListComponent implements OnInit {
 
-	path:string = Path.url;
+	path: string = Path.url;
 
-	stores:any[] = [];
-	storeFound:number = 0;
-	totalPage:number = 0;
-	page:number = 1;
-	param1:any = null;
-	param2:any = null;
-	render:boolean = true;
-	sortItems:any[] = [];
-	sortValues:any[] = [];
-	currentRoute:string = "store-list";
+	stores: any[] = [];
+	storeFound: number = 0;
+	totalPage: number = 0;
+	page: number = 1;
+	param1: any = null;
+	param2: any = null;
+	render: boolean = true;
+	sortItems: any[] = [];
+	sortValues: any[] = [];
+	currentRoute: string = "store-list";
+	renderReview: boolean = false; // Variables para el render de las Reseñas
+	loadReview: number = 0; // Variables para el render de las Reseñas
+	totalReviews: any[] = []; // Variable para capturar el total de calficiaciones que tiene la tienda
+	loadProduct: number = 0; // Variable para identificar cuando  termina la carga de los productos
 
 	constructor(private storesService: StoresService, private activatedRoute: ActivatedRoute) { }
 
@@ -33,16 +37,16 @@ export class StoreListComponent implements OnInit {
 
 		/*=============================================
 		Capturamos el parámetro URL
-		=============================================*/	
+		=============================================*/
 
-		if(this.activatedRoute.snapshot.params["param"] != undefined){
+		if (this.activatedRoute.snapshot.params["param"] != undefined) {
 
 			this.param1 = this.activatedRoute.snapshot.params["param"].split("&")[0];
 			this.param2 = this.activatedRoute.snapshot.params["param"].split("&")[1];
 
 		}
 
-		if(Number(this.param1)){
+		if (Number(this.param1)) {
 
 			this.page = this.param1;
 
@@ -52,22 +56,35 @@ export class StoreListComponent implements OnInit {
 
 		/*=============================================
 		Traemos todas las tiendas del marketplace
-		=============================================*/	
+		=============================================*/
 
 		this.storesService.getData()
-		.subscribe(resp=>{
-	
-			this.storeFnc(resp);
-			
-		})
-	
+			.subscribe(resp => {
+
+				this.storeFnc(resp);
+				//console.log(resp, "resp");
+
+			})
+
 	}
 
-  /*=============================================
+	parseSocial(socialString: string) {
+		try {
+			// Intenta analizar la cadena JSON en un objeto JSON
+			return JSON.parse(socialString);
+		} catch (error) {
+			// Si hay un error al analizar la cadena JSON, muestra un mensaje de error en la consola
+			console.error('Error parsing social string:', error);
+			// Devuelve null para indicar que ha habido un error
+			return null;
+		}
+	}
+	
+	/*=============================================
 	Declaramos función para mostrar el catálogo de tiendas
-	=============================================*/	
+	=============================================*/
 
-	storeFnc(response){
+	storeFnc(response) {
 
 		this.stores = [];
 
@@ -75,18 +92,17 @@ export class StoreListComponent implements OnInit {
 
 		/*=============================================
 		Hacemos un recorrido por la respuesta que nos traiga el filtrado
-		=============================================*/	
+		=============================================*/
 
-		for(const i in response){
+		for (const i in response) {
 
 			getStores.push(response[i]);
 		}
-
 		/*=============================================
 		Filtramos de acuerdo a la búsqueda
 		=============================================*/
 
-		if(this.param2 != null){
+		if (this.param2 != null) {
 
 			getStores = getStores.filter(value => !value.store.search(this.param2));
 
@@ -96,11 +112,11 @@ export class StoreListComponent implements OnInit {
 		Filtramos de acuerdo al orden
 		=============================================*/
 
-		if(this.param1 == null){
+		if (this.param1 == null) {
 
-			getStores.sort((a, b)=> {
+			getStores.sort((a, b) => {
 
-			  return new Date(b.date).getTime() - new Date(a.date).getTime()	
+				return new Date(b.date).getTime() - new Date(a.date).getTime()
 
 			})
 
@@ -115,16 +131,16 @@ export class StoreListComponent implements OnInit {
 
 				"first",
 				"latest"
-			
+
 			]
 
 		}
 
-		if(this.param1 != null && this.param1 == "latest"){
+		if (this.param1 != null && this.param1 == "latest") {
 
-			getStores.sort((a, b)=> {
+			getStores.sort((a, b) => {
 
-			  return new Date(a.date).getTime() - new Date(b.date).getTime()	
+				return new Date(a.date).getTime() - new Date(b.date).getTime()
 
 			})
 
@@ -142,11 +158,11 @@ export class StoreListComponent implements OnInit {
 
 		}
 
-		if(this.param1 != null && this.param1 == "first"){
+		if (this.param1 != null && this.param1 == "first") {
 
-			getStores.sort((a, b)=> {
+			getStores.sort((a, b) => {
 
-			  return new Date(b.date).getTime() - new Date(a.date).getTime()	
+				return new Date(b.date).getTime() - new Date(a.date).getTime()
 
 			})
 
@@ -161,56 +177,56 @@ export class StoreListComponent implements OnInit {
 
 				"first",
 				"latest"
-			
+
 			]
-			
+
 		}
 
 		/*=============================================
 		Definimos el total de tiendas y la paginación de tiendas
-		=============================================*/	
+		=============================================*/
 
 		this.storeFound = getStores.length;
 
-		this.totalPage = Math.ceil(Number(this.storeFound)/9);
+		this.totalPage = Math.ceil(Number(this.storeFound) / 9);
 
 		/*=============================================
 		Filtramos solo hasta 9 tiendas
 		=============================================*/
 
-		getStores.forEach((product, index)=>{
-	
+		getStores.forEach((product, index) => {
+
 			/*=============================================
 			Configuramos la paginación desde - hasta
 			=============================================*/
 
-			let first = Number(index) + (this.page*9)-9;
+			let first = Number(index) + (this.page * 9) - 9;
 
-			let last = 9*this.page;
+			let last = 9 * this.page;
 
 			/*=============================================
 			Filtramos los productos a mostrar
-			=============================================*/	
+			=============================================*/
 
-			if(first < last){
+			if (first < last) {
 
-				if(getStores[first] != undefined){
+				if (getStores[first] != undefined) {
 
 					this.stores.push(getStores[index]);
 
 				}
 
 			}
-			
+
 		})
 
 	}
 
 	/*=============================================
 	Función para el buscador de tiendas
-	=============================================*/	
+	=============================================*/
 
-	searchStore(search){
+	searchStore(search) {
 
 		window.open(`store-list/search&${search.value}`, '_top');
 
@@ -220,22 +236,22 @@ export class StoreListComponent implements OnInit {
 	Función que nos avisa cuando finaliza el renderizado de Angular
 	=============================================*/
 
-  callback(){
+	callback() {
 
-    if(this.render){
+		if (this.render) {
 
-      this.render = false;
-    Select2Cofig.fnc();
-    Pagination.fnc();
+			this.render = false;
+			Select2Cofig.fnc();
+			Pagination.fnc();
 
-    $(".sortItems").change(function(){
+			$(".sortItems").change(function () {
 
-      window.open(`store-list/${$(this).val()}`, '_top');
+				window.open(`store-list/${$(this).val()}`, '_top');
 
-    })
-    
-    }
+			})
 
-  }
+		}
+
+	}
 
 }
