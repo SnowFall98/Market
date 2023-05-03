@@ -1,17 +1,110 @@
 <div 
-*ngFor="let st of store"
-class="media p-3">
+*ngIf="!preload"
+class="ps-section__content">
 
-  <img 
-  src="{{path}}img/stores/{{st.url}}/{{st.logo}}" 
-  alt="{{st.store}}" 
-  class="mr-5 mt-1 rounded-circle" 
-  style="width:120px;">
+  <div 
+  *ngFor="let st of store"
+  class="media p-3">
 
-  <div class="media-body">
-    <h4>{{st.store}}</h4>
-    <p>{{st.abstract}}</p>
-    <a class="ps-btn" href="store/{{st.url}}">Visit Store</a>
+    <img 
+    src="{{path}}img/stores/{{st.url}}/{{st.logo}}" 
+    alt="{{st.store}}" 
+    class="mr-5 mt-1 rounded-circle" 
+    style="width:120px;">
+
+    <div class="media-body">
+      <h4>
+        <a href="/search/{{st.store}}">{{st.store}}</a>
+      </h4>
+      
+        <div class="br-wrapper br-theme-fontawesome-stars">
+    
+                                      
+        </div>
+    
+        <p>
+            <strong class="rating">
+                <span class="percentage">0</span>% Positive
+            </strong> (
+                <span class="globalRating">0</span> rating)
+        </p>
+
+      <tr *ngFor="let product of products; let i = index; let lastIndex = last">
+        {{ lastIndex ? callback(i, totalReviews) : ""}}
+      </tr>
+
+      <p>{{st.about}}</p>
+      <p>{{st.country}} / {{st.city}} / {{st.address}}</p>
+      <article class="ps-block--store">
+        <ul class="ps-block__contact">
+
+          <!-- Email -->
+          <li>
+              <i class="icon-envelope"></i>
+              <a href="mailto:{{st.email}}">{{st.email}}</a>
+          </li>
+    
+          <!-- Telefono -->
+          <li>
+              <i class="icon-telephone"></i>  {{st.phone}}
+          </li>
+          
+          <!-- Facebook -->
+          <li *ngIf="parseSocial(st.social)?.facebook !== ''">
+            <i class="fab fa-facebook"></i>
+            <a href="{{parseSocial(st.social)?.facebook}}" target="_blank">
+              {{parseSocial(st.social)?.facebook}}
+            </a>
+          </li>
+
+          <!-- Instagram -->
+          <li *ngIf="parseSocial(st.social)?.instagram !== ''">
+            <i class="fab fa-instagram"></i>
+            <a href="{{parseSocial(st.social)?.instagram}}" target="_blank">
+              {{parseSocial(st.social)?.instagram}}
+            </a>
+          </li>
+
+          <!-- Twitter -->
+          <li *ngIf="parseSocial(st.social)?.twitter !== ''">
+            <i class="fab fa-twitter"></i>
+            <a href="{{parseSocial(st.social)?.twitter}}" target="_blank">
+              {{parseSocial(st.social)?.twitter}}
+            </a>
+          </li>
+
+          <!-- Linkedin -->
+          <li *ngIf="parseSocial(st.social)?.linkedin !== ''">
+            <i class="fab fa-linkedin"></i>
+            <a href="{{parseSocial(st.social)?.linkedin}}" target="_blank">
+              {{parseSocial(st.social)?.linkedin}}
+            </a>
+          </li>
+
+          <!-- Youtube -->
+          <li *ngIf="parseSocial(st.social)?.youtube !== ''">
+            <i class="fab fa-youtube"></i>
+            <a href="{{parseSocial(st.social)?.youtube}}" target="_blank">
+              {{parseSocial(st.social)?.youtube}}
+            </a>
+          </li>
+
+        </ul>
+      </article>
+      <!-- <a class="ps-btn" href="/search/{{st.url}}">Visit Store</a> -->
+    </div>
   </div>
+
+
 </div>
 
+<!--=====================================
+Preload
+======================================-->
+<div 
+*ngIf="preload"
+class="d-flex justify-content-center">
+                        
+    <div class="spinner-border text-muted my-3"></div>
+
+</div>
