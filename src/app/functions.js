@@ -538,7 +538,7 @@ export let Search = {
 
         if(match.test(search)){
 
-            var searchTest = search.replace(/[ ]/g, "_");
+            var searchTest = search.replace(/[ ]/g, "-");
             searchTest = searchTest.replace(/[ñ]/g, "n");
             searchTest = searchTest.replace(/[á]/g, "a");
             searchTest = searchTest.replace(/[é]/g, "e");
